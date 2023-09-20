@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace ProyectoPGTA_P2
 {
+    //Comentario
     static class Program
     {
         /// <summary>
