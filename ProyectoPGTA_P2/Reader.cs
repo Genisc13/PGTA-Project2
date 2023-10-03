@@ -8,7 +8,7 @@ using System.Data;
 
 namespace LibreriaClases
 {
-    public class Fichero
+    public class Reader
     {
         string path;
         List<CAT10> listaCAT10 = new List<CAT10>();
@@ -19,7 +19,7 @@ namespace LibreriaClases
         DataTable tablaCAT21 = new DataTable();
 
 
-        public Fichero(string nombre)
+        public Reader(string nombre)
         {
             this.path = nombre;
         }
@@ -59,7 +59,7 @@ namespace LibreriaClases
                 }
                 listabyte.Add(array); //Añade array a la lista de bytes
                 //length += array.Length;
-                if (i + 2 < fileBytes.Length) //??
+                if (i + 2 < fileBytes.Length) //Tendré que mirarmelo más a fondo?????
                 {
                     contador = fileBytes[i + 2]; //Determina la longitud del próximo array de bytes o longitud de la siguiente entrada en la lista listabyte
                 }
