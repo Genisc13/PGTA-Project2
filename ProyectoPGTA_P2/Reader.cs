@@ -6,40 +6,25 @@ using System.IO;
 using System.Data;
 
 
-namespace LibreriaClases
+namespace ProyectoPGTA_P2
 {
     public class Reader
     {
         string path;
-        List<CAT10> listaCAT10 = new List<CAT10>();
-        List<CAT20> listaCAT20 = new List<CAT20>();
-        List<CAT21> listaCAT21 = new List<CAT21>();
-        DataTable tablaCAT10 = new DataTable();
-        DataTable tablaCAT20 = new DataTable();
-        DataTable tablaCAT21 = new DataTable();
 
+        private List<CAT48> listaCAT48 = new List<CAT48>();
+        private DataTable tablaCAT48 = new DataTable();
 
         public Reader(string nombre)
         {
             this.path = nombre;
         }
-
-        public List<CAT10> getListCAT10()
+        public List<CAT48> GetListCAT48()
         {
-            return listaCAT10;
+            return this.listaCAT48;
         }
-        public List<CAT20> getListCAT20()
-        {
-            return listaCAT20;
-        }
-        public List<CAT21> getListCAT21()
-        {
-            return listaCAT21;
-        }
-
         public void leer()
         {
-
             //StreamReader fichero = new StreamReader(path);
             //string linea_1 = fichero.ReadLine();
             byte[] fileBytes = File.ReadAllBytes(path); //Pasamos todo el fichero a conjuntos de 8 bits puestos en una matriz de una fila
@@ -59,14 +44,11 @@ namespace LibreriaClases
                 }
                 listabyte.Add(array); //Añade array a la lista de bytes
                 //length += array.Length;
-                if (i + 2 < fileBytes.Length) //Tendré que mirarmelo más a fondo?????
+                if (i + 2 < fileBytes.Length) //Básicamente, lo que ocurre es que, una vez se sabe la length y se pasa por todo el primer mensaje, se salta al siguiente para seguir
                 {
                     contador = fileBytes[i + 2]; //Determina la longitud del próximo array de bytes o longitud de la siguiente entrada en la lista listabyte
                 }
-
-
             }
-
 
             List<string[]> listahex = new List<string[]>(); //Nueva lista de arrays de strings. listabyte en formato hex
 
@@ -88,37 +70,20 @@ namespace LibreriaClases
                 int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber); //Convertir cada par de valores hex a un decimal
 
                 //Filtrar por valor decimal en distintas categorias ordenadas por listas 10, 20 y 21
-                if (CAT == 10)
+                if (CAT == 48)
                 {
-                    CAT10 newcat10 = new CAT10(arraystring);
-                    listaCAT10.Add(newcat10);
+                    CAT48 newcat10 = new CAT48(arraystring);
+                    listaCAT48.Add(newcat10);
                 }
-                else if (CAT == 20)
+                else
                 {
-                    CAT20 newcat20 = new CAT20(arraystring);
-                    listaCAT20.Add(newcat20);
-                }
-                else if (CAT == 21)
-                {
-                    CAT21 newcat21 = new CAT21(arraystring);
-                    listaCAT21.Add(newcat21);
+                    continue;
                 }
             }
-            
-
         }
-
-        public DataTable getTablaCAT10()
+        public DataTable GetDataTableCAT48()
         {
-            return tablaCAT10;
-        }
-        public DataTable getTablaCAT20()
-        {
-            return tablaCAT20;
-        }
-        public DataTable getTablaCAT21()
-        {
-            return tablaCAT21;
+            return this.tablaCAT48;
         }
     }
 }

@@ -46,8 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataItems\DataItem1.cs" />
-    <Compile Include="DataItems\DataItem2.cs" />
+    <Compile Include="CAT48.cs" />
+    <Compile Include="DataItems.cs" />
     <Compile Include="Reader.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
