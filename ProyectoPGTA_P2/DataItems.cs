@@ -11,12 +11,12 @@ namespace ProyectoPGTA_P2
     public class DataItem1
     {
         public int number;
-        public string[] arrayHex;
+        public List<string> arrayHex;
 
         //DATA ITEM 1
         public string SAC, SIC;
 
-        public DataItem1(string[] arrayhex)
+        public DataItem1(List<string> arrayhex)
         {
             this.number = 1;
             this.arrayHex = arrayhex;
@@ -34,21 +34,21 @@ namespace ProyectoPGTA_P2
     public class DataItem2
     {
         public int number;
-        public string[] arrayHex;
+        public List<string> arrayHex;
         //public string[] arrayString;
 
         //DATA ITEM 2
         public string timestr = "";
         public int time;
 
-        public DataItem2(string[] arrayhex)
+        public DataItem2(List<string> arrayhex)
         {
             this.number = 2;
             this.arrayHex = arrayhex;
 
             //this.arrayString = new string[arrayhex.Length];
 
-            for (int i = 0; i < arrayhex.Length; i++)
+            for (int i = 0; i < arrayhex.Count; i++)
             {
                 //arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
                 this.timestr += arrayhex[i];
@@ -69,22 +69,22 @@ namespace ProyectoPGTA_P2
     public class DataItem3
     {
         public int number;
-        public string[] arrayHex;
+        public List<string> arrayHex;
 
-        public string[] arrayString;
+        public List<string> arrayString;
         public string TYP, SIM, RPD, SPI, RAB;
         public string FX1;
         public string TST, ERR, XPP, ME, MI, FOE_FRI;
         public string FX2;
         public string ADSB_EP, ADSB_VAL, SCN_EP, SCN_VAL, PAI_EP, PAI_VAL;
 
-        public DataItem3(string[] arrayhex)
+        public DataItem3(List<string> arrayhex)
         {
             this.number = 3;
             this.arrayHex = arrayhex;
-            this.arrayString = new string[arrayhex.Length];
+            this.arrayString = new List<string>(arrayhex.Count);
 
-            for (int i = 0; i < arrayhex.Length; i++)
+            for (int i = 0; i < arrayhex.Count; i++)
             {
                 arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
             }
@@ -368,545 +368,544 @@ namespace ProyectoPGTA_P2
 
                 }
             }
-        }
+        }  
+    }
+    //Measured position of an aircraft in local polar co-ordinates
+    public class DataItem4
+    {
+        public int number;
+        public List<string> arrayHex;
 
-        //Measured position of an aircraft in local polar co-ordinates
-        public class DataItem4
+        public float RHD, THETA;
+
+        public DataItem4(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
+            this.number = 4;
+            this.arrayHex = arrayhex;
 
-            public float RHD, THETA;
+            string RHD_16 = String.Concat(arrayhex[0], arrayhex[1]);
+            string THETA_16 = String.Concat(arrayhex[2], arrayhex[3]);
 
-            public DataItem4(string[] arrayhex)
+            RHD = Convert.ToInt32(RHD_16, 16) / 256;
+            THETA = Convert.ToInt32(THETA_16, 16) * 45 / 8192;
+
+        }
+    }
+
+    // Data Item I048/070, Mode-3/A Code in Octal Representation
+    public class DataItem5
+    {
+        public int number;
+        public List<string> arrayHex;
+        public List<string> arrayString;
+
+        public string V, G, L, Mode3;
+
+        public DataItem5(List<string> arrayhex)
+        {
+            this.number = 5;
+            this.arrayHex = arrayhex;
+
+            this.arrayString = new List<string>(arrayhex.Count);
+
+            for (int i = 0; i < arrayhex.Count; i++)
             {
-                this.number = 4;
-                this.arrayHex = arrayhex;
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+            }
 
-                string RHD_16 = String.Concat(arrayhex[0], arrayhex[1]);
-                string THETA_16 = String.Concat(arrayhex[2], arrayhex[3]);
-
-                RHD = Convert.ToInt32(RHD_16, 16) / 256;
-                THETA = Convert.ToInt32(THETA_16, 16) * 45 / 8192;
+            V = arrayString[0][0].ToString();
+            switch (V)
+            {
+                case "0":
+                    V = "Código validado";
+                    break;
+                case "1":
+                    V = "Código no validado";
+                    break;
+                default:
+                    V = "N/A";
+                    break;
 
             }
-        }
 
-        // Data Item I048/070, Mode-3/A Code in Octal Representation
-        public class DataItem5
-        {
-            public int number;
-            public string[] arrayHex;
-            public string[] arrayString;
-
-            public string V, G, L, Mode3;
-
-            public DataItem5(string[] arrayhex)
+            G = arrayString[0][1].ToString();
+            switch (G)
             {
-                this.number = 5;
-                this.arrayHex = arrayhex;
-
-                this.arrayString = new string[arrayhex.Length];
-
-                for (int i = 0; i < arrayhex.Length; i++)
-                {
-                    arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
-                }
-
-                V = arrayString[0][0].ToString();
-                switch (V)
-                {
-                    case "0":
-                        V = "Código validado";
-                        break;
-                    case "1":
-                        V = "Código no validado";
-                        break;
-                    default:
-                        V = "N/A";
-                        break;
-
-                }
-
-                G = arrayString[0][1].ToString();
-                switch (G)
-                {
-                    case "0":
-                        G = "Código default";
-                        break;
-                    case "1":
-                        G = "Código distorsionado";
-                        break;
-                    default:
-                        G = "N/A";
-                        break;
-
-                }
-
-                L = arrayString[0][2].ToString();
-                switch (L)
-                {
-                    case "0":
-                        L = "Código Mode-3/A derivado de la respuesta XPDR";
-                        break;
-                    case "1":
-                        L = "Código Mode-3/A no se ha extraído en el último escaneo";
-                        break;
-                    default:
-                        L = "N/A";
-                        break;
-
-                }
-
-                Mode3 = String.Concat(arrayhex[0][4], arrayhex[0][5], arrayhex[0][6], arrayhex[0][7], arrayhex[1]);
-                if (L == "Código Mode-3/A no se ha extraído en el último escaneo")
-                {
-                    Mode3 = "N/A";
-                }
-                else
-                {
-                    Mode3 = Convert.ToString(Convert.ToInt32(Mode3, 2), 8);
-                }
+                case "0":
+                    G = "Código default";
+                    break;
+                case "1":
+                    G = "Código distorsionado";
+                    break;
+                default:
+                    G = "N/A";
+                    break;
 
             }
-        }
 
-        //Flight Level converted into binary representation
-        public class DataItem6
-        {
-            public int number;
-            public string[] arrayHex;
-            public string[] arrayString;
-
-            public string V, G;
-            public int FL;
-
-            public DataItem6(string[] arrayhex)
+            L = arrayString[0][2].ToString();
+            switch (L)
             {
-                this.number = 6;
-                this.arrayHex = arrayhex;
+                case "0":
+                    L = "Código Mode-3/A derivado de la respuesta XPDR";
+                    break;
+                case "1":
+                    L = "Código Mode-3/A no se ha extraído en el último escaneo";
+                    break;
+                default:
+                    L = "N/A";
+                    break;
 
-                this.arrayString = new string[arrayhex.Length];
+            }
 
-                for (int i = 0; i < arrayhex.Length; i++)
-                {
-                    arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
-                }
+            Mode3 = String.Concat(arrayhex[0][4], arrayhex[0][5], arrayhex[0][6], arrayhex[0][7], arrayhex[1]);
+            if (L == "Código Mode-3/A no se ha extraído en el último escaneo")
+            {
+                Mode3 = "N/A";
+            }
+            else
+            {
+                Mode3 = Convert.ToString(Convert.ToInt32(Mode3, 2), 8);
+            }
 
-                V = arrayString[0][0].ToString();
-                switch (V)
-                {
-                    case "0":
-                        V = "Código validado";
-                        break;
-                    case "1":
-                        V = "Código no validado";
-                        break;
-                    default:
-                        V = "N/A";
-                        break;
+        }
+    }
 
-                }
+    //Flight Level converted into binary representation
+    public class DataItem6
+    {
+        public int number;
+        public List<string> arrayHex;
+        public List<string> arrayString;
 
-                G = arrayString[0][1].ToString();
-                switch (G)
-                {
-                    case "0":
-                        G = "Default";
-                        break;
-                    case "1":
-                        G = "Código distorsionado";
-                        break;
-                    default:
-                        G = "N/A";
-                        break;
+        public string V, G;
+        public int FL;
 
-                }
+        public DataItem6(List<string> arrayhex)
+        {
+            this.number = 6;
+            this.arrayHex = arrayhex;
 
-                string FL_BIN = String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
-                FL = Convert.ToInt32(FL_BIN, 2) / 4;
+            this.arrayString = new List<string>(arrayhex.Count);
+
+            for (int i = 0; i < arrayhex.Count; i++)
+            {
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+            }
+
+            V = arrayString[0][0].ToString();
+            switch (V)
+            {
+                case "0":
+                    V = "Código validado";
+                    break;
+                case "1":
+                    V = "Código no validado";
+                    break;
+                default:
+                    V = "N/A";
+                    break;
+
+            }
+
+            G = arrayString[0][1].ToString();
+            switch (G)
+            {
+                case "0":
+                    G = "Default";
+                    break;
+                case "1":
+                    G = "Código distorsionado";
+                    break;
+                default:
+                    G = "N/A";
+                    break;
+
+            }
+
+            string FL_BIN = String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
+            FL = Convert.ToInt32(FL_BIN, 2) / 4;
+        }
+    }
+
+    //Radar plot characteristics
+    public class DataItem7
+    {
+        public int number;
+        public List<string> arrayHex;
+        public List<string> arrayString;
+
+        public float SRL, SRR, SAM, PRL, PAM, RPD, APD;
+        public string FX1;
+
+
+        public DataItem7(List<string> arrayhex)
+        {
+            this.number = 7;
+            this.arrayHex = arrayhex;
+
+            for (int i = 0; i < arrayhex.Count; i++)
+            {
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+            }
+            int index = 1;
+
+            string SRL_str = arrayString[0][0].ToString();
+            if (SRL_str == "1")
+            {
+                SRL_str = arrayString[index];
+                SRL = Convert.ToInt32(SRL_str, 2) * 45 / 1024;
+
+                index++;
+
+            }
+            else
+            {
+                SRL_str = "N/A";
+                SRL = -1;
+            }
+
+            string SRR_str = arrayString[0][1].ToString();
+            if (SRR_str == "1")
+            {
+                SRR_str = arrayString[index];
+                SRR = Convert.ToInt32(SRR_str, 2);
+
+                index++;
+
+            }
+            else
+            {
+                SRR_str = "N/A";
+                SRR = -1;
+            }
+
+            string SAM_str = arrayString[0][2].ToString();
+            if (SAM_str == "1")
+            {
+                SAM_str = arrayString[index];
+                SAM = Convert.ToInt32(SAM_str, 2);
+
+                index++;
+
+            }
+            else
+            {
+                SAM_str = "N/A";
+                SAM = -1;
+            }
+
+            string PRL_str = arrayString[0][3].ToString();
+            if (PRL_str == "1")
+            {
+                PRL_str = arrayString[index];
+                PRL = Convert.ToInt32(PRL_str, 2) * 45 / 1024;
+
+                index++;
+
+            }
+            else
+            {
+                PRL_str = "N/A";
+                PRL = -1;
+            }
+
+            string PAM_str = arrayString[0][4].ToString();
+            if (PAM_str == "1")
+            {
+                PAM_str = arrayString[index];
+                PAM = Convert.ToInt32(PAM_str, 2);
+
+                index++;
+
+            }
+            else
+            {
+                PAM_str = "N/A";
+                PAM = -1;
+            }
+
+            string RPD_str = arrayString[0][5].ToString();
+            if (RPD_str == "1")
+            {
+                RPD_str = arrayString[index];
+                RPD = Convert.ToInt32(RPD_str, 2) / 256;
+
+                index++;
+
+            }
+            else
+            {
+                RPD_str = "N/A";
+                RPD = -1;
+            }
+
+            string APD_str = arrayString[0][6].ToString();
+            if (APD_str == "1")
+            {
+                APD_str = arrayString[index];
+                APD = Convert.ToInt32(APD_str, 2) * 45 / 2048;
+
+                index++;
+
+            }
+            else
+            {
+                APD_str = "N/A";
+                APD = -1;
             }
         }
+    }
 
-        //Radar plot characteristics
-        public class DataItem7
+    //Data Item I048/220, Aircraft Address
+    public class DataItem8
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem8(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public string[] arrayString;
-
-            public float SRL, SRR, SAM, PRL, PAM, RPD, APD;
-            public string FX1;
-
-
-            public DataItem7(string[] arrayhex)
-            {
-                this.number = 7;
-                this.arrayHex = arrayhex;
-
-                for (int i = 0; i < arrayhex.Length; i++)
-                {
-                    arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
-                }
-                int index = 1;
-
-                string SRL_str = arrayString[0][0].ToString();
-                if (SRL_str == "1")
-                {
-                    SRL_str = arrayString[index];
-                    SRL = Convert.ToInt32(SRL_str, 2) * 45 / 1024;
-
-                    index++;
-
-                }
-                else
-                {
-                    SRL_str = "N/A";
-                    SRL = -1;
-                }
-
-                string SRR_str = arrayString[0][1].ToString();
-                if (SRR_str == "1")
-                {
-                    SRR_str = arrayString[index];
-                    SRR = Convert.ToInt32(SRR_str, 2);
-
-                    index++;
-
-                }
-                else
-                {
-                    SRR_str = "N/A";
-                    SRR = -1;
-                }
-
-                string SAM_str = arrayString[0][2].ToString();
-                if (SAM_str == "1")
-                {
-                    SAM_str = arrayString[index];
-                    SAM = Convert.ToInt32(SAM_str, 2);
-
-                    index++;
-
-                }
-                else
-                {
-                    SAM_str = "N/A";
-                    SAM = -1;
-                }
-
-                string PRL_str = arrayString[0][3].ToString();
-                if (PRL_str == "1")
-                {
-                    PRL_str = arrayString[index];
-                    PRL = Convert.ToInt32(PRL_str, 2)*45/1024;
-
-                    index++;
-
-                }
-                else
-                {
-                    PRL_str = "N/A";
-                    PRL = -1;
-                }
-
-                string PAM_str = arrayString[0][4].ToString();
-                if (PAM_str == "1")
-                {
-                    PAM_str = arrayString[index];
-                    PAM = Convert.ToInt32(PAM_str, 2);
-
-                    index++;
-
-                }
-                else
-                {
-                    PAM_str = "N/A";
-                    PAM = -1;
-                }
-
-                string RPD_str = arrayString[0][5].ToString();
-                if (RPD_str == "1")
-                {
-                    RPD_str = arrayString[index];
-                    RPD = Convert.ToInt32(RPD_str, 2)/256;
-
-                    index++;
-
-                }
-                else
-                {
-                    RPD_str = "N/A";
-                    RPD = -1;
-                }
-
-                string APD_str = arrayString[0][6].ToString();
-                if (APD_str == "1")
-                {
-                    APD_str = arrayString[index];
-                    APD = Convert.ToInt32(APD_str, 2) *45/2048;
-
-                    index++;
-
-                }
-                else
-                {
-                    APD_str = "N/A";
-                    APD = -1;
-                }
-            }
+            this.number = 8;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I048/220, Aircraft Address
-        public class DataItem8
+    //Data Item I048/240, Aircraft Identification
+    public class DataItem9
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem9(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem8(string[] arrayhex)
-            {
-                this.number = 8;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 9;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I048/240, Aircraft Identification
-        public class DataItem9
+    //Data Item I0458/250, BDS Register Data
+    public class DataItem10
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem10(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem9(string[] arrayhex)
-            {
-                this.number = 9;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 10;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I0458/250, BDS Register Data
-        public class DataItem10
+    //Data Item 11: Data Item I048/161, Track Number
+    public class DataItem11
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem11(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem10(string[] arrayhex)
-            {
-                this.number = 10;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 11;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item 11: Data Item I048/161, Track Number
-        public class DataItem11
+    //Calculated position in cartesian coordinates
+    public class DataItem12
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem12(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem11(string[] arrayhex)
-            {
-                this.number = 11;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 12;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Calculated position in cartesian coordinates
-        public class DataItem12
+    //Velocity calculated and expressed on polar coordinates
+    public class DataItem13
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem13(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem12(string[] arrayhex)
-            {
-                this.number = 12;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 13;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Velocity calculated and expressed on polar coordinates
-        public class DataItem13
+    //Track status
+    public class DataItem14
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem14(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem13(string[] arrayhex)
-            {
-                this.number = 13;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 14;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Track status
-        public class DataItem14
+    //Data Item I048/210, Track Quality 
+    public class DataItem15
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem15(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem14(string[] arrayhex)
-            {
-                this.number = 14;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 15;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I048/210, Track Quality 
-        public class DataItem15
+    //Data Item 16: Data Item I048/030, Warning/Error Conditions and Target Classification
+    public class DataItem16
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem16(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem15(string[] arrayhex)
-            {
-                this.number = 15;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 16;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item 16: Data Item I048/030, Warning/Error Conditions and Target Classification
-        public class DataItem16
+    //Data Item I048/080, Mode-3/A Code Confidence Indicator
+    public class DataItem17
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem17(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem16(string[] arrayhex)
-            {
-                this.number = 16;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 17;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I048/080, Mode-3/A Code Confidence Indicator
-        public class DataItem17
+    //Data Item I048/100, Mode-C Code and Code Confidence Indicator
+    public class DataItem18
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem18(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem17(string[] arrayhex)
-            {
-                this.number = 17;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 18;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I048/100, Mode-C Code and Code Confidence Indicator
-        public class DataItem18
+    // Data Item I048/110, Height Measured by a 3D Radar
+    public class DataItem19
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem19(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem18(string[] arrayhex)
-            {
-                this.number = 18;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 19;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        // Data Item I048/110, Height Measured by a 3D Radar
-        public class DataItem19
+    //Data Item I048/120, Radial Doppler Speed.
+    public class DataItem20
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem20(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem19(string[] arrayhex)
-            {
-                this.number = 19;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 20;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I048/120, Radial Doppler Speed.
-        public class DataItem20
+    //Data Item I048/230, Communications/ACAS Capability and Flight Status
+    public class DataItem21
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem21(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem20(string[] arrayhex)
-            {
-                this.number = 20;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 21;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I048/230, Communications/ACAS Capability and Flight Status
-        public class DataItem21
+    //Data Item I048/260, ACAS Resolution Advisory Report.
+    public class DataItem22
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem22(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem21(string[] arrayhex)
-            {
-                this.number = 21;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 22;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I048/260, ACAS Resolution Advisory Report.
-        public class DataItem22
+    // Data Item I048/055, Mode-1 Code in Octal Representation
+    public class DataItem23
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem23(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem22(string[] arrayhex)
-            {
-                this.number = 22;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 23;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        // Data Item I048/055, Mode-1 Code in Octal Representation
-        public class DataItem23
+    //Data Item I048/050, Mode-2 Code in Octal Representation
+    public class DataItem24
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem24(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem23(string[] arrayhex)
-            {
-                this.number = 23;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 24;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I048/050, Mode-2 Code in Octal Representation
-        public class DataItem24
+    //Data Item I048/065, Mode-1 Code Confidence Indicator
+    public class DataItem25
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem25(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem24(string[] arrayhex)
-            {
-                this.number = 24;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 25;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Data Item I048/065, Mode-1 Code Confidence Indicator
-        public class DataItem25
+    // Data Item I048/060, Mode-2 Code Confidence Indicator
+    public class DataItem26
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem26(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem25(string[] arrayhex)
-            {
-                this.number = 25;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 26;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        // Data Item I048/060, Mode-2 Code Confidence Indicator
-        public class DataItem26
+    //Non-Standard Data Field
+    public class DataItem27
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem27(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem26(string[] arrayhex)
-            {
-                this.number = 26;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 27;
+            this.arrayHex = arrayhex;
         }
+    }
 
-        //Non-Standard Data Field
-        public class DataItem27
+    //Reserved expansion Field
+    public class DataItem28
+    {
+        public int number;
+        public List<string> arrayHex;
+        public DataItem28(List<string> arrayhex)
         {
-            public int number;
-            public string[] arrayHex;
-            public DataItem27(string[] arrayhex)
-            {
-                this.number = 27;
-                this.arrayHex = arrayhex;
-            }
-        }
-
-        //Reserved expansion Field
-        public class DataItem28
-        {
-            public int number;
-            public string[] arrayHex;
-            public DataItem28(string[] arrayhex)
-            {
-                this.number = 28;
-                this.arrayHex = arrayhex;
-            }
+            this.number = 28;
+            this.arrayHex = arrayhex;
         }
     }
 }
