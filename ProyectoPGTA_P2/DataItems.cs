@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProyectoPGTA_P2
 {
-
+    
     //Data Item I048/010, Data Source Identifier
     public class DataItem1
     {
@@ -368,7 +368,7 @@ namespace ProyectoPGTA_P2
 
                 }
             }
-        }  
+        }
     }
     //Measured position of an aircraft in local polar co-ordinates
     public class DataItem4

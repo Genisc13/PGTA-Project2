@@ -15,11 +15,12 @@ namespace ProyectoPGTA_P2
 
         
         public CAT48(List<string> arrayhex)
-        {
+        {   
             this.arrayHex = arrayhex;
             this.CAT = int.Parse(arrayHex[0], System.Globalization.NumberStyles.HexNumber);
             this.Length = int.Parse(arrayHex[1]+arrayHex[2], System.Globalization.NumberStyles.HexNumber);
             this.items = new bool[28];
+            List<string> arrayItem3 = new List<string>();
             int i = 3;
             
             bool finishFSPEC = false;
@@ -64,9 +65,11 @@ namespace ProyectoPGTA_P2
                 //Item 1
                 if (items[0] == true)
                 {
-                    List<string> arrayItem = new List<string>(); ;
-                    arrayItem.Add(arrayHex[i]);
-                    arrayItem.Add(arrayHex[i + 1]);
+                    List<string> arrayItem = new List<string>
+                    {
+                        arrayHex[i],
+                        arrayHex[i + 1]
+                    };
                     new DataItem1(arrayItem);
                     i+=2;
                     items[0] = false;
@@ -75,10 +78,12 @@ namespace ProyectoPGTA_P2
                 //Item 2
                 else if (items[1] == true)
                 {
-                    List<string> arrayItem = new List<string>(3);
-                    arrayItem[0] = arrayHex[i];
-                    arrayItem[1] = arrayHex[i + 1];
-                    arrayItem[2] = arrayHex[i + 2];
+                    List<string> arrayItem = new List<string>(3)
+                    {
+                        [0] = arrayHex[i],
+                        [1] = arrayHex[i + 1],
+                        [2] = arrayHex[i + 2]
+                    };
                     new DataItem2(arrayItem);
                     i += 3;
                     items[1] = false;
@@ -87,18 +92,17 @@ namespace ProyectoPGTA_P2
                 //Item 3
                 else if (items[2] == true)
                 {
-                    List<string> arrayItem = new List<string>();
                     if (binaryByte[7].Equals("1"))
                     {
-                        arrayItem.Add(arrayHex[i]);
+                        arrayItem3.Add(arrayHex[i]);
                         i++;
                         continue;
                     }
                     else
                     {
-                        arrayItem.Add(arrayHex[i]);
+                        arrayItem3.Add(arrayHex[i]);
                         i++;
-                        new DataItem3(arrayItem);
+                        new DataItem3(arrayItem3);
                         items[2] = false;
                         continue;
                     }
@@ -106,11 +110,13 @@ namespace ProyectoPGTA_P2
                 //Item 4
                 else if (items[3] == true)
                 {
-                    List<string> arrayItem = new List<string>(); ;
-                    arrayItem.Add(arrayHex[i]);
-                    arrayItem.Add(arrayHex[i + 1]);
-                    arrayItem.Add(arrayHex[i + 2]);
-                    arrayItem.Add(arrayHex[i + 3]);
+                    List<string> arrayItem = new List<string>
+                    {
+                        [0] = arrayHex[i],
+                        [1] = arrayHex[i + 1],
+                        [2] = arrayHex[i + 2],
+                        [3] = arrayHex[i + 3]
+                    };
                     new DataItem4(arrayItem);
                     i += 4;
                     items[3] = false;
@@ -119,47 +125,155 @@ namespace ProyectoPGTA_P2
                 //Item 5
                 else if (items[4] == true)
                 {
+                    List<string> arrayItem = new List<string>
+                    {
+                        arrayHex[i],
+                        arrayHex[i + 1]
+                    };
+                    new DataItem5(arrayItem);
+                    i += 2;
+                    items[4] = false;
+                    continue;
 
                 }
                 //Item 6
                 else if (items[5] == true)
                 {
+                    List<string> arrayItem = new List<string>
+                    {
+                        arrayHex[i],
+                        arrayHex[i + 1]
+                    };
+                    new DataItem6(arrayItem);
+                    i += 2;
+                    items[5] = false;
+                    continue;
 
                 }
                 //Item 7
                 else if (items[6] == true)
                 {
-
+                    List<string> arrayItem = new List<string>();
+                    n = 0;
+                    int count = 0;
+                    while (n < binaryByte.Length)
+                    {
+                        if (binaryByte[n].Equals("1"))
+                        {
+                            if (n == 7)
+                            {
+                                //FX
+                                arrayItem.Add(arrayHex[i]);
+                                n = 0;
+                                continue;
+                            }
+                            else
+                            {
+                                count++;
+                            }                      
+                        }                        
+                        n++;
+                    }
+                    n = 1;
+                    while (n <= count)
+                    {
+                        arrayItem.Add(arrayHex[i+n]);
+                    }
+                    i+=n;
+                    new DataItem7(arrayItem);
+                    items[6] = false;
+                    continue;
+                    
                 }
                 //Item 8
                 else if (items[7] == true)
                 {
+                    List<string> arrayItem = new List<string>(3)
+                    {
+                        [0] = arrayHex[i],
+                        [1] = arrayHex[i + 1],
+                        [2] = arrayHex[i + 2]
+                    };
+                    new DataItem8(arrayItem);
+                    i += 3;
+                    items[7] = false;
+                    continue;
 
                 }
                 //Item 9
                 else if (items[8] == true)
                 {
-
+                    List<string> arrayItem = new List<string>(3)
+                    {
+                        [0] = arrayHex[i],
+                        [1] = arrayHex[i + 1],
+                        [2] = arrayHex[i + 2],
+                        [3] = arrayHex[i + 3],
+                        [4] = arrayHex[i + 4],
+                        [5] = arrayHex[i + 5],                        
+                    };
+                    new DataItem8(arrayItem);
+                    i += 6;
+                    items[8] = false;
+                    continue;
                 }
                 //Item 10
                 else if (items[9] == true)
                 {
-
+                    List<string> arrayItem = new List<string>();
+                    int REP = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);                    
+                    n = 0;
+                    while (n <= REP*8)
+                    {
+                        arrayItem.Add(arrayHex[i + n]);
+                    }
+                    new DataItem10(arrayItem);
+                    i += REP * 8;
+                    items[9] = false;
+                    continue;
                 }
                 //Item 11
                 else if (items[10] == true)
                 {
-
+                    List<string> arrayItem = new List<string>
+                    {
+                        arrayHex[i],
+                        arrayHex[i + 1]
+                    };
+                    new DataItem11(arrayItem);
+                    i += 2;
+                    items[10] = false;
+                    continue;
                 }
                 //Item 12
                 else if (items[11] == true)
                 {
-
+                    List<string> arrayItem = new List<string>
+                    {
+                        [0] = arrayHex[i],
+                        [1] = arrayHex[i + 1],
+                        [2] = arrayHex[i + 2],
+                        [3] = arrayHex[i + 3]
+                    };
+                    new DataItem12(arrayItem);
+                    i += 4;
+                    items[11] = false;
+                    continue;
                 }
                 //Item 13
                 else if (items[12] == true)
                 {
-
+                    List<string> arrayItem = new List<string>
+                    {
+                        [0] = arrayHex[i],
+                        [1] = arrayHex[i + 1],
+                        [2] = arrayHex[i + 2],
+                        [3] = arrayHex[i + 3]
+                    };
+                    new DataItem13(arrayItem);
+                    i += 4;
+                    items[12] = false;
+                    continue;
                 }
                 //Item 14
                 else if (items[13] == true)
@@ -169,7 +283,9 @@ namespace ProyectoPGTA_P2
                 //Item 15
                 else if (items[14] == true)
                 {
-
+                    i += 4;
+                    items[14] = false;
+                    continue;
                 }
                 //Item 16
                 else if (items[15] == true)
@@ -179,12 +295,16 @@ namespace ProyectoPGTA_P2
                 //Item 17
                 else if (items[16] == true)
                 {
-
+                    i += 2;
+                    items[16] = false;
+                    continue;
                 }
                 //Item 18
                 else if (items[17] == true)
                 {
-
+                    i += 4;
+                    items[17] = false;
+                    continue;
                 }
                 //Item 19
                 else if (items[18] == true)
@@ -209,22 +329,30 @@ namespace ProyectoPGTA_P2
                 //Item 23
                 else if (items[22] == true)
                 {
-
+                    i += 1;
+                    items[22] = false;
+                    continue;
                 }
                 //Item 24
                 else if (items[23] == true)
                 {
-
+                    i += 2;
+                    items[23] = false;
+                    continue;
                 }
                 //Item 25
                 else if (items[24] == true)
                 {
-
+                    i += 1;
+                    items[24] = false;
+                    continue;
                 }
                 //Item 26
                 else if (items[25] == true)
                 {
-
+                    i += 2;
+                    items[25] = false;
+                    continue;
                 }
                 //Item 27
                 else if (items[26] == true)

@@ -28,6 +28,7 @@ namespace ProyectoPGTA_P2
             //StreamReader fichero = new StreamReader(path);
             //string linea_1 = fichero.ReadLine();
             byte[] fileBytes = File.ReadAllBytes(path); //Pasamos todo el fichero a conjuntos de 8 bits puestos en una matriz de una fila
+            
             List<byte[]> listabyte = new List<byte[]>(); //Nueva lista de arrays de bytes vacía
             int i = 0; //Colocamos la i en el primer byte del fichero
             int contador = fileBytes[2]; //contador = al segundo byte del fichero?? Determina la longitud de la linea en la listabyte
@@ -66,7 +67,11 @@ namespace ProyectoPGTA_P2
 
             for (int q = 0; q < listahex.Count; q++) //Iterar sobre toda la lista de bytes en hex
             {
-                string[] arraystring = listahex[q]; //Cada linea en hex
+                List<string> arraystring = new List<string>(listahex[q].Length); //Cada linea en hex
+                for(int k = 0; k < listahex[q].Length; k++)
+                {
+                    arraystring[k] = listahex[q][k];
+                }
                 int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber); //Convertir cada par de valores hex a un decimal
 
                 //Filtrar por valor decimal en distintas categorias ordenadas por listas 10, 20 y 21
