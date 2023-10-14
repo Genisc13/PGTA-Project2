@@ -21,6 +21,7 @@ namespace ProyectoPGTA_P2
             this.Length = int.Parse(arrayHex[1]+arrayHex[2], System.Globalization.NumberStyles.HexNumber);
             this.items = new bool[28];
             List<string> arrayItem3 = new List<string>();
+            List<string> arrayItem14 = new List<string>();
             int i = 3;
             
             bool finishFSPEC = false;
@@ -92,15 +93,14 @@ namespace ProyectoPGTA_P2
                 //Item 3
                 else if (items[2] == true)
                 {
+                    arrayItem3.Add(arrayHex[i]);
                     if (binaryByte[7].Equals("1"))
-                    {
-                        arrayItem3.Add(arrayHex[i]);
+                    {                        
                         i++;
                         continue;
                     }
                     else
-                    {
-                        arrayItem3.Add(arrayHex[i]);
+                    {                       
                         i++;
                         new DataItem3(arrayItem3);
                         items[2] = false;
@@ -278,7 +278,19 @@ namespace ProyectoPGTA_P2
                 //Item 14
                 else if (items[13] == true)
                 {
-
+                    arrayItem14.Add(arrayHex[i]);
+                    if (binaryByte[7].Equals("1"))
+                    {                        
+                        i++;
+                        continue;
+                    }
+                    else
+                    {                        
+                        i++;
+                        new DataItem14(arrayItem14);
+                        items[13] = false;
+                        continue;
+                    }
                 }
                 //Item 15
                 else if (items[14] == true)
@@ -290,7 +302,17 @@ namespace ProyectoPGTA_P2
                 //Item 16
                 else if (items[15] == true)
                 {
-
+                    if (binaryByte[7].Equals("1"))
+                    {
+                        i++;
+                        continue;
+                    }
+                    else
+                    {                      
+                        i++;
+                        items[13] = false;
+                        continue;
+                    }
                 }
                 //Item 17
                 else if (items[16] == true)
@@ -309,22 +331,50 @@ namespace ProyectoPGTA_P2
                 //Item 19
                 else if (items[18] == true)
                 {
-
+                    List<string> arrayItem = new List<string>
+                    {
+                        arrayHex[i],
+                        arrayHex[i + 1]
+                    };
+                    new DataItem19(arrayItem);
+                    i += 2;
+                    items[18] = false;
+                    continue;
                 }
                 //Item 20
                 else if (items[19] == true)
                 {
-
+                    if (binaryByte[7].Equals("1"))
+                    {
+                        i++;
+                        continue;
+                    }
+                    else
+                    {
+                        i++;
+                        items[19] = false;
+                        continue;
+                    }
                 }
                 //Item 21
                 else if (items[20] == true)
                 {
-
+                    List<string> arrayItem = new List<string>
+                    {
+                        arrayHex[i],
+                        arrayHex[i + 1]
+                    };
+                    new DataItem21(arrayItem);
+                    i += 2;
+                    items[20] = false;
+                    continue;
                 }
                 //Item 22
                 else if (items[21] == true)
                 {
-
+                    i += 7;
+                    items[21] = false;
+                    continue;
                 }
                 //Item 23
                 else if (items[22] == true)
@@ -357,12 +407,32 @@ namespace ProyectoPGTA_P2
                 //Item 27
                 else if (items[26] == true)
                 {
-
+                    List<string> arrayItem = new List<string>();
+                    int length = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);
+                    n = 0;
+                    while (n < length)
+                    {
+                        arrayItem.Add(arrayHex[i + n]);
+                    }
+                    i += n;
+                    new DataItem27(arrayItem);
+                    items[26] = false;
+                    continue;
                 }
                 //Item 28
                 else if (items[27] == true)
                 {
-
+                    List<string> arrayItem = new List<string>();
+                    int length = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);
+                    n = 0;
+                    while (n < length)
+                    {
+                        arrayItem.Add(arrayHex[i + n]);
+                    }
+                    i += n;
+                    new DataItem28(arrayItem);
+                    items[27] = false;
+                    continue;
                 }
             }
         }
