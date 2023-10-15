@@ -15,6 +15,7 @@ namespace ProyectoPGTA_P2
 
         //DATA ITEM 1
         public string SAC, SIC;
+        public List<string> data;
 
         public DataItem1(List<string> arrayhex)
         {
@@ -27,7 +28,10 @@ namespace ProyectoPGTA_P2
             Console.WriteLine("SAC: " + SAC);
             Console.WriteLine("SIC: " + SIC);
 
+            data = new List<string>{ "SAC", SAC, "SIC", SIC };
         }
+
+
     }
 
     //Data Item 2: Data Item I048/140, Time of Day
@@ -40,6 +44,8 @@ namespace ProyectoPGTA_P2
         //DATA ITEM 2
         public string timestr = "";
         public int time;
+
+        public List<string> data;
 
         public DataItem2(List<string> arrayhex)
         {
@@ -59,9 +65,8 @@ namespace ProyectoPGTA_P2
             float hours = time / 3600;
             float minutes = time % 3600 / 60;
             float seconds = time - hours * 3600 - minutes * 60;
-            Console.WriteLine("Horas: " + hours);
-            Console.WriteLine("Minutos: " + minutes);
-            Console.WriteLine("Segundos: " + seconds);
+
+            this.data = new List<string> { "Time", time.ToString() };
         }
     }
 
@@ -77,6 +82,9 @@ namespace ProyectoPGTA_P2
         public string TST, ERR, XPP, ME, MI, FOE_FRI;
         public string FX2;
         public string ADSB_EP, ADSB_VAL, SCN_EP, SCN_VAL, PAI_EP, PAI_VAL;
+
+        public List<string> data;
+        
 
         public DataItem3(List<string> arrayhex)
         {
@@ -368,6 +376,8 @@ namespace ProyectoPGTA_P2
 
                 }
             }
+            data = new List<string> { "TYP", TYP, "SIM", SIM, "RPD", RPD, "SPI", SPI, "RAB", RAB, "TST", TST, "ERR", ERR, "XPP", XPP, "ME", ME, "MI", MI, "FOE/FRI", FOE_FRI, "ADSB_EP", ADSB_EP, "ADSB_VAL", ADSB_VAL, "SCN_EP", SCN_EP, "SCN_VAL", SCN_VAL, "PAI_EP", PAI_EP, "PAI_VAL", PAI_VAL };
+
         }
     }
     //Measured position of an aircraft in local polar co-ordinates
@@ -377,6 +387,7 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
 
         public float RHD, THETA;
+        public List<string> data;
 
         public DataItem4(List<string> arrayhex)
         {
@@ -389,6 +400,7 @@ namespace ProyectoPGTA_P2
             RHD = Convert.ToInt32(RHD_16, 16) / 256;
             THETA = Convert.ToInt32(THETA_16, 16) * 45 / 8192;
 
+            data = new List<string> { "TYP", RHD.ToString(), "SIM", THETA.ToString() };
         }
     }
 
@@ -400,6 +412,7 @@ namespace ProyectoPGTA_P2
         public List<string> arrayString;
 
         public string V, G, L, Mode3;
+        public List<string> data;
 
         public DataItem5(List<string> arrayhex)
         {
@@ -467,7 +480,7 @@ namespace ProyectoPGTA_P2
             {
                 Mode3 = Convert.ToString(Convert.ToInt32(Mode3, 2), 8);
             }
-
+            data = new List<string> { "V", V, "G", G, "L", L, "Mode3", Mode3 };
         }
     }
 
@@ -480,6 +493,7 @@ namespace ProyectoPGTA_P2
 
         public string V, G;
         public int FL;
+        public List<string> data;
 
         public DataItem6(List<string> arrayhex)
         {
@@ -525,6 +539,8 @@ namespace ProyectoPGTA_P2
 
             string FL_BIN = String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
             FL = Convert.ToInt32(FL_BIN, 2) / 4;
+
+            data = new List<string> { "V", V, "G", G, "FL", FL.ToString() };
         }
     }
 
@@ -537,7 +553,7 @@ namespace ProyectoPGTA_P2
 
         public float SRL, SRR, SAM, PRL, PAM, RPD, APD;
         public string FX1;
-
+        public List<string> data;
 
         public DataItem7(List<string> arrayhex)
         {
@@ -654,6 +670,8 @@ namespace ProyectoPGTA_P2
                 APD_str = "N/A";
                 APD = -1;
             }
+            
+            data = new List<string> { "SRL", SRL.ToString(), "SRR", SRR.ToString(), "SAM", SAM.ToString(), "PRL", PRL.ToString(), "PAM", PAM.ToString(), "RPD", RPD.ToString(), "APD", APD.ToString() };
         }
     }
 
