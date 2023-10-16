@@ -12,6 +12,7 @@ namespace ProyectoPGTA_P2
         public int CAT;
         public int Length;
         public bool[] items;
+        public DataItem itemContainer;
 
         
         public CAT48(List<string> arrayhex)
@@ -22,6 +23,7 @@ namespace ProyectoPGTA_P2
             this.items = new bool[28];
             List<string> arrayItem3 = new List<string>();
             List<string> arrayItem14 = new List<string>();
+            itemContainer = new DataItem();
             int i = 3;
             
             bool finishFSPEC = false;
@@ -71,7 +73,7 @@ namespace ProyectoPGTA_P2
                         arrayHex[i],
                         arrayHex[i + 1]
                     };
-                    new DataItem1(arrayItem);
+                    itemContainer.SetDataItem1(new DataItem1(arrayItem));
                     i+=2;
                     items[0] = false;
                     continue;
@@ -85,7 +87,7 @@ namespace ProyectoPGTA_P2
                         [1] = arrayHex[i + 1],
                         [2] = arrayHex[i + 2]
                     };
-                    new DataItem2(arrayItem);
+                    itemContainer.SetDataItem2(new DataItem2(arrayItem));
                     i += 3;
                     items[1] = false;
                     continue;
@@ -102,7 +104,7 @@ namespace ProyectoPGTA_P2
                     else
                     {                       
                         i++;
-                        new DataItem3(arrayItem3);
+                        itemContainer.SetDataItem3(new DataItem3(arrayItem3));
                         items[2] = false;
                         continue;
                     }
@@ -117,7 +119,7 @@ namespace ProyectoPGTA_P2
                         [2] = arrayHex[i + 2],
                         [3] = arrayHex[i + 3]
                     };
-                    new DataItem4(arrayItem);
+                    itemContainer.SetDataItem4(new DataItem4(arrayItem));
                     i += 4;
                     items[3] = false;
                     continue;
@@ -130,7 +132,7 @@ namespace ProyectoPGTA_P2
                         arrayHex[i],
                         arrayHex[i + 1]
                     };
-                    new DataItem5(arrayItem);
+                    itemContainer.SetDataItem5(new DataItem5(arrayItem));
                     i += 2;
                     items[4] = false;
                     continue;
@@ -144,7 +146,7 @@ namespace ProyectoPGTA_P2
                         arrayHex[i],
                         arrayHex[i + 1]
                     };
-                    new DataItem6(arrayItem);
+                    itemContainer.SetDataItem6(new DataItem6(arrayItem));
                     i += 2;
                     items[5] = false;
                     continue;
@@ -180,7 +182,7 @@ namespace ProyectoPGTA_P2
                         arrayItem.Add(arrayHex[i+n]);
                     }
                     i+=n;
-                    new DataItem7(arrayItem);
+                    itemContainer.SetDataItem7(new DataItem7(arrayItem));
                     items[6] = false;
                     continue;
                     
@@ -194,7 +196,7 @@ namespace ProyectoPGTA_P2
                         [1] = arrayHex[i + 1],
                         [2] = arrayHex[i + 2]
                     };
-                    new DataItem8(arrayItem);
+                    itemContainer.SetDataItem8(new DataItem8(arrayItem));
                     i += 3;
                     items[7] = false;
                     continue;
@@ -212,7 +214,7 @@ namespace ProyectoPGTA_P2
                         [4] = arrayHex[i + 4],
                         [5] = arrayHex[i + 5],                        
                     };
-                    new DataItem8(arrayItem);
+                    itemContainer.SetDataItem9(new DataItem9(arrayItem));
                     i += 6;
                     items[8] = false;
                     continue;
@@ -227,7 +229,7 @@ namespace ProyectoPGTA_P2
                     {
                         arrayItem.Add(arrayHex[i + n]);
                     }
-                    new DataItem10(arrayItem);
+                    itemContainer.SetDataItem10(new DataItem10(arrayItem));
                     i += REP * 8;
                     items[9] = false;
                     continue;
@@ -240,7 +242,7 @@ namespace ProyectoPGTA_P2
                         arrayHex[i],
                         arrayHex[i + 1]
                     };
-                    new DataItem11(arrayItem);
+                    itemContainer.SetDataItem11(new DataItem11(arrayItem));
                     i += 2;
                     items[10] = false;
                     continue;
@@ -255,7 +257,7 @@ namespace ProyectoPGTA_P2
                         [2] = arrayHex[i + 2],
                         [3] = arrayHex[i + 3]
                     };
-                    new DataItem12(arrayItem);
+                    itemContainer.SetDataItem12(new DataItem12(arrayItem));
                     i += 4;
                     items[11] = false;
                     continue;
@@ -270,7 +272,7 @@ namespace ProyectoPGTA_P2
                         [2] = arrayHex[i + 2],
                         [3] = arrayHex[i + 3]
                     };
-                    new DataItem13(arrayItem);
+                    itemContainer.SetDataItem13(new DataItem13(arrayItem));
                     i += 4;
                     items[12] = false;
                     continue;
@@ -287,7 +289,7 @@ namespace ProyectoPGTA_P2
                     else
                     {                        
                         i++;
-                        new DataItem14(arrayItem14);
+                        itemContainer.SetDataItem14(new DataItem14(arrayItem14));
                         items[13] = false;
                         continue;
                     }
@@ -336,7 +338,7 @@ namespace ProyectoPGTA_P2
                         arrayHex[i],
                         arrayHex[i + 1]
                     };
-                    new DataItem19(arrayItem);
+                    itemContainer.SetDataItem19(new DataItem19(arrayItem));
                     i += 2;
                     items[18] = false;
                     continue;
@@ -364,7 +366,7 @@ namespace ProyectoPGTA_P2
                         arrayHex[i],
                         arrayHex[i + 1]
                     };
-                    new DataItem21(arrayItem);
+                    itemContainer.SetDataItem21(new DataItem21(arrayItem));
                     i += 2;
                     items[20] = false;
                     continue;
@@ -415,7 +417,7 @@ namespace ProyectoPGTA_P2
                         arrayItem.Add(arrayHex[i + n]);
                     }
                     i += n;
-                    new DataItem27(arrayItem);
+                    itemContainer.SetDataItem27(new DataItem27(arrayItem));
                     items[26] = false;
                     continue;
                 }
@@ -430,11 +432,12 @@ namespace ProyectoPGTA_P2
                         arrayItem.Add(arrayHex[i + n]);
                     }
                     i += n;
-                    new DataItem28(arrayItem);
+                    itemContainer.SetDataItem28(new DataItem28(arrayItem));
                     items[27] = false;
                     continue;
                 }
             }
+            //Una vez tenemos todos los DataItems decodificados hemos de hacer algo con ellos.
         }
     }
 }

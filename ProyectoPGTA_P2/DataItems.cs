@@ -6,6 +6,294 @@ using System.Threading.Tasks;
 
 namespace ProyectoPGTA_P2
 {
+
+    public class DataItem
+    {
+        public DataItem1 item1;
+        public DataItem2 item2;
+        public DataItem3 item3;
+        public DataItem4 item4;
+        public DataItem5 item5;
+        public DataItem6 item6;
+        public DataItem7 item7;
+        public DataItem8 item8;
+        public DataItem9 item9;
+        public DataItem10 item10;
+        public DataItem11 item11;
+        public DataItem12 item12;
+        public DataItem13 item13;
+        public DataItem14 item14;
+        public DataItem15 item15;
+        public DataItem16 item16;
+        public DataItem17 item17;
+        public DataItem18 item18;
+        public DataItem19 item19;
+        public DataItem20 item20;
+        public DataItem21 item21;
+        public DataItem22 item22;
+        public DataItem23 item23;
+        public DataItem24 item24;
+        public DataItem25 item25;
+        public DataItem26 item26;
+        public DataItem27 item27;
+        public DataItem28 item28;
+        public DataItem()
+        {
+            this.item1 = null;
+            this.item2 = null;
+            this.item3 = null;
+            this.item4 = null;
+            this.item5 = null;
+            this.item6 = null;
+            this.item7 = null;
+            this.item8 = null;
+            this.item9 = null;
+            this.item10 = null;
+            this.item11 = null;
+            this.item12 = null;
+            this.item13 = null;
+            this.item14 = null;
+            this.item15 = null;
+            this.item16 = null;
+            this.item17 = null;
+            this.item18 = null;
+            this.item19 = null;
+            this.item20 = null;
+            this.item21 = null;
+            this.item22 = null;
+            this.item23 = null;
+            this.item24 = null;
+            this.item25 = null;
+            this.item26 = null;
+            this.item27 = null;
+            this.item28 = null;
+        }
+        public void SetDataItem1(DataItem1 item1)
+        {
+            this.item1 = item1;
+        }
+        public DataItem1 GetDataItem1()
+        {
+            return item1;
+        }
+        public void SetDataItem2(DataItem2 item2)
+        {
+            this.item2 = item2;
+        }
+        public DataItem2 GetDataItem2()
+        {
+            return item2;
+        }
+        public void SetDataItem3(DataItem3 item3)
+        {
+            this.item3 = item3;
+        }
+        public DataItem3 GetDataItem3()
+        {
+            return item3;
+        }
+        public void SetDataItem4(DataItem4 item4)
+        {
+            this.item4 = item4;
+        }
+        public DataItem4 GetDataItem4()
+        {
+            return item4;
+        }
+        public void SetDataItem5(DataItem5 item5)
+        {
+            this.item5 = item5;
+        }
+        public DataItem5 GetDataItem5()
+        {
+            return item5;
+        }
+        public void SetDataItem6(DataItem6 item6)
+        {
+            this.item6 = item6;
+        }
+        public DataItem6 GetDataItem6()
+        {
+            return item6;
+        }
+        public void SetDataItem7(DataItem7 item7)
+        {
+            this.item7 = item7;
+        }
+        public DataItem7 GetDataItem7()
+        {
+            return item7;
+        }
+        public void SetDataItem8(DataItem8 item8)
+        {
+            this.item8 = item8;
+        }
+        public DataItem8 GetDataItem8()
+        {
+            return item8;
+        }
+        public void SetDataItem9(DataItem9 item9)
+        {
+            this.item9 = item9;
+        }
+        public DataItem9 GetDataItem9()
+        {
+            return item9;
+        }
+        public void SetDataItem10(DataItem10 item10)
+        {
+            this.item10 = item10;
+        }
+        public DataItem10 GetDataItem10()
+        {
+            return item10;
+        }
+        public void SetDataItem11(DataItem11 item11)
+        {
+            this.item11 = item11;
+        }
+        public DataItem11 GetDataItem11()
+        {
+            return item11;
+        }
+        public void SetDataItem12(DataItem12 item12)
+        {
+            this.item12 = item12;
+        }
+        public DataItem12 GetDataItem12()
+        {
+            return item12;
+        }
+        public void SetDataItem13(DataItem13 item13)
+        {
+            this.item13 = item13;
+
+        }
+        public DataItem13 GetDataItem13()
+        {
+            return item13;
+        }
+        public void SetDataItem14(DataItem14 item14)
+        {
+            this.item14 = item14;
+        }
+        public DataItem14 GetDataItem14()
+        {
+            return item14;
+        }
+        public void SetDataItem15(DataItem15 item15)
+        {
+            this.item15 = item15;
+        }
+        public DataItem15 GetDataItem15()
+        {
+            return item15;
+        }
+        public void SetDataItem16(DataItem16 item16)
+        {
+            this.item16 = item16;
+        }
+        public DataItem16 GetDataItem16()
+        {
+            return item16;
+        }
+        public void SetDataItem17(DataItem17 item17)
+        {
+            this.item17 = item17;
+        }
+        public DataItem17 GetDataItem17()
+        {
+            return item17;
+        }
+        public void SetDataItem18(DataItem18 item18)
+        {
+            this.item18 = item18;
+        }
+        public DataItem18 GetDataItem18()
+        {
+            return item18;
+        }
+        public void SetDataItem19(DataItem19 item19)
+        {
+            this.item19 = item19;
+        }
+        public DataItem19 GetDataItem19()
+        {
+            return item19;
+        }
+        public void SetDataItem20(DataItem20 item20)
+        {
+            this.item20 = item20;
+        }
+        public DataItem20 GetDataItem20()
+        {
+            return item20;
+        }
+        public void SetDataItem21(DataItem21 item21)
+        {
+            this.item21 = item21;
+        }
+        public DataItem21 GetDataItem21()
+        {
+            return item21;
+        }
+        public void SetDataItem22(DataItem22 item22)
+        {
+            this.item22 = item22;
+        }
+        public DataItem22 GetDataItem22()
+        {
+            return item22;
+        }
+        public void SetDataItem23(DataItem23 item23)
+        {
+            this.item23 = item23;
+        }
+        public DataItem23 GetDataItem23()
+        {
+            return item23;
+        }
+        public void SetDataItem24(DataItem24 item24)
+        {
+            this.item24 = item24;
+        }
+        public DataItem24 GetDataItem24()
+        {
+            return item24;
+        }
+        public void SetDataItem25(DataItem25 item25)
+        {
+            this.item25 = item25;
+        }
+        public DataItem25 GetDataItem25()
+        {
+            return item25;
+        }
+        public void SetDataItem26(DataItem26 item26)
+        {
+            this.item26 = item26;
+        }
+        public DataItem26 GetDataItem26()
+        {
+            return item26;
+        }
+        public void SetDataItem27(DataItem27 item27)
+        {
+            this.item27 = item27;
+        }
+        public DataItem27 GetDataItem27()
+        {
+            return item27;
+        }
+        public void SetDataItem28(DataItem28 item28)
+        {
+            this.item28 = item28;
+        }
+        public DataItem28 GetDataItem28()
+        {
+            return item28;
+        }
+    }
     
     //Data Item I048/010, Data Source Identifier
     public class DataItem1
