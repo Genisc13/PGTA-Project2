@@ -319,7 +319,10 @@ namespace ProyectoPGTA_P2
             data = new List<string>{ "SAC", SAC, "SIC", SIC };
         }
 
-
+        public List<string> GetData()
+        {
+            return this.data;
+        }
     }
 
     //Data Item 2: Data Item I048/140, Time of Day
@@ -355,6 +358,10 @@ namespace ProyectoPGTA_P2
             float seconds = time - hours * 3600 - minutes * 60;
 
             this.data = new List<string> { "Time", time.ToString() };
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -667,6 +674,10 @@ namespace ProyectoPGTA_P2
             data = new List<string> { "TYP", TYP, "SIM", SIM, "RPD", RPD, "SPI", SPI, "RAB", RAB, "TST", TST, "ERR", ERR, "XPP", XPP, "ME", ME, "MI", MI, "FOE/FRI", FOE_FRI, "ADSB_EP", ADSB_EP, "ADSB_VAL", ADSB_VAL, "SCN_EP", SCN_EP, "SCN_VAL", SCN_VAL, "PAI_EP", PAI_EP, "PAI_VAL", PAI_VAL };
 
         }
+        public List<string> GetData()
+        {
+            return this.data;
+        }
     }
     //Measured position of an aircraft in local polar co-ordinates
     public class DataItem4
@@ -689,6 +700,10 @@ namespace ProyectoPGTA_P2
             THETA = Convert.ToInt32(THETA_16, 16) * 45 / 8192;
 
             data = new List<string> { "TYP", RHD.ToString(), "SIM", THETA.ToString() };
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -770,6 +785,10 @@ namespace ProyectoPGTA_P2
             }
             data = new List<string> { "V", V, "G", G, "L", L, "Mode3", Mode3 };
         }
+        public List<string> GetData()
+        {
+            return this.data;
+        }
     }
 
     //Flight Level converted into binary representation
@@ -829,6 +848,10 @@ namespace ProyectoPGTA_P2
             FL = Convert.ToInt32(FL_BIN, 2) / 4;
 
             data = new List<string> { "V", V, "G", G, "FL", FL.ToString() };
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -961,6 +984,10 @@ namespace ProyectoPGTA_P2
             
             data = new List<string> { "SRL", SRL.ToString(), "SRR", SRR.ToString(), "SAM", SAM.ToString(), "PRL", PRL.ToString(), "PAM", PAM.ToString(), "RPD", RPD.ToString(), "APD", APD.ToString() };
         }
+        public List<string> GetData()
+        {
+            return this.data;
+        }
     }
 
     //Data Item I048/220, Aircraft Address
@@ -968,10 +995,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem8(List<string> arrayhex)
         {
             this.number = 8;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -980,10 +1012,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem9(List<string> arrayhex)
         {
             this.number = 9;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -992,10 +1029,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem10(List<string> arrayhex)
         {
             this.number = 10;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1004,10 +1046,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem11(List<string> arrayhex)
         {
             this.number = 11;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1016,10 +1063,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem12(List<string> arrayhex)
         {
             this.number = 12;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1028,10 +1080,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem13(List<string> arrayhex)
         {
             this.number = 13;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1040,10 +1097,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem14(List<string> arrayhex)
         {
             this.number = 14;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1052,10 +1114,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem15(List<string> arrayhex)
         {
             this.number = 15;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1064,10 +1131,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem16(List<string> arrayhex)
         {
             this.number = 16;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1076,10 +1148,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem17(List<string> arrayhex)
         {
             this.number = 17;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1088,10 +1165,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem18(List<string> arrayhex)
         {
             this.number = 18;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1100,10 +1182,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem19(List<string> arrayhex)
         {
             this.number = 19;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1112,10 +1199,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem20(List<string> arrayhex)
         {
             this.number = 20;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1124,10 +1216,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem21(List<string> arrayhex)
         {
             this.number = 21;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1136,10 +1233,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem22(List<string> arrayhex)
         {
             this.number = 22;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1148,10 +1250,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem23(List<string> arrayhex)
         {
             this.number = 23;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1160,10 +1267,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem24(List<string> arrayhex)
         {
             this.number = 24;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1172,10 +1284,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem25(List<string> arrayhex)
         {
             this.number = 25;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1184,10 +1301,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem26(List<string> arrayhex)
         {
             this.number = 26;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1196,10 +1318,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem27(List<string> arrayhex)
         {
             this.number = 27;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 
@@ -1208,10 +1335,15 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> data;
         public DataItem28(List<string> arrayhex)
         {
             this.number = 28;
             this.arrayHex = arrayhex;
+        }
+        public List<string> GetData()
+        {
+            return this.data;
         }
     }
 }

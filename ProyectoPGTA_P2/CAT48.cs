@@ -13,8 +13,8 @@ namespace ProyectoPGTA_P2
         public int Length;
         public bool[] items;
         public DataItem itemContainer;
+        Dictionary<int, List<string>> decodedDataPerItem;
 
-        
         public CAT48(List<string> arrayhex)
         {   
             this.arrayHex = arrayhex;
@@ -23,6 +23,7 @@ namespace ProyectoPGTA_P2
             this.items = new bool[28];
             List<string> arrayItem3 = new List<string>();
             List<string> arrayItem14 = new List<string>();
+            decodedDataPerItem = new Dictionary<int, List<string>>();
             itemContainer = new DataItem();
             int i = 3;
             
@@ -438,6 +439,118 @@ namespace ProyectoPGTA_P2
                 }
             }
             //Una vez tenemos todos los DataItems decodificados hemos de hacer algo con ellos.
+            if (itemContainer.GetDataItem1()!=null)
+            {
+                decodedDataPerItem.Add(1,itemContainer.GetDataItem1().GetData());
+            }
+            if (itemContainer.GetDataItem2() != null)
+            {
+                decodedDataPerItem.Add(2, itemContainer.GetDataItem2().GetData());
+            }
+            if (itemContainer.GetDataItem3() != null)
+            {
+                decodedDataPerItem.Add(3, itemContainer.GetDataItem3().GetData());
+            }
+            if (itemContainer.GetDataItem4() != null)
+            {
+                decodedDataPerItem.Add(4, itemContainer.GetDataItem4().GetData());
+            }
+            if (itemContainer.GetDataItem5() != null)
+            {
+                decodedDataPerItem.Add(5, itemContainer.GetDataItem5().GetData());
+            }
+            if (itemContainer.GetDataItem6() != null)
+            {
+                decodedDataPerItem.Add(6, itemContainer.GetDataItem6().GetData());
+            }
+            if (itemContainer.GetDataItem7() != null)
+            {
+                decodedDataPerItem.Add(7, itemContainer.GetDataItem7().GetData());
+            }
+            if (itemContainer.GetDataItem8() != null)
+            {
+                decodedDataPerItem.Add(8, itemContainer.GetDataItem8().GetData());
+            }
+            if (itemContainer.GetDataItem9() != null)
+            {
+                decodedDataPerItem.Add(9, itemContainer.GetDataItem9().GetData());
+            }
+            if (itemContainer.GetDataItem10() != null)
+            {
+                decodedDataPerItem.Add(10, itemContainer.GetDataItem10().GetData());
+            }
+            if (itemContainer.GetDataItem11() != null)
+            {
+                decodedDataPerItem.Add(11, itemContainer.GetDataItem11().GetData());
+            }
+            if (itemContainer.GetDataItem12() != null)
+            {
+                decodedDataPerItem.Add(12, itemContainer.GetDataItem12().GetData());
+            }
+            if (itemContainer.GetDataItem13() != null)
+            {
+                decodedDataPerItem.Add(13, itemContainer.GetDataItem13().GetData());
+            }
+            if (itemContainer.GetDataItem14() != null)
+            {
+                decodedDataPerItem.Add(14, itemContainer.GetDataItem14().GetData());
+            }
+            if (itemContainer.GetDataItem15() != null)
+            {
+                decodedDataPerItem.Add(15, itemContainer.GetDataItem15().GetData());
+            }
+            if (itemContainer.GetDataItem16() != null)
+            {
+                decodedDataPerItem.Add(16, itemContainer.GetDataItem16().GetData());
+            }
+            if (itemContainer.GetDataItem17() != null)
+            {
+                decodedDataPerItem.Add(17, itemContainer.GetDataItem17().GetData());
+            }
+            if (itemContainer.GetDataItem18() != null)
+            {
+                decodedDataPerItem.Add(18, itemContainer.GetDataItem18().GetData());
+            }
+            if (itemContainer.GetDataItem19() != null)
+            {
+                decodedDataPerItem.Add(19, itemContainer.GetDataItem19().GetData());
+            }
+            if (itemContainer.GetDataItem20() != null)
+            {
+                decodedDataPerItem.Add(20, itemContainer.GetDataItem20().GetData());
+            }
+            if (itemContainer.GetDataItem21() != null)
+            {
+                decodedDataPerItem.Add(21, itemContainer.GetDataItem21().GetData());
+            }
+            if (itemContainer.GetDataItem22() != null)
+            {
+                decodedDataPerItem.Add(22, itemContainer.GetDataItem22().GetData());
+            }
+            if (itemContainer.GetDataItem23() != null)
+            {
+                decodedDataPerItem.Add(23, itemContainer.GetDataItem23().GetData());
+            }
+            if (itemContainer.GetDataItem24() != null)
+            {
+                decodedDataPerItem.Add(24, itemContainer.GetDataItem24().GetData());
+            }
+            if (itemContainer.GetDataItem25() != null)
+            {
+                decodedDataPerItem.Add(25, itemContainer.GetDataItem25().GetData());
+            }
+            if (itemContainer.GetDataItem26() != null)
+            {
+                decodedDataPerItem.Add(26, itemContainer.GetDataItem26().GetData());
+            }
+            if (itemContainer.GetDataItem27() != null)
+            {
+                decodedDataPerItem.Add(27, itemContainer.GetDataItem27().GetData());
+            }
+            if (itemContainer.GetDataItem28() != null)
+            {
+                decodedDataPerItem.Add(28, itemContainer.GetDataItem28().GetData());
+            }
         }
     }
 }
