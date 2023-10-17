@@ -995,11 +995,16 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public string AircraftAddress;
+
         public List<string> data;
         public DataItem8(List<string> arrayhex)
         {
             this.number = 8;
             this.arrayHex = arrayhex;
+
+            AircraftAddress = String.Concat(this.arrayHex[0], this.arrayHex[1], this.arrayHex[2]);
+            data = new List<string> { "Aircraft Address", AircraftAddress };
         }
         public List<string> GetData()
         {
@@ -1012,12 +1017,177 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public List<string> arrayString;
+        public string[] AAmatrix = new string[8];
+        public string AircraftIdentification;
+
         public List<string> data;
         public DataItem9(List<string> arrayhex)
         {
             this.number = 9;
             this.arrayHex = arrayhex;
+
+            this.arrayString = new List<string>(arrayhex.Count);
+
+            for (int i = 0; i < arrayhex.Count; i++)
+            {
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+            }
+
+            string[] AA = new string[8];
+
+            for (int i = 0;i < AA.Length; i++)
+            {
+                AA[i] = String.Concat(arrayString[i*6], arrayString[i*6+1], arrayString[i*6+2], arrayString[i*6+3], arrayString[i*6+4], arrayString[i*6+5]);
+
+                AAmatrix[i] = decode6bit(AA[i]);
+            }
+
+            AircraftIdentification = String.Join("", AAmatrix);
+
+            data = new List<string> { "Aircraft Identification", AircraftIdentification};
         }
+
+        public string decode6bit(string a)
+        {
+            string result;
+
+            switch (a){
+                case "000000":
+                    result = "A"; break;
+                case "000001":
+                    result = "B"; break;
+                case "000010":
+                    result = "C"; break;
+                case "000011":
+                    result = "D"; break;
+                case "000100":
+                    result = "E"; break;
+                case "000101":
+                    result = "F"; break;
+                case "000110":
+                    result= "G"; break;
+                case "000111":
+                    result = "H"; break;
+                case "001000":
+                    result = "I"; break;
+                case "001001":
+                    result = "J"; break;
+                case "001010":
+                    result = "K"; break;
+                case "001011":
+                    result = "L"; break;
+                case "001100":
+                    result = "M"; break;
+                case "001101":
+                    result = "N"; break;
+                case "001110":
+                    result = "O"; break;
+                case "001111":
+                    result = "P"; break;
+                case "010000":
+                    result = "Q"; break;
+                case "010001":
+                    result = "R"; break;
+                case "010010":
+                    result = "S"; break;
+                case "010011":
+                    result = "T"; break;
+                case "010100":
+                    result = "U"; break;
+                case "010101":
+                    result = "V"; break;
+                case "010110":
+                    result = "W"; break;
+                case "010111":
+                    result = "X"; break;
+                case "011000":
+                    result = "Y"; break;
+                case "011001":
+                    result = "Z"; break;
+                case "011010":
+                    result = "a"; break;
+                case "011011":
+                    result = "b"; break;
+                case "011100":
+                    result = "c"; break;
+                case "011101":
+                    result = "d"; break;
+                case "011110":
+                    result = "e"; break;
+                case "011111":
+                    result = "f"; break;
+                case "100000":
+                    result = "g"; break;
+                case "100001":
+                    result = "h"; break;
+                case "100010":
+                    result = "i"; break;
+                case "100011":
+                    result = "j"; break;
+                case "100100":
+                    result = "k"; break;
+                case "100101":
+                    result = "l"; break;
+                case "100110":
+                    result = "m"; break;
+                case "100111":
+                    result = "n"; break;
+                case "101000":
+                    result = "o"; break;
+                case "101001":
+                    result = "p"; break;
+                case "101010":
+                    result = "q"; break;
+                case "101011":
+                    result = "r"; break;
+                case "101100":
+                    result = "s"; break;
+                case "101101":
+                    result = "t"; break;
+                case "101110":
+                    result = "u"; break;
+                case "101111":
+                    result = "v"; break;
+                case "110000":
+                    result = "w"; break;
+                case "110001":
+                    result = "x"; break;
+                case "110010":
+                    result = "y"; break;
+                case "110011":
+                    result = "z"; break;
+                case "110100":
+                    result = "0"; break;
+                case "110101":
+                    result = "1"; break;
+                case "110110":
+                    result = "2"; break;
+                case "110111":
+                    result = "3"; break;
+                case "111000":
+                    result = "4"; break;
+                case "111001":
+                    result = "5"; break;
+                case "111010":
+                    result = "6"; break;
+                case "111011":
+                    result = "7"; break;
+                case "111100":
+                    result = "8"; break;
+                case "111101":
+                    result = "9"; break;
+                case "111110":
+                    result = "+"; break;
+                case "111111":
+                    result = "/"; break;
+                default:
+                    result = " "; break;
+            }
+
+            return result;
+        }
+
         public List<string> GetData()
         {
             return this.data;
@@ -1029,11 +1199,25 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
+        public string[] arrayString;
+        public int REP;
+        public string BDSDATA;
+        public string BDS1, BDS2;
+
         public List<string> data;
         public DataItem10(List<string> arrayhex)
         {
             this.number = 10;
             this.arrayHex = arrayhex;
+
+            this.arrayString = new List<string>(arrayhex.Count);
+
+            for (int i = 0; i < arrayhex.Count; i++)
+            {
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+            }
+
+
         }
         public List<string> GetData()
         {
