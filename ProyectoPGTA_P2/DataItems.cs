@@ -696,8 +696,8 @@ namespace ProyectoPGTA_P2
             string RHD_16 = String.Concat(arrayhex[0], arrayhex[1]);
             string THETA_16 = String.Concat(arrayhex[2], arrayhex[3]);
 
-            RHD = Convert.ToInt32(RHD_16, 16) / 256;
-            THETA = Convert.ToInt32(THETA_16, 16) * 45 / 8192;
+            RHD = Convert.ToInt32(RHD_16, 16) / 256f;
+            THETA = Convert.ToInt32(THETA_16, 16) * 45 / 8192f;
 
             data = new List<string> { "TYP", RHD.ToString(), "SIM", THETA.ToString() };
         }
@@ -881,7 +881,7 @@ namespace ProyectoPGTA_P2
             if (SRL_str == "1")
             {
                 SRL_str = arrayString[index];
-                SRL = Convert.ToInt32(SRL_str, 2) * 45 / 1024;
+                SRL = Convert.ToInt32(SRL_str, 2) * 45 / 1024f;
 
                 index++;
 
@@ -926,7 +926,7 @@ namespace ProyectoPGTA_P2
             if (PRL_str == "1")
             {
                 PRL_str = arrayString[index];
-                PRL = Convert.ToInt32(PRL_str, 2) * 45 / 1024;
+                PRL = Convert.ToInt32(PRL_str, 2) * 45 / 1024f;
 
                 index++;
 
@@ -956,7 +956,7 @@ namespace ProyectoPGTA_P2
             if (RPD_str == "1")
             {
                 RPD_str = arrayString[index];
-                RPD = Convert.ToInt32(RPD_str, 2) / 256;
+                RPD = Convert.ToInt32(RPD_str, 2) / 256f;
 
                 index++;
 
@@ -971,7 +971,7 @@ namespace ProyectoPGTA_P2
             if (APD_str == "1")
             {
                 APD_str = arrayString[index];
-                APD = Convert.ToInt32(APD_str, 2) * 45 / 2048;
+                APD = Convert.ToInt32(APD_str, 2) * 45 / 2048f;
 
                 index++;
 
@@ -1210,14 +1210,26 @@ namespace ProyectoPGTA_P2
             this.number = 10;
             this.arrayHex = arrayhex;
 
-            this.arrayString = new List<string>(arrayhex.Count);
+            this.arrayString = new string[arrayhex.Count];
 
             for (int i = 0; i < arrayhex.Count; i++)
             {
                 arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
             }
 
+            string REP_str = arrayString[0];
+            REP = Convert.ToInt32(arrayString[1], 2);
 
+            string BDSDATA_str = String.Concat(arrayString[1], arrayString[2], arrayString[3], arrayString[4], arrayString[5], arrayString[6], arrayString[7]);
+            BDSDATA = BDSDATA_str;
+
+            BDS1 = String.Concat(arrayString[8][0], arrayString[8][1], arrayString[8][2], arrayString[8][3]);
+            BDS1 = Convert.ToInt32(BDS1).ToString("X");
+            BDS2 = String.Concat(arrayString[9][0], arrayString[9][1], arrayString[9][2], arrayString[9][3]);
+            BDS2 = Convert.ToInt32(BDS2).ToString("X");
+
+            data = new List<string> { "REP", REP.ToString(), "BDS DATA", BDSDATA, "BDS 1", BDS1, "BDS 2", BDS2};
+            //FALTA DECODE BDS DATA
         }
         public List<string> GetData()
         {
@@ -1231,10 +1243,24 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public List<string> data;
+        public int TrackNumber;
+
+        public string[] arrayString;
+
         public DataItem11(List<string> arrayhex)
         {
             this.number = 11;
             this.arrayHex = arrayhex;
+            this.arrayString = new string[arrayhex.Count];
+
+            for (int i = 0; i < arrayhex.Count; i++)
+            {
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+            }
+
+            TrackNumber = Convert.ToInt32(String.Concat(arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]), 2);
+
+            data = new List<string> { "Track Number", TrackNumber.ToString()};
         }
         public List<string> GetData()
         {
@@ -1248,10 +1274,24 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public List<string> data;
+        public float Xcord, Ycord;
+        public string[] arrayString;
+
         public DataItem12(List<string> arrayhex)
         {
             this.number = 12;
             this.arrayHex = arrayhex;
+            this.arrayString = new string[arrayhex.Count];
+
+            for (int i = 0; i < arrayhex.Count; i++)
+            {
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+            }
+
+            Xcord = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1]))/128f;
+            Ycord = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3]))/128f;
+
+            data = new List<string> { "X", Xcord.ToString(), "Y", Ycord.ToString()};
         }
         public List<string> GetData()
         {
@@ -1265,10 +1305,23 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public List<string> data;
+        public float GS, HEAD;
+        public string[] arrayString;
         public DataItem13(List<string> arrayhex)
         {
             this.number = 13;
             this.arrayHex = arrayhex;
+            this.arrayString = new string[arrayhex.Count];
+
+            for (int i = 0; i < arrayhex.Count; i++)
+            {
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+            }
+
+            GS = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1])) / 16384f;
+            HEAD = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3])) * 45 / 8192f;
+
+            data = new List<string> { "Ground Speed", GS.ToString(), "Heading", HEAD.ToString()};
         }
         public List<string> GetData()
         {
@@ -1282,10 +1335,156 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public List<string> data;
+        public string CNF, RAD, DOU, MAH, CDM;
+        public int FX1;
+        public string TRE, GHO, SUP, TCC;
+        public int FX2;
+
+        public string[] arrayString;
         public DataItem14(List<string> arrayhex)
         {
             this.number = 14;
             this.arrayHex = arrayhex;
+            this.arrayString = new string[arrayhex.Count];
+
+            for (int i = 0; i < arrayhex.Count; i++)
+            {
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+            }
+            CNF = Convert.ToString(arrayString[0][0]);
+            switch (CNF)
+            {
+                case "0":
+                    CNF = "Confirmed Track";
+                    break;
+                case "1":
+                    CNF = "Tentative Track";
+                    break;
+                default:
+                    break;
+            }
+
+            RAD = Convert.ToString(String.Concat(arrayString[0][1], arrayString[0][2]));
+            switch (RAD)
+            {
+                case "00":
+                    RAD = "Combined Track";
+                    break;
+                case "01":
+                    RAD = "PSR Track";
+                    break;
+                case "10":
+                    RAD = "SSR/Mode S Track";
+                    break;
+                case "11":
+                    RAD = "Invalid";
+                    break;
+                default:
+                    break;
+            }
+
+            DOU = Convert.ToString(arrayString[0][3]);
+            switch (DOU)
+            {
+                case "0":
+                    DOU = "Normal confidence";
+                    break;
+                case "1":
+                    DOU = "Low confidence in pilot to track association";
+                    break;
+                default:
+                    break;
+            }
+
+            MAH = Convert.ToString(arrayString[0][4]);
+            switch (MAH)
+            {
+                case "0":
+                    MAH = "No horizontal manoeuvre sensed";
+                    break;
+                case "1":
+                    MAH = "Horizontal manoeuvre sensed";
+                    break;
+                default:
+                    break;
+            }
+
+            CDM = Convert.ToString(String.Concat(arrayString[0][5], arrayString[0][6]));
+            switch (CDM)
+            {
+                case "00":
+                    CDM = "Maintaining";
+                    break;
+                case "01":
+                    CDM = "Climbing";
+                    break;
+                case "10":
+                    CDM = "Descending";
+                    break;
+                case "11":
+                    CDM = "Unknown";
+                    break;
+                default:
+                    break;
+            }
+
+            FX1 = Convert.ToInt32(arrayString[0][7]);
+
+            TRE = Convert.ToString(arrayString[1][0]);
+            switch (TRE)
+            {
+                case "0":
+                    TRE = "Track still alive";
+                    break;
+                case "1":
+                    TRE = "End of track lifetime";
+                    break;
+                default:
+                    break;
+            }
+
+            GHO = Convert.ToString(arrayString[1][1]);
+            switch (GHO)
+            {
+                case "0":
+                    GHO = "True target track";
+                    break;
+                case "1":
+                    GHO = "Ghost target track";
+                    break;
+                default:
+                    break;
+            }
+
+            SUP = Convert.ToString(arrayString[1][2]);
+            switch (SUP)
+            {
+                case "0":
+                    SUP = "No";
+                    break;
+                case "1":
+                    SUP = "Yes";
+                    break;
+                default:
+                    break;
+            }
+
+            TCC = Convert.ToString(arrayString[1][3]);
+            switch (TCC)
+            {
+                case "0":
+                    TCC = "Tracking in Radar-Plane mode";
+                    break;
+                case "1":
+                    TCC = "Slant range correction";
+                    break;
+                default:
+                    break;
+            }
+
+            FX2 = Convert.ToInt32(arrayString[1][7]);
+
+            data = new List<string>{ "CNF", CNF, "RAD", RAD, "DOU", DOU, "MAH", MAH, "CDM", CDM, "TRE", TRE, "GHO", GHO, "SUP", SUP, "TCC", TCC};
         }
         public List<string> GetData()
         {
@@ -1367,10 +1566,24 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public List<string> data;
+        public int Height3D;
+
+        public string[] arrayString;
         public DataItem19(List<string> arrayhex)
         {
             this.number = 19;
             this.arrayHex = arrayhex;
+
+            this.arrayString = new string[arrayhex.Count];
+
+            for (int i = 0; i < arrayhex.Count; i++)
+            {
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+            }
+
+            Height3D = Convert.ToInt32(String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]), 2)*25;
+
+            data = new List<string> { "3D Height", Height3D.ToString()};
         }
         public List<string> GetData()
         {
