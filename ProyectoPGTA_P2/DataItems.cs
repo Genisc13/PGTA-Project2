@@ -1230,6 +1230,7 @@ namespace ProyectoPGTA_P2
 
             data = new List<string> { "REP", REP.ToString(), "BDS DATA", BDSDATA, "BDS 1", BDS1, "BDS 2", BDS2};
             //FALTA DECODE BDS DATA
+            //REP es el num de veces que hay BDSDATA
         }
         public List<string> GetData()
         {

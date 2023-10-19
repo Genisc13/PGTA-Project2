@@ -16,3 +16,12 @@ C:\Users\GENIS\OneDrive\Escritorio\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\
 C:\Users\GENIS\OneDrive\Escritorio\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.CoreCompileInputs.cache
 C:\Users\GENIS\OneDrive\Escritorio\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.exe
 C:\Users\GENIS\OneDrive\Escritorio\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.pdb
+C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe.config
+C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe
+C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.pdb
+C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.AssemblyReference.cache
+C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Properties.Resources.resources
+C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.GenerateResource.cache
+C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.CoreCompileInputs.cache
+C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.exe
+C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.pdb
