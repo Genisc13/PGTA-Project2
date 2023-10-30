@@ -1052,6 +1052,87 @@ namespace ProyectoPGTA_P2
         {
             string result;
 
+            switch (a)
+            {
+                case "000001":
+                    result = "P"; break;
+                case "000010":
+                    result = " "; break;
+                case "000011":
+                    result = "0"; break;
+                case "000100":
+                    result = "A"; break;
+                case "000101":
+                    result = "Q"; break;
+                case "000111":
+                    result = "1"; break;
+                case "001000":
+                    result = "B"; break;
+                case "001001":
+                    result = "R"; break;
+                case "001011":
+                    result = "2"; break;
+                case "001100":
+                    result = "C"; break;
+                case "001101":
+                    result = "S"; break;
+                case "001111":
+                    result = "3"; break;
+                case "010000":
+                    result = "D"; break;
+                case "010001":
+                    result = "T"; break;
+                case "010011":
+                    result = "4"; break;
+                case "010100":
+                    result = "E"; break;
+                case "010101":
+                    result = "U"; break;
+                case "010111":
+                    result = "5"; break;
+                case "011000":
+                    result = "F"; break;
+                case "011001":
+                    result = "V"; break;
+                case "011011":
+                    result = "6"; break;
+                case "011100":
+                    result = "G"; break;
+                case "011101":
+                    result = "W"; break;
+                case "011111":
+                    result = "7"; break;
+                case "100000":
+                    result = "H"; break;
+                case "100001":
+                    result = "X"; break;
+                case "100011":
+                    result = "8"; break;
+                case "100100":
+                    result = "I"; break;
+                case "100101":
+                    result = "Y"; break;
+                case "100111":
+                    result = "9"; break;
+                case "101000":
+                    result = "J"; break;
+                case "101001":
+                    result = "Z"; break;
+                case "101100":
+                    result = "K"; break;
+                case "110000":
+                    result = "L"; break;
+                case "110100":
+                    result = "M"; break;
+                case "111000":
+                    result = "N"; break;
+                case "111100":
+                    result = "O"; break;
+                default:
+                    result = ""; break;
+            }
+
+            /*
             switch (a){
                 case "000000":
                     result = "A"; break;
@@ -1184,7 +1265,7 @@ namespace ProyectoPGTA_P2
                 default:
                     result = " "; break;
             }
-
+            */
             return result;
         }
 
@@ -1201,8 +1282,21 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public string[] arrayString;
         public int REP;
-        public string BDSDATA;
+        public string BDSDATA, BDSver;
         public string BDS1, BDS2;
+
+        //Param BDS5.0
+        public float RollAngle = 0f;
+        public float TrueTrackAngle = 0f;
+        public float GS = 0f;
+        public float TrackAngleRate = 0f;
+        public float TAS = 0f;
+        //Param BDS6.0
+        public float MagneticHeading = 0f;
+        public float IAS = 0f;
+        public float MACH = 0f;
+        public float BarometricAlt = 0f;
+        public float InertialVerticalVel = 0f;
 
         public List<string> data;
         public DataItem10(List<string> arrayhex)
@@ -1223,12 +1317,34 @@ namespace ProyectoPGTA_P2
             string BDSDATA_str = String.Concat(arrayString[1], arrayString[2], arrayString[3], arrayString[4], arrayString[5], arrayString[6], arrayString[7]);
             BDSDATA = BDSDATA_str;
 
-            BDS1 = String.Concat(arrayString[8][0], arrayString[8][1], arrayString[8][2], arrayString[8][3]);
-            BDS1 = Convert.ToInt32(BDS1).ToString("X");
-            BDS2 = String.Concat(arrayString[9][0], arrayString[9][1], arrayString[9][2], arrayString[9][3]);
-            BDS2 = Convert.ToInt32(BDS2).ToString("X");
+            BDS1 = Convert.ToInt32(String.Concat(arrayString[8][0], arrayString[8][1], arrayString[8][2], arrayString[8][3]), 2).ToString();
+            BDS2 = Convert.ToInt32(String.Concat(arrayString[8][4], arrayString[8][5], arrayString[8][6], arrayString[8][7]), 2).ToString();
 
-            data = new List<string> { "REP", REP.ToString(), "BDS DATA", BDSDATA, "BDS 1", BDS1, "BDS 2", BDS2};
+            BDSver = BDS1 + "." + BDS2;
+
+            switch (BDSver)
+            {
+                case "4.0":
+                //NADA AUN
+                case "5.0":
+                    RollAngle = Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10]),2)*45/256f;
+                    TrueTrackAngle = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]),2)*90/512f;
+                    GS = Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 2f;
+                    TrackAngleRate = ((-1)^Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 8 / 256f;
+                    TAS = Convert.ToInt32(String.Concat(BDSDATA[46], BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 2f;
+                    break;
+                case "6.0":
+                    MagneticHeading = Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11]), 2) * 90 / 512f;
+                    IAS = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2);
+                    MACH = Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 4f;
+                    BarometricAlt = ((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 32f;
+                    InertialVerticalVel = ((-1) ^ Convert.ToInt32(BDSDATA[46])) * Convert.ToInt32(String.Concat(BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 32f;
+                    break;
+                default:
+                    break;
+            }
+
+            data = new List<string> { "REP", REP.ToString(), "BDS Version", BDSver};
             //FALTA DECODE BDS DATA
             //REP es el num de veces que hay BDSDATA
         }
