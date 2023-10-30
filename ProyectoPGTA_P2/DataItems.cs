@@ -1731,15 +1731,139 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public List<string> data;
+        public string COM, STAT, SI, MSSC, ARC, AIC, B1A, B1B;
         public DataItem21(List<string> arrayhex)
         {
             this.number = 21;
-            this.arrayHex = arrayhex;
+            this.arrayHex = arrayhex;                
+            string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[0], 16), 2).PadLeft(8, '0');
+            string comVector = Convert.ToString(binaryByte[0])+ Convert.ToString(binaryByte[1])+ Convert.ToString(binaryByte[2]);
+            string statVector = Convert.ToString(binaryByte[3]) + Convert.ToString(binaryByte[4]) + Convert.ToString(binaryByte[5]);
+            string si = Convert.ToString(binaryByte[6]);
+            string com = Convert.ToString(BinaryToDecimal(comVector));
+            string stat = Convert.ToString(BinaryToDecimal(statVector));
+            
+            string binaryByte2 = Convert.ToString(Convert.ToInt32(arrayHex[1], 16), 2).PadLeft(8, '0');
+            string mssc = Convert.ToString(binaryByte2[0]);
+            string arc = Convert.ToString(binaryByte2[1]);
+            string aic = Convert.ToString(binaryByte2[2]);
+            string b1a = Convert.ToString(binaryByte2[3]);
+            string b1b = Convert.ToString(binaryByte2[4])+ Convert.ToString(binaryByte2[5])+ Convert.ToString(binaryByte2[6])+ Convert.ToString(binaryByte2[7]);
+            B1A = b1a;
+            B1B = b1b;
+            if(com.Equals("0"))
+            {
+                COM = "No communications capability (surveillance only)";
+            }
+            else if (com.Equals("1"))
+            {
+                COM = "Comm. A and Comm. B capability";
+            }
+            else if (com.Equals("2"))
+            {
+                COM = "Comm. A, Comm. B and Uplink ELM";
+            }
+            else if (com.Equals("3"))
+            {
+                COM = "Comm. A, Comm. B, Uplink ELM and Downlink";
+            }
+            else if (com.Equals("4"))
+            {
+                COM = "Level 5 Transponder capability";
+            }
+            else
+            {
+                COM = "Not assigned";
+            }
+
+            if (stat.Equals("0"))
+            {
+                STAT = "No alert, no SPI, aircraft airborne";
+            }
+            else if (stat.Equals("1"))
+            {
+                STAT = "No alert, no SPI, aircraft on ground";
+            }
+            else if (stat.Equals("2"))
+            {
+                STAT = "Alert, no SPI, aircraft airborne";
+            }
+            else if (stat.Equals("3"))
+            {
+                STAT = "Alert, no SPI, aircraft on ground";
+            }
+            else if (stat.Equals("4"))
+            {
+                STAT = "Alert,SPI, aircraft airborne or on ground";
+            }
+            else if (stat.Equals("5"))
+            {
+                STAT = "No alert,SPI, aircraft airborne or on ground";
+            }
+            else if (stat.Equals("6"))
+            {
+                STAT = "Not assigned";
+            }
+            else if (stat.Equals("7"))
+            {
+                STAT = "Unknown";
+            }
+
+            if (si.Equals("0"))
+            {
+                SI = "Transponder capable on SI";
+            }
+            else
+            {
+                SI = "Transponder capable on II";
+            }
+            if (mssc.Equals("0"))
+            {
+                MSSC = "Not Capability of the specific service of the Mode-S";
+            }
+            else
+            {
+                MSSC = "Capability of the specific service of the Mode-S";
+            }
+            if (arc.Equals("0"))
+            {
+                ARC = "100ft of resolution";
+            }
+            else
+            {
+                ARC = "25ft of resolution";
+            }
+            if (aic.Equals("0"))
+            {
+                AIC = "Not capable of identify itself";
+            }
+            else
+            {
+                AIC = "Capable of identifying itself";
+            }
+
+            data = new List<string> { "COM", COM.ToString(),"STAT",STAT.ToString(), "SI", SI.ToString(), "MSSC",ARC.ToString(), "AIC",AIC.ToString(), "B1A",B1A.ToString(), "B1B",B1B.ToString() };
         }
         public List<string> GetData()
         {
             return this.data;
         }
+
+        private int BinaryToDecimal(string binary)
+        {
+            char[] binaryArray = binary.ToCharArray();
+            Array.Reverse(binaryArray);
+            int decimalValue = 0;
+            for (int i = 0; i < binaryArray.Length; i++)
+            {
+                if (binaryArray[i] == '1')
+                {
+                    decimalValue += (int)Math.Pow(2, i);
+                }
+            }
+            return decimalValue;
+        }
+
     }
 
     //Data Item I048/260, ACAS Resolution Advisory Report.
