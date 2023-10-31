@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace ProyectoPGTA_P2
 {
@@ -1282,23 +1283,8 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public string[] arrayString;
         public int REP;
-        public string BDSDATA, BDSver;
-        public string BDS1, BDS2;
 
-        //Param BDS5.0
-        public float RollAngle = 0f;
-        public float TrueTrackAngle = 0f;
-        public float GS = 0f;
-        public float TrackAngleRate = 0f;
-        public float TAS = 0f;
-        //Param BDS6.0
-        public float MagneticHeading = 0f;
-        public float IAS = 0f;
-        public float MACH = 0f;
-        public float BarometricAlt = 0f;
-        public float InertialVerticalVel = 0f;
-
-        public List<string> data;
+        public List<List<string>> data;
         public DataItem10(List<string> arrayhex)
         {
             this.number = 10;
@@ -1314,41 +1300,67 @@ namespace ProyectoPGTA_P2
             string REP_str = arrayString[0];
             REP = Convert.ToInt32(arrayString[1], 2);
 
-            string BDSDATA_str = String.Concat(arrayString[1], arrayString[2], arrayString[3], arrayString[4], arrayString[5], arrayString[6], arrayString[7]);
-            BDSDATA = BDSDATA_str;
-
-            BDS1 = Convert.ToInt32(String.Concat(arrayString[8][0], arrayString[8][1], arrayString[8][2], arrayString[8][3]), 2).ToString();
-            BDS2 = Convert.ToInt32(String.Concat(arrayString[8][4], arrayString[8][5], arrayString[8][6], arrayString[8][7]), 2).ToString();
-
-            BDSver = BDS1 + "." + BDS2;
-
-            switch (BDSver)
+            for (int i = 0; i < REP; i++)
             {
-                case "4.0":
-                //NADA AUN
-                case "5.0":
-                    RollAngle = Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10]),2)*45/256f;
-                    TrueTrackAngle = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]),2)*90/512f;
-                    GS = Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 2f;
-                    TrackAngleRate = ((-1)^Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 8 / 256f;
-                    TAS = Convert.ToInt32(String.Concat(BDSDATA[46], BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 2f;
-                    break;
-                case "6.0":
-                    MagneticHeading = Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11]), 2) * 90 / 512f;
-                    IAS = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2);
-                    MACH = Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 4f;
-                    BarometricAlt = ((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 32f;
-                    InertialVerticalVel = ((-1) ^ Convert.ToInt32(BDSDATA[46])) * Convert.ToInt32(String.Concat(BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 32f;
-                    break;
-                default:
-                    break;
+                string BDSDATA, BDSver;
+                string BDS1, BDS2;
+
+                //Param BDS5.0
+                float RollAngle = 0f;
+                float TrueTrackAngle = 0f;
+                float GS = 0f;
+                float TrackAngleRate = 0f;
+                float TAS = 0f;
+                //Param BDS6.0
+                float MagneticHeading = 0f;
+                float IAS = 0f;
+                float MACH = 0f;
+                float BarometricAlt = 0f;
+                float InertialVerticalVel = 0f;
+
+                List<string> dataBDS;
+
+                int shift = REP * 7;
+                BDSDATA = String.Concat(arrayString[shift + 1], arrayString[shift + 2], arrayString[shift + 3], arrayString[shift + 4], arrayString[shift + 5], arrayString[shift + 6], arrayString[shift + 7]);
+
+                BDS1 = Convert.ToInt32(String.Concat(arrayString[8][0], arrayString[8][1], arrayString[8][2], arrayString[8][3]), 2).ToString();
+                BDS2 = Convert.ToInt32(String.Concat(arrayString[8][4], arrayString[8][5], arrayString[8][6], arrayString[8][7]), 2).ToString();
+
+                BDSver = BDS1 + "." + BDS2;
+
+                switch (BDSver)
+                {
+                    case "4.0":
+                    //NADA AUN
+                    case "5.0":
+                        RollAngle = Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10]), 2) * 45 / 256f;
+                        TrueTrackAngle = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2) * 90 / 512f;
+                        GS = Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 2f;
+                        TrackAngleRate = ((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 8 / 256f;
+                        TAS = Convert.ToInt32(String.Concat(BDSDATA[46], BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 2f;
+
+                        dataBDS = new List<string> { "REP", REP.ToString(), "BDS Version", BDSver, "Roll Angle: ", RollAngle.ToString(), "True Track Angle: ", TrueTrackAngle.ToString(), "Ground Speed: ", GS.ToString(), "Track Angle Rate: ", TrackAngleRate.ToString(), "True Air Speed: ", TAS.ToString() };
+                        break;
+                    case "6.0":
+                        MagneticHeading = Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11]), 2) * 90 / 512f;
+                        IAS = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2);
+                        MACH = Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 4f;
+                        BarometricAlt = ((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 32f;
+                        InertialVerticalVel = ((-1) ^ Convert.ToInt32(BDSDATA[46])) * Convert.ToInt32(String.Concat(BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 32f;
+                        
+                        dataBDS = new List<string> { "Magnetic Heading: ", MagneticHeading.ToString(), "Indicated Air Speed: ", IAS.ToString(), "MACH Number: ", MACH.ToString(), "Barometric Altitude: ", BarometricAlt.ToString(), "Inertial Vertical Velocity: ", InertialVerticalVel.ToString() };
+                        break;
+                    default:
+
+                        dataBDS = null;
+                        break;
+                }
+
+                data.Add(dataBDS);
             }
 
-            data = new List<string> { "REP", REP.ToString(), "BDS Version", BDSver};
-            //FALTA DECODE BDS DATA
-            //REP es el num de veces que hay BDSDATA
         }
-        public List<string> GetData()
+        public List<List<string>> GetData()
         {
             return this.data;
         }
