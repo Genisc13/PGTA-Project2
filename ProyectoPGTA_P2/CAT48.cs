@@ -26,10 +26,11 @@ namespace ProyectoPGTA_P2
             decodedDataPerItem = new Dictionary<int, List<string>>();
             itemContainer = new DataItem();
             int i = 3;
-            
+            //Console.WriteLine("Creando paquete CAT48...");
             bool finishFSPEC = false;
             while (i < arrayHex.Count)
             {
+                //Console.WriteLine("Editando Byte");
                 int n;
                 string hexByte = arrayHex[i];
                 string binaryByte = Convert.ToString(Convert.ToInt32(hexByte, 16), 2).PadLeft(8, '0');
@@ -62,9 +63,11 @@ namespace ProyectoPGTA_P2
                             {
                                 finishFSPEC = true;
                             }     
-                        }                        
-                        i++;                        
+                        }
+                        n++;                        
                     }
+                    i++;
+                    continue;
                 }
                 //Item 1
                 if (items[0] == true)
@@ -181,6 +184,7 @@ namespace ProyectoPGTA_P2
                     while (n <= count)
                     {
                         arrayItem.Add(arrayHex[i+n]);
+                        n++;
                     }
                     i+=n;
                     itemContainer.SetDataItem7(new DataItem7(arrayItem));
@@ -229,6 +233,7 @@ namespace ProyectoPGTA_P2
                     while (n <= REP*8)
                     {
                         arrayItem.Add(arrayHex[i + n]);
+                        n++;
                     }
                     itemContainer.SetDataItem10(new DataItem10(arrayItem));
                     i += REP * 8;
@@ -416,6 +421,7 @@ namespace ProyectoPGTA_P2
                     while (n < length)
                     {
                         arrayItem.Add(arrayHex[i + n]);
+                        n++;
                     }
                     i += n;
                     itemContainer.SetDataItem27(new DataItem27(arrayItem));
@@ -431,12 +437,14 @@ namespace ProyectoPGTA_P2
                     while (n < length)
                     {
                         arrayItem.Add(arrayHex[i + n]);
+                        n++;
                     }
                     i += n;
                     itemContainer.SetDataItem28(new DataItem28(arrayItem));
                     items[27] = false;
                     continue;
                 }
+                i++;
             }
             //Una vez tenemos todos los DataItems decodificados hemos de hacer algo con ellos.
             if (itemContainer.GetDataItem1()!=null)
@@ -551,6 +559,11 @@ namespace ProyectoPGTA_P2
             {
                 decodedDataPerItem.Add(28, itemContainer.GetDataItem28().GetData());
             }
+            
+        }
+        public Dictionary<int,List<string>> GetDataDecodedPerItem()
+        {
+            return decodedDataPerItem;
         }
     }
 }

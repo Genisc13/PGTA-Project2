@@ -18,12 +18,13 @@ namespace ProyectoPGTA_P2
         public Reader(string nombre)
         {
             this.path = nombre;
+            this.Leer();
         }
         public List<CAT48> GetListCAT48()
         {
             return this.listaCAT48;
         }
-        public void leer()
+        public void Leer()
         {
             //StreamReader fichero = new StreamReader(path);
             //string linea_1 = fichero.ReadLine();
@@ -70,7 +71,7 @@ namespace ProyectoPGTA_P2
                 List<string> arraystring = new List<string>(listahex[q].Length); //Cada linea en hex
                 for(int k = 0; k < listahex[q].Length; k++)
                 {
-                    arraystring[k] = listahex[q][k];
+                    arraystring.Add(listahex[q][k]);
                 }
                 int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber); //Convertir cada par de valores hex a un decimal
 
@@ -79,6 +80,7 @@ namespace ProyectoPGTA_P2
                 {
                     CAT48 newcat10 = new CAT48(arraystring);
                     listaCAT48.Add(newcat10);
+                    //Console.WriteLine("Hecha una categoría");
                 }
                 else
                 {

@@ -1284,7 +1284,7 @@ namespace ProyectoPGTA_P2
         public string[] arrayString;
         public int REP;
 
-        public List<List<string>> data;
+        public List<string> data;
         public DataItem10(List<string> arrayhex)
         {
             this.number = 10;
@@ -1356,11 +1356,11 @@ namespace ProyectoPGTA_P2
                         break;
                 }
 
-                data.Add(dataBDS);
+                data.Add(dataBDS.ToString());
             }
 
         }
-        public List<List<string>> GetData()
+        public List<string> GetData()
         {
             return this.data;
         }

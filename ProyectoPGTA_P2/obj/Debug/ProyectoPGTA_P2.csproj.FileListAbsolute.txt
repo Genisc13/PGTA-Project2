@@ -25,3 +25,13 @@ C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_
 C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.CoreCompileInputs.cache
 C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.exe
 C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.pdb
+C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.AssemblyReference.cache
+C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Form1.resources
+C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Properties.Resources.resources
+C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.GenerateResource.cache
+C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.CoreCompileInputs.cache
+C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.exe
+C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.pdb
+C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe.config
+C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe
+C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.pdb
