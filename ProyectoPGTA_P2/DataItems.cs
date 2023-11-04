@@ -390,7 +390,7 @@ namespace ProyectoPGTA_P2
 
             for (int i = 0; i < arrayhex.Count; i++)
             {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+                arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
             }
 
             //First part decode
@@ -727,7 +727,7 @@ namespace ProyectoPGTA_P2
 
             for (int i = 0; i < arrayhex.Count; i++)
             {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+                arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
             }
 
             V = arrayString[0][0].ToString();
@@ -812,7 +812,7 @@ namespace ProyectoPGTA_P2
 
             for (int i = 0; i < arrayhex.Count; i++)
             {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+                arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
             }
 
             V = arrayString[0][0].ToString();
@@ -874,7 +874,7 @@ namespace ProyectoPGTA_P2
 
             for (int i = 0; i < arrayhex.Count; i++)
             {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+                arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
             }
             int index = 1;
 
@@ -1032,7 +1032,7 @@ namespace ProyectoPGTA_P2
 
             for (int i = 0; i < arrayhex.Count; i++)
             {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+                arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
             }
 
             string[] AA = new string[8];
@@ -1763,23 +1763,23 @@ namespace ProyectoPGTA_P2
             string b1b = Convert.ToString(binaryByte2[4])+ Convert.ToString(binaryByte2[5])+ Convert.ToString(binaryByte2[6])+ Convert.ToString(binaryByte2[7]);
             B1A = b1a;
             B1B = b1b;
-            if(com.Equals("0"))
+            if(string.Compare(com,"0")==0)
             {
                 COM = "No communications capability (surveillance only)";
             }
-            else if (com.Equals("1"))
+            else if (string.Compare(com, "1") == 0)
             {
                 COM = "Comm. A and Comm. B capability";
             }
-            else if (com.Equals("2"))
+            else if (string.Compare(com, "2") == 0)
             {
                 COM = "Comm. A, Comm. B and Uplink ELM";
             }
-            else if (com.Equals("3"))
+            else if (string.Compare(com, "3") == 0)
             {
                 COM = "Comm. A, Comm. B, Uplink ELM and Downlink";
             }
-            else if (com.Equals("4"))
+            else if (string.Compare(com, "4") == 0)
             {
                 COM = "Level 5 Transponder capability";
             }
@@ -1788,40 +1788,40 @@ namespace ProyectoPGTA_P2
                 COM = "Not assigned";
             }
 
-            if (stat.Equals("0"))
+            if (string.Compare(stat, "0") == 0)
             {
                 STAT = "No alert, no SPI, aircraft airborne";
             }
-            else if (stat.Equals("1"))
+            else if (string.Compare(stat, "1") == 0)
             {
                 STAT = "No alert, no SPI, aircraft on ground";
             }
-            else if (stat.Equals("2"))
+            else if (string.Compare(stat, "2") == 0)
             {
                 STAT = "Alert, no SPI, aircraft airborne";
             }
-            else if (stat.Equals("3"))
+            else if (string.Compare(stat, "3") == 0)
             {
                 STAT = "Alert, no SPI, aircraft on ground";
             }
-            else if (stat.Equals("4"))
+            else if (string.Compare(stat, "4") == 0)
             {
                 STAT = "Alert,SPI, aircraft airborne or on ground";
             }
-            else if (stat.Equals("5"))
+            else if (string.Compare(stat, "5") == 0)
             {
                 STAT = "No alert,SPI, aircraft airborne or on ground";
             }
-            else if (stat.Equals("6"))
+            else if (string.Compare(stat, "6") == 0)
             {
                 STAT = "Not assigned";
             }
-            else if (stat.Equals("7"))
+            else if (string.Compare(stat, "7") == 0)
             {
                 STAT = "Unknown";
             }
 
-            if (si.Equals("0"))
+            if (string.Compare(si, "0") == 0)
             {
                 SI = "Transponder capable on SI";
             }
@@ -1829,7 +1829,7 @@ namespace ProyectoPGTA_P2
             {
                 SI = "Transponder capable on II";
             }
-            if (mssc.Equals("0"))
+            if (string.Compare(mssc, "0") == 0)
             {
                 MSSC = "Not Capability of the specific service of the Mode-S";
             }
@@ -1837,7 +1837,7 @@ namespace ProyectoPGTA_P2
             {
                 MSSC = "Capability of the specific service of the Mode-S";
             }
-            if (arc.Equals("0"))
+            if (string.Compare(arc, "0") == 0)
             {
                 ARC = "100ft of resolution";
             }
@@ -1845,7 +1845,7 @@ namespace ProyectoPGTA_P2
             {
                 ARC = "25ft of resolution";
             }
-            if (aic.Equals("0"))
+            if (string.Compare(aic, "0") == 0)
             {
                 AIC = "Not capable of identify itself";
             }

@@ -32,6 +32,37 @@ namespace ProyectoPGTA_P2
                 string filePath = ofd.FileName;
                 decoder = new Reader(filePath);
                 lista = decoder.GetListCAT48();
+                Console.WriteLine("Las CAT48 que hay son: " + lista.Count());
+
+                // Crear un StringBuilder para almacenar el contenido CSV
+                StringBuilder csvContent = new StringBuilder();
+
+                foreach (CAT48 items in lista)
+                {
+                    Dictionary<int, List<string>> datos = items.GetDataDecodedPerItem();
+
+                    // Itera a través de los datos y agrega cada fila al contenido CSV
+                    foreach (var kvp in datos)
+                    {
+                        if (kvp.Key >= 1 && kvp.Key <= 28)
+                        {
+                            string rowData = string.Join(",", kvp.Key, kvp.Value[0], kvp.Value[1], kvp.Value[2]);
+                            csvContent.AppendLine(rowData);
+                        }
+                    }
+                }
+
+                // Guarda el contenido en un archivo CSV
+                File.WriteAllText(filePath + "Data.csv", csvContent.ToString());
+
+                // Muestra un mensaje de confirmación
+                MessageBox.Show("Archivo CSV generado exitosamente." + filePath + "Data.csv");
+            }
+            /*if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = ofd.FileName;
+                decoder = new Reader(filePath);
+                lista = decoder.GetListCAT48();
                 dataGridView1.Rows.Clear();
                 Console.WriteLine("Las CAT48 que hay son: "+lista.Count());
                 dataGridView1.ColumnCount = lista.Count();
@@ -161,8 +192,8 @@ namespace ProyectoPGTA_P2
                         }
                     }
                 }
-            }
-                    
+            }*/
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
