@@ -775,7 +775,7 @@ namespace ProyectoPGTA_P2
 
             }
 
-            Mode3 = String.Concat(arrayhex[0][4], arrayhex[0][5], arrayhex[0][6], arrayhex[0][7], arrayhex[1]);
+            Mode3 = string.Concat(arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
             if (L == "Código Mode-3/A no se ha extraído en el último escaneo")
             {
                 Mode3 = "N/A";
@@ -861,7 +861,7 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
-        public List<string> arrayString;
+        public List<string> arrayString = new List<string>();
 
         public float SRL, SRR, SAM, PRL, PAM, RPD, APD;
         public string FX1;

@@ -31,6 +31,7 @@ namespace ProyectoPGTA_P2
             while (i < arrayHex.Count)
             {
                 //Console.WriteLine("Editando Byte");
+                List<string> arrayItem;
                 int n;
                 string hexByte = arrayHex[i];
                 string binaryByte = Convert.ToString(Convert.ToInt32(hexByte, 16), 2).PadLeft(8, '0');
@@ -72,7 +73,7 @@ namespace ProyectoPGTA_P2
                 //Item 1
                 if (items[0] == true)
                 {
-                    List<string> arrayItem = new List<string>
+                    arrayItem = new List<string>
                     {
                         arrayHex[i],
                         arrayHex[i + 1]
@@ -85,7 +86,7 @@ namespace ProyectoPGTA_P2
                 //Item 2
                 else if (items[1] == true)
                 {
-                    List<string> arrayItem = new List<string>(3)
+                    arrayItem = new List<string>(3)
                     {
                         arrayHex[i],
                         arrayHex[i + 1],
@@ -116,7 +117,7 @@ namespace ProyectoPGTA_P2
                 //Item 4
                 else if (items[3] == true)
                 {
-                    List<string> arrayItem = new List<string>
+                    arrayItem = new List<string>
                     {
                         arrayHex[i],
                         arrayHex[i + 1],
@@ -131,7 +132,7 @@ namespace ProyectoPGTA_P2
                 //Item 5
                 else if (items[4] == true)
                 {
-                    List<string> arrayItem = new List<string>
+                    arrayItem = new List<string>
                     {
                         arrayHex[i],
                         arrayHex[i + 1]
@@ -145,7 +146,7 @@ namespace ProyectoPGTA_P2
                 //Item 6
                 else if (items[5] == true)
                 {
-                    List<string> arrayItem = new List<string>
+                    arrayItem = new List<string>
                     {
                         arrayHex[i],
                         arrayHex[i + 1]
@@ -159,17 +160,20 @@ namespace ProyectoPGTA_P2
                 //Item 7
                 else if (items[6] == true)
                 {
-                    List<string> arrayItem = new List<string>();
+                    arrayItem = new List<string>();
                     n = 0;
                     int count = 0;
+                    int next = 0;
                     while (n < binaryByte.Length)
                     {
+                        binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i+next], 16), 2).PadLeft(8, '0');
                         if (binaryByte[n] == '1')
                         {
                             if (n == 7)
                             {
                                 //FX
-                                arrayItem.Add(arrayHex[i]);
+                                arrayItem.Add(arrayHex[i+next]);
+                                next++;
                                 n = 0;
                                 continue;
                             }
@@ -180,7 +184,7 @@ namespace ProyectoPGTA_P2
                         }                        
                         n++;
                     }
-                    n = 1;
+                    n = 1 + next;
                     while (n <= count)
                     {
                         arrayItem.Add(arrayHex[i+n]);
@@ -195,7 +199,7 @@ namespace ProyectoPGTA_P2
                 //Item 8
                 else if (items[7] == true)
                 {
-                    List<string> arrayItem = new List<string>(3)
+                    arrayItem = new List<string>(3)
                     {
                         arrayHex[i],
                         arrayHex[i + 1],
@@ -210,7 +214,7 @@ namespace ProyectoPGTA_P2
                 //Item 9
                 else if (items[8] == true)
                 {
-                    List<string> arrayItem = new List<string>(3)
+                    arrayItem = new List<string>(3)
                     {
                         arrayHex[i],
                         arrayHex[i + 1],
@@ -227,7 +231,7 @@ namespace ProyectoPGTA_P2
                 //Item 10
                 else if (items[9] == true)
                 {
-                    List<string> arrayItem = new List<string>();
+                    arrayItem = new List<string>();
                     int REP = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);                    
                     n = 0;
                     while (n <= REP*8)
@@ -243,7 +247,7 @@ namespace ProyectoPGTA_P2
                 //Item 11
                 else if (items[10] == true)
                 {
-                    List<string> arrayItem = new List<string>
+                    arrayItem = new List<string>
                     {
                         arrayHex[i],
                         arrayHex[i + 1]
@@ -256,7 +260,7 @@ namespace ProyectoPGTA_P2
                 //Item 12
                 else if (items[11] == true)
                 {
-                    List<string> arrayItem = new List<string>
+                    arrayItem = new List<string>
                     {
                         arrayHex[i],
                         arrayHex[i + 1],
@@ -271,7 +275,7 @@ namespace ProyectoPGTA_P2
                 //Item 13
                 else if (items[12] == true)
                 {
-                    List<string> arrayItem = new List<string>
+                    arrayItem = new List<string>
                     {
                         arrayHex[i],
                         arrayHex[i + 1],
@@ -339,7 +343,7 @@ namespace ProyectoPGTA_P2
                 //Item 19
                 else if (items[18] == true)
                 {
-                    List<string> arrayItem = new List<string>
+                    arrayItem = new List<string>
                     {
                         arrayHex[i],
                         arrayHex[i + 1]
@@ -367,7 +371,7 @@ namespace ProyectoPGTA_P2
                 //Item 21
                 else if (items[20] == true)
                 {
-                    List<string> arrayItem = new List<string>
+                    arrayItem = new List<string>
                     {
                         arrayHex[i],
                         arrayHex[i + 1]
@@ -415,7 +419,7 @@ namespace ProyectoPGTA_P2
                 //Item 27
                 else if (items[26] == true)
                 {
-                    List<string> arrayItem = new List<string>();
+                    arrayItem = new List<string>();
                     int length = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);
                     n = 0;
                     while (n < length)
@@ -431,7 +435,7 @@ namespace ProyectoPGTA_P2
                 //Item 28
                 else if (items[27] == true)
                 {
-                    List<string> arrayItem = new List<string>();
+                    arrayItem = new List<string>();
                     int length = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);
                     n = 0;
                     while (n < length)
