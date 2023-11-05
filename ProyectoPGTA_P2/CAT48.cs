@@ -172,7 +172,6 @@ namespace ProyectoPGTA_P2
                             if (n == 7)
                             {
                                 //FX
-                                arrayItem.Add(arrayHex[i+next]);
                                 next++;
                                 n = 0;
                                 continue;
@@ -184,8 +183,8 @@ namespace ProyectoPGTA_P2
                         }                        
                         n++;
                     }
-                    n = 1 + next;
-                    while (n <= count)
+                    n = 0 + next;
+                    while (n <= count+next)
                     {
                         arrayItem.Add(arrayHex[i+n]);
                         n++;

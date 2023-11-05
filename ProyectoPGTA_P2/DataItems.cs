@@ -331,11 +331,11 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
-        //public string[] arrayString;
+        public string[] arrayString;
 
         //DATA ITEM 2
         public string timestr = "";
-        public int time;
+        public float time;
 
         public List<string> data;
 
@@ -344,15 +344,15 @@ namespace ProyectoPGTA_P2
             this.number = 2;
             this.arrayHex = arrayhex;
 
-            //this.arrayString = new string[arrayhex.Length];
+           arrayString = new string[arrayhex.Count];
 
             for (int i = 0; i < arrayhex.Count; i++)
             {
-                //arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
-                this.timestr += arrayhex[i];
+                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
+                this.timestr += arrayString[i];
             }
 
-            this.time = Convert.ToInt32(timestr) / 128; //hora actual en segundos
+            this.time = Convert.ToInt32(timestr,2) / 128; //hora actual en segundos
 
             float hours = time / 3600;
             float minutes = time % 3600 / 60;
@@ -581,7 +581,7 @@ namespace ProyectoPGTA_P2
                 }
 
                 FX2 = b[7].ToString();
-                if (FX1 == "1")
+                if (FX2 == "1")
                 {
                     //Decode second extension
                     string c = arrayString[2];
