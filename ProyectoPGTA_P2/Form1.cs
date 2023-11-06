@@ -24,8 +24,8 @@ namespace ProyectoPGTA_P2
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.InitialDirectory ="..\\";
-            ofd.Filter = "All files (*.*)|*.*";
-            //ofd.FilterIndex = 2;
+            ofd.Filter = "Asterix Files (*.ast*)|*.ast|All files (*.*)|*.";
+            ofd.FilterIndex = 1;
             ofd.RestoreDirectory = true;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
@@ -46,7 +46,8 @@ namespace ProyectoPGTA_P2
                     {
                         if (kvp.Key >= 1 && kvp.Key <= 28)
                         {
-                            string rowData = string.Join(",", kvp.Key, kvp.Value[0], kvp.Value[1], kvp.Value[2]);
+                            //string rowData = string.Join(",", kvp.Key, kvp.Value[0], kvp.Value[1], kvp.Value[2]);
+                            string rowData = string.Join(";", kvp.Key, kvp.Value[0], kvp.Value[1]);
                             csvContent.AppendLine(rowData);
                         }
                     }

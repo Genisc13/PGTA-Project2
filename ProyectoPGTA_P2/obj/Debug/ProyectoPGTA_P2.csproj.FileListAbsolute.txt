@@ -45,3 +45,4 @@ C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Deb
 C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.exe
 C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.pdb
 C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csprojAssemblyReference.cache
+C:\Users\baiales\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Form1.resources

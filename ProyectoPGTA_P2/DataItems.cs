@@ -314,8 +314,8 @@ namespace ProyectoPGTA_P2
             SAC = arrayhex[0];
             SIC = arrayhex[1];
 
-            Console.WriteLine("SAC: " + SAC);
-            Console.WriteLine("SIC: " + SIC);
+            //Console.WriteLine("SAC: " + SAC);
+            //Console.WriteLine("SIC: " + SIC);
 
             data = new List<string>{ "SAC", SAC, "SIC", SIC };
         }
@@ -700,7 +700,7 @@ namespace ProyectoPGTA_P2
             RHD = Convert.ToInt32(RHD_16, 16) / 256f;
             THETA = Convert.ToInt32(THETA_16, 16) * 45 / 8192f;
 
-            data = new List<string> { "TYP", RHD.ToString(), "SIM", THETA.ToString() };
+            data = new List<string> { "TYP RHD", RHD.ToString(), "SIM THETA", THETA.ToString() };
         }
         public List<string> GetData()
         {
@@ -767,7 +767,7 @@ namespace ProyectoPGTA_P2
                     L = "Código Mode-3/A derivado de la respuesta XPDR";
                     break;
                 case "1":
-                    L = "Código Mode-3/A no se ha extraído en el último escaneo";
+                    L = "Código Mode-3/A no se ha extraido en el ultimo escaneo";
                     break;
                 default:
                     L = "N/A";
