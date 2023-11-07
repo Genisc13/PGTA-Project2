@@ -40,14 +40,23 @@ namespace ProyectoPGTA_P2
                 foreach (CAT48 items in lista)
                 {
                     Dictionary<int, List<string>> datos = items.GetDataDecodedPerItem();
-
+                    
                     // Itera a través de los datos y agrega cada fila al contenido CSV
                     foreach (var kvp in datos)
                     {
                         if (kvp.Key >= 1 && kvp.Key <= 28)
                         {
-                            //string rowData = string.Join(",", kvp.Key, kvp.Value[0], kvp.Value[1], kvp.Value[2]);
-                            string rowData = string.Join(";", kvp.Key, kvp.Value[0], kvp.Value[1]);
+                            StringBuilder rowDataBuilder = new StringBuilder();
+
+                            rowDataBuilder.Append(kvp.Key);
+
+                            foreach (string value in kvp.Value)
+                            {
+                                rowDataBuilder.Append(";");
+                                rowDataBuilder.Append(value);
+                            }
+
+                            string rowData = rowDataBuilder.ToString();
                             csvContent.AppendLine(rowData);
                         }
                     }

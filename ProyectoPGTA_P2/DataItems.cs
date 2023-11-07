@@ -373,11 +373,17 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
 
         public List<string> arrayString;
-        public string TYP, SIM, RPD, SPI, RAB;
-        public string FX1;
-        public string TST, ERR, XPP, ME, MI, FOE_FRI;
-        public string FX2;
-        public string ADSB_EP, ADSB_VAL, SCN_EP, SCN_VAL, PAI_EP, PAI_VAL;
+        public string TYP = "N/A";
+        public string SIM = "N/A";
+        public string RPD = "N/A";
+        public string SPI = "N/A";
+        public string RAB = "N/A";
+        public string FX1 = "N/A";
+        public string TST = "N/A";
+        public string ERR = "N/A";
+        public string XPP = "N/A", ME = "N/A", MI = "N/A", FOE_FRI = "N/A";
+        public string FX2 = "N/A";
+        public string ADSB_EP = "N/A", ADSB_VAL = "N/A", SCN_EP = "N/A", SCN_VAL = "N/A", PAI_EP = "N/A", PAI_VAL = "N/A";
 
         public List<string> data;
         
