@@ -59,11 +59,10 @@ namespace ProyectoPGTA_P2
                                     this.items[n + 21] = true;
                                 }
                                 
-                            }
-                            else if (n == 7)
-                            {
-                                finishFSPEC = true;
-                            }     
+                            }                                
+                        }else if (n == 7)
+                        {
+                            finishFSPEC = true;
                         }
                         n++;                        
                     }

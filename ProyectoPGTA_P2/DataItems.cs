@@ -1025,6 +1025,7 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public List<string> arrayString;
+        public string completeArraystring;
         public string[] AAmatrix = new string[8];
         public string AircraftIdentification;
 
@@ -1033,19 +1034,22 @@ namespace ProyectoPGTA_P2
         {
             this.number = 9;
             this.arrayHex = arrayhex;
-
+            this.completeArraystring = "";
             this.arrayString = new List<string>(arrayhex.Count);
 
             for (int i = 0; i < arrayhex.Count; i++)
             {
                 arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
             }
-
+            for (int i=0; i< arrayHex.Count; i++)
+            {
+                completeArraystring = completeArraystring.ToString() + arrayString[i].ToString();
+            }           
             string[] AA = new string[8];
 
             for (int i = 0;i < AA.Length; i++)
             {
-                AA[i] = String.Concat(arrayString[i*6], arrayString[i*6+1], arrayString[i*6+2], arrayString[i*6+3], arrayString[i*6+4], arrayString[i*6+5]);
+                AA[i] = String.Concat(completeArraystring[i*6].ToString(), completeArraystring[i*6+1].ToString(), completeArraystring[i*6+2].ToString(), completeArraystring[i*6+3].ToString(), completeArraystring[i*6+4].ToString(), completeArraystring[i*6+5].ToString());
 
                 AAmatrix[i] = decode6bit(AA[i]);
             }
