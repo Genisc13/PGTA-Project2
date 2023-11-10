@@ -922,6 +922,9 @@ namespace ProyectoPGTA_P2
             }
 
             string SAM_str = arrayString[0][2].ToString();
+
+            //2s complement
+
             if (SAM_str == "1")
             {
                 SAM_str = arrayString[index];
