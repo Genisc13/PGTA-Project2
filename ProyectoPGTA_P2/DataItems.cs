@@ -313,11 +313,13 @@ namespace ProyectoPGTA_P2
 
             SAC = arrayhex[0];
             SIC = arrayhex[1];
+            int SACint = Convert.ToInt32(SAC, 16);
+            int SICint = Convert.ToInt32(SIC, 16);
 
             //Console.WriteLine("SAC: " + SAC);
             //Console.WriteLine("SIC: " + SIC);
 
-            data = new List<string>{ "SAC", SAC, "SIC", SIC };
+            data = new List<string>{ "SAC", SACint.ToString(), "SIC", SICint.ToString() };
         }
 
         public List<string> GetData()
@@ -352,13 +354,18 @@ namespace ProyectoPGTA_P2
                 this.timestr += arrayString[i];
             }
 
-            this.time = Convert.ToInt32(timestr,2) / 128; //hora actual en segundos
+            this.time = Convert.ToInt32(timestr,2) / 128f; //hora actual en segundos
 
-            float hours = time / 3600;
-            float minutes = time % 3600 / 60;
-            float seconds = time - hours * 3600 - minutes * 60;
+            float hours = time / 3600f;
+            int trunchours = (int)Math.Truncate(hours);
+            float minutes = (hours - trunchours) * 60;
+            int truncminutes = (int)Math.Truncate(minutes);
+            float seconds = (minutes - truncminutes) * 60;
+            int truncseconds = (int)Math.Truncate(seconds);
+            float milsec = (seconds - truncseconds) * 1000;
+            int truncmilsec = (int)Math.Truncate(milsec);
 
-            this.data = new List<string> { "Time", time.ToString() };
+            this.data = new List<string> { "Time (sec)", trunchours.ToString() + ":" + truncminutes.ToString() + ":" + truncseconds.ToString() + ":" + truncmilsec.ToString()};
         }
         public List<string> GetData()
         {
@@ -706,7 +713,7 @@ namespace ProyectoPGTA_P2
             RHD = Convert.ToInt32(RHD_16, 16) / 256f;
             THETA = Convert.ToInt32(THETA_16, 16) * 45 / 8192f;
 
-            data = new List<string> { "TYP RHD", RHD.ToString(), "SIM THETA", THETA.ToString() };
+            data = new List<string> { "RHD", RHD.ToString() + " NM", "THETA", THETA.ToString() + " º"};
         }
         public List<string> GetData()
         {
@@ -806,7 +813,7 @@ namespace ProyectoPGTA_P2
         public List<string> arrayString;
 
         public string V, G;
-        public int FL;
+        public float FL;
         public List<string> data;
 
         public DataItem6(List<string> arrayhex)
@@ -852,7 +859,7 @@ namespace ProyectoPGTA_P2
             }
 
             string FL_BIN = String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
-            FL = Convert.ToInt32(FL_BIN, 2) / 4;
+            FL = Convert.ToInt32(FL_BIN, 2) / 4f;
 
             data = new List<string> { "V", V, "G", G, "FL", FL.ToString() };
         }
@@ -989,7 +996,7 @@ namespace ProyectoPGTA_P2
                 APD = -1;
             }
             
-            data = new List<string> { "SRL", SRL.ToString(), "SRR", SRR.ToString(), "SAM", SAM.ToString(), "PRL", PRL.ToString(), "PAM", PAM.ToString(), "RPD", RPD.ToString(), "APD", APD.ToString() };
+            data = new List<string> { "SRL", SRL.ToString() + " dg", "SRR", SRR.ToString(), "SAM", SAM.ToString() + " dbm", "PRL", PRL.ToString() + " dg", "PAM", PAM.ToString() + " dbm", "RPD", RPD.ToString() + " NM", "APD", APD.ToString() + " dg" };
         }
         public List<string> GetData()
         {
@@ -1065,218 +1072,84 @@ namespace ProyectoPGTA_P2
 
             switch (a)
             {
-                case "000001":
-                    result = "P"; break;
-                case "000010":
-                    result = " "; break;
-                case "000011":
-                    result = "0"; break;
-                case "000100":
+                case "100000":
                     result = "A"; break;
-                case "000101":
-                    result = "Q"; break;
-                case "000111":
-                    result = "1"; break;
-                case "001000":
-                    result = "B"; break;
-                case "001001":
-                    result = "R"; break;
-                case "001011":
-                    result = "2"; break;
-                case "001100":
-                    result = "C"; break;
-                case "001101":
-                    result = "S"; break;
-                case "001111":
-                    result = "3"; break;
                 case "010000":
+                    result = "B"; break;
+                case "110000":
+                    result = "C"; break;
+                case "001000":
                     result = "D"; break;
-                case "010001":
-                    result = "T"; break;
-                case "010011":
-                    result = "4"; break;
-                case "010100":
+                case "101000":
                     result = "E"; break;
-                case "010101":
-                    result = "U"; break;
-                case "010111":
-                    result = "5"; break;
                 case "011000":
                     result = "F"; break;
-                case "011001":
-                    result = "V"; break;
-                case "011011":
-                    result = "6"; break;
-                case "011100":
+                case "111000":
                     result = "G"; break;
-                case "011101":
-                    result = "W"; break;
-                case "011111":
-                    result = "7"; break;
-                case "100000":
+                case "000100":
                     result = "H"; break;
-                case "100001":
-                    result = "X"; break;
-                case "100011":
-                    result = "8"; break;
                 case "100100":
                     result = "I"; break;
-                case "100101":
-                    result = "Y"; break;
-                case "100111":
-                    result = "9"; break;
-                case "101000":
+                case "010100":
                     result = "J"; break;
-                case "101001":
-                    result = "Z"; break;
-                case "101100":
-                    result = "K"; break;
-                case "110000":
-                    result = "L"; break;
                 case "110100":
+                    result = "K"; break;
+                case "001100":
+                    result = "L"; break;
+                case "101100":
                     result = "M"; break;
-                case "111000":
+                case "011100":
                     result = "N"; break;
                 case "111100":
                     result = "O"; break;
+                case "000010":
+                    result = "P"; break;
+                case "100010":
+                    result = "Q"; break;
+                case "010010":
+                    result = "R"; break;
+                case "110010":
+                    result = "S"; break;
+                case "001010":
+                    result = "T"; break;
+                case "101010":
+                    result = "U"; break;
+                case "011010":
+                    result = "V"; break;
+                case "111010":
+                    result = "W"; break;
+                case "000110":
+                    result = "X"; break;
+                case "100110":
+                    result = "Y"; break;
+                case "010110":
+                    result = "Z"; break;
+                case "000011":
+                    result = "0"; break;
+                case "100011":
+                    result = "1"; break;
+                case "010011":
+                    result = "2"; break;
+                case "110011":
+                    result = "3"; break;
+                case "001011":
+                    result = "4"; break;
+                case "101011":
+                    result = "5"; break;
+                case "011011":
+                    result = "6"; break;
+                case "111011":
+                    result = "7"; break;
+                case "000111":
+                    result = "8"; break;
+                case "100111":
+                    result = "9"; break;
+                case "000001":
+                    result = " "; break;
                 default:
                     result = ""; break;
             }
 
-            /*
-            switch (a){
-                case "000000":
-                    result = "A"; break;
-                case "000001":
-                    result = "B"; break;
-                case "000010":
-                    result = "C"; break;
-                case "000011":
-                    result = "D"; break;
-                case "000100":
-                    result = "E"; break;
-                case "000101":
-                    result = "F"; break;
-                case "000110":
-                    result= "G"; break;
-                case "000111":
-                    result = "H"; break;
-                case "001000":
-                    result = "I"; break;
-                case "001001":
-                    result = "J"; break;
-                case "001010":
-                    result = "K"; break;
-                case "001011":
-                    result = "L"; break;
-                case "001100":
-                    result = "M"; break;
-                case "001101":
-                    result = "N"; break;
-                case "001110":
-                    result = "O"; break;
-                case "001111":
-                    result = "P"; break;
-                case "010000":
-                    result = "Q"; break;
-                case "010001":
-                    result = "R"; break;
-                case "010010":
-                    result = "S"; break;
-                case "010011":
-                    result = "T"; break;
-                case "010100":
-                    result = "U"; break;
-                case "010101":
-                    result = "V"; break;
-                case "010110":
-                    result = "W"; break;
-                case "010111":
-                    result = "X"; break;
-                case "011000":
-                    result = "Y"; break;
-                case "011001":
-                    result = "Z"; break;
-                case "011010":
-                    result = "a"; break;
-                case "011011":
-                    result = "b"; break;
-                case "011100":
-                    result = "c"; break;
-                case "011101":
-                    result = "d"; break;
-                case "011110":
-                    result = "e"; break;
-                case "011111":
-                    result = "f"; break;
-                case "100000":
-                    result = "g"; break;
-                case "100001":
-                    result = "h"; break;
-                case "100010":
-                    result = "i"; break;
-                case "100011":
-                    result = "j"; break;
-                case "100100":
-                    result = "k"; break;
-                case "100101":
-                    result = "l"; break;
-                case "100110":
-                    result = "m"; break;
-                case "100111":
-                    result = "n"; break;
-                case "101000":
-                    result = "o"; break;
-                case "101001":
-                    result = "p"; break;
-                case "101010":
-                    result = "q"; break;
-                case "101011":
-                    result = "r"; break;
-                case "101100":
-                    result = "s"; break;
-                case "101101":
-                    result = "t"; break;
-                case "101110":
-                    result = "u"; break;
-                case "101111":
-                    result = "v"; break;
-                case "110000":
-                    result = "w"; break;
-                case "110001":
-                    result = "x"; break;
-                case "110010":
-                    result = "y"; break;
-                case "110011":
-                    result = "z"; break;
-                case "110100":
-                    result = "0"; break;
-                case "110101":
-                    result = "1"; break;
-                case "110110":
-                    result = "2"; break;
-                case "110111":
-                    result = "3"; break;
-                case "111000":
-                    result = "4"; break;
-                case "111001":
-                    result = "5"; break;
-                case "111010":
-                    result = "6"; break;
-                case "111011":
-                    result = "7"; break;
-                case "111100":
-                    result = "8"; break;
-                case "111101":
-                    result = "9"; break;
-                case "111110":
-                    result = "+"; break;
-                case "111111":
-                    result = "/"; break;
-                default:
-                    result = " "; break;
-            }
-            */
             return result;
         }
 
@@ -1294,7 +1167,7 @@ namespace ProyectoPGTA_P2
         public string[] arrayString;
         public int REP;
 
-        public List<string> data;
+        public List<string> data = new List<string>();
         public DataItem10(List<string> arrayhex)
         {
             this.number = 10;
@@ -1307,8 +1180,7 @@ namespace ProyectoPGTA_P2
                 arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
             }
 
-            string REP_str = arrayString[0];
-            REP = Convert.ToInt32(arrayString[1], 2);
+            REP = Convert.ToInt32(arrayString[0], 2);
 
             for (int i = 0; i < REP; i++)
             {
@@ -1328,10 +1200,10 @@ namespace ProyectoPGTA_P2
                 float BarometricAlt = 0f;
                 float InertialVerticalVel = 0f;
 
-                List<string> dataBDS;
-
-                int shift = REP * 7;
+                int shift = i * 7;
                 BDSDATA = String.Concat(arrayString[shift + 1], arrayString[shift + 2], arrayString[shift + 3], arrayString[shift + 4], arrayString[shift + 5], arrayString[shift + 6], arrayString[shift + 7]);
+
+                string dataBDSstr;
 
                 BDS1 = Convert.ToInt32(String.Concat(arrayString[8][0], arrayString[8][1], arrayString[8][2], arrayString[8][3]), 2).ToString();
                 BDS2 = Convert.ToInt32(String.Concat(arrayString[8][4], arrayString[8][5], arrayString[8][6], arrayString[8][7]), 2).ToString();
@@ -1341,7 +1213,9 @@ namespace ProyectoPGTA_P2
                 switch (BDSver)
                 {
                     case "4.0":
-                    //NADA AUN
+                        //NADA AUN
+                        dataBDSstr = "BDS 4.0";
+                        break;
                     case "5.0":
                         RollAngle = Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10]), 2) * 45 / 256f;
                         TrueTrackAngle = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2) * 90 / 512f;
@@ -1349,7 +1223,8 @@ namespace ProyectoPGTA_P2
                         TrackAngleRate = ((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 8 / 256f;
                         TAS = Convert.ToInt32(String.Concat(BDSDATA[46], BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 2f;
 
-                        dataBDS = new List<string> { "REP", REP.ToString(), "BDS Version", BDSver, "Roll Angle: ", RollAngle.ToString(), "True Track Angle: ", TrueTrackAngle.ToString(), "Ground Speed: ", GS.ToString(), "Track Angle Rate: ", TrackAngleRate.ToString(), "True Air Speed: ", TAS.ToString() };
+                        dataBDSstr = "REP;" + REP.ToString() + ";BDS Version;" + BDSver + ";Roll Angle:;" + RollAngle.ToString() +";True Track Angle:;" +TrueTrackAngle.ToString()+ ";Ground Speed;"+GS.ToString()+";Track Angle Rate:;"+TrackAngleRate.ToString()+";True Air Speed:;" + TAS.ToString();
+                        
                         break;
                     case "6.0":
                         MagneticHeading = Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11]), 2) * 90 / 512f;
@@ -1357,16 +1232,16 @@ namespace ProyectoPGTA_P2
                         MACH = Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 4f;
                         BarometricAlt = ((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 32f;
                         InertialVerticalVel = ((-1) ^ Convert.ToInt32(BDSDATA[46])) * Convert.ToInt32(String.Concat(BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 32f;
+
+                        dataBDSstr = "Magnetic Heading:;" + MagneticHeading.ToString()+";Indicated Air Speed:;" +IAS.ToString() + ";MACH Number: ;"+MACH.ToString()+ ";Barometric Altitude:;"+ BarometricAlt.ToString()+";Inertial Vertical Velocity;" +InertialVerticalVel.ToString();
                         
-                        dataBDS = new List<string> { "Magnetic Heading: ", MagneticHeading.ToString(), "Indicated Air Speed: ", IAS.ToString(), "MACH Number: ", MACH.ToString(), "Barometric Altitude: ", BarometricAlt.ToString(), "Inertial Vertical Velocity: ", InertialVerticalVel.ToString() };
                         break;
                     default:
-
-                        dataBDS = null;
+                        dataBDSstr = "Null";
                         break;
                 }
 
-                data.Add(dataBDS.ToString());
+                data.Add(dataBDSstr);
             }
 
         }
@@ -1430,7 +1305,7 @@ namespace ProyectoPGTA_P2
             Xcord = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1]))/128f;
             Ycord = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3]))/128f;
 
-            data = new List<string> { "X", Xcord.ToString(), "Y", Ycord.ToString()};
+            data = new List<string> { "X", Xcord.ToString() + " NM", "Y", Ycord.ToString() + " NM" };
         }
         public List<string> GetData()
         {
@@ -1457,10 +1332,10 @@ namespace ProyectoPGTA_P2
                 arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
             }
 
-            GS = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1])) / 16384f;
-            HEAD = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3])) * 45 / 8192f;
+            GS = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1]), 2) / 16384f;
+            HEAD = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3]), 2) * 45 / 8192f;
 
-            data = new List<string> { "Ground Speed", GS.ToString(), "Heading", HEAD.ToString()};
+            data = new List<string> { "Ground Speed", GS.ToString() + " kt", "Heading", HEAD.ToString() + " º"};
         }
         public List<string> GetData()
         {
@@ -1474,9 +1349,9 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public List<string> data;
-        public string CNF, RAD, DOU, MAH, CDM;
+        public string CNF = "N/A", RAD = "N/A", DOU = "N/A", MAH = "N/A", CDM = "N/A";
         public int FX1;
-        public string TRE, GHO, SUP, TCC;
+        public string TRE = "N/A", GHO = "N/A", SUP = "N/A", TCC = "N/A";
         public int FX2;
 
         public string[] arrayString;
@@ -1569,59 +1444,61 @@ namespace ProyectoPGTA_P2
 
             FX1 = Convert.ToInt32(arrayString[0][7]);
 
-            TRE = Convert.ToString(arrayString[1][0]);
-            switch (TRE)
-            {
-                case "0":
-                    TRE = "Track still alive";
-                    break;
-                case "1":
-                    TRE = "End of track lifetime";
-                    break;
-                default:
-                    break;
-            }
+            if (FX1 == 1 ){ 
+                TRE = Convert.ToString(arrayString[1][0]);
+                switch (TRE)
+                {
+                    case "0":
+                        TRE = "Track still alive";
+                        break;
+                    case "1":
+                        TRE = "End of track lifetime";
+                        break;
+                    default:
+                        break;
+                }
 
-            GHO = Convert.ToString(arrayString[1][1]);
-            switch (GHO)
-            {
-                case "0":
-                    GHO = "True target track";
-                    break;
-                case "1":
-                    GHO = "Ghost target track";
-                    break;
-                default:
-                    break;
-            }
+                GHO = Convert.ToString(arrayString[1][1]);
+                switch (GHO)
+                {
+                    case "0":
+                        GHO = "True target track";
+                        break;
+                    case "1":
+                        GHO = "Ghost target track";
+                        break;
+                    default:
+                        break;
+                }
 
-            SUP = Convert.ToString(arrayString[1][2]);
-            switch (SUP)
-            {
-                case "0":
-                    SUP = "No";
-                    break;
-                case "1":
-                    SUP = "Yes";
-                    break;
-                default:
-                    break;
-            }
+                SUP = Convert.ToString(arrayString[1][2]);
+                switch (SUP)
+                {
+                    case "0":
+                        SUP = "No";
+                        break;
+                    case "1":
+                        SUP = "Yes";
+                        break;
+                    default:
+                        break;
+                }
 
-            TCC = Convert.ToString(arrayString[1][3]);
-            switch (TCC)
-            {
-                case "0":
-                    TCC = "Tracking in Radar-Plane mode";
-                    break;
-                case "1":
-                    TCC = "Slant range correction";
-                    break;
-                default:
-                    break;
-            }
+                TCC = Convert.ToString(arrayString[1][3]);
+                switch (TCC)
+                {
+                    case "0":
+                        TCC = "Tracking in Radar-Plane mode";
+                        break;
+                    case "1":
+                        TCC = "Slant range correction";
+                        break;
+                    default:
+                        break;
+                }
 
-            FX2 = Convert.ToInt32(arrayString[1][7]);
+                FX2 = Convert.ToInt32(arrayString[1][7]);
+             }
 
             data = new List<string>{ "CNF", CNF, "RAD", RAD, "DOU", DOU, "MAH", MAH, "CDM", CDM, "TRE", TRE, "GHO", GHO, "SUP", SUP, "TCC", TCC};
         }
@@ -1722,7 +1599,7 @@ namespace ProyectoPGTA_P2
 
             Height3D = Convert.ToInt32(String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]), 2)*25;
 
-            data = new List<string> { "3D Height", Height3D.ToString()};
+            data = new List<string> { "3D Height", Height3D.ToString() + " ft" };
         }
         public List<string> GetData()
         {

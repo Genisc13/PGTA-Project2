@@ -53,7 +53,14 @@ namespace ProyectoPGTA_P2
                             foreach (string value in kvp.Value)
                             {
                                 rowDataBuilder.Append(";");
-                                rowDataBuilder.Append(value);
+                                if (value.Contains(","))
+                                {
+                                    rowDataBuilder.Append(value.Replace(",","."));
+                                }
+                                else
+                                {
+                                    rowDataBuilder.Append(value);
+                                } 
                             }
 
                             string rowData = rowDataBuilder.ToString();
@@ -63,7 +70,7 @@ namespace ProyectoPGTA_P2
                 }
 
                 // Guarda el contenido en un archivo CSV
-                File.WriteAllText(filePath + "Data.csv", csvContent.ToString());
+                File.WriteAllText(filePath + "Data.txt", csvContent.ToString());
 
                 // Muestra un mensaje de confirmación
                 MessageBox.Show("Archivo CSV generado exitosamente." + filePath + "Data.csv");
