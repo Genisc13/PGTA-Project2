@@ -1642,8 +1642,8 @@ namespace ProyectoPGTA_P2
             string comVector = Convert.ToString(binaryByte[0])+ Convert.ToString(binaryByte[1])+ Convert.ToString(binaryByte[2]);
             string statVector = Convert.ToString(binaryByte[3]) + Convert.ToString(binaryByte[4]) + Convert.ToString(binaryByte[5]);
             string si = Convert.ToString(binaryByte[6]);
-            string com = Convert.ToString(BinaryToDecimal(comVector));
-            string stat = Convert.ToString(BinaryToDecimal(statVector));
+            string com =Convert.ToString( Convert.ToInt32(comVector,2));
+            string stat = Convert.ToString(Convert.ToInt32(statVector, 2));
             
             string binaryByte2 = Convert.ToString(Convert.ToInt32(arrayHex[1], 16), 2).PadLeft(8, '0');
             string mssc = Convert.ToString(binaryByte2[0]);
@@ -1653,23 +1653,23 @@ namespace ProyectoPGTA_P2
             string b1b = Convert.ToString(binaryByte2[4])+ Convert.ToString(binaryByte2[5])+ Convert.ToString(binaryByte2[6])+ Convert.ToString(binaryByte2[7]);
             B1A = b1a;
             B1B = b1b;
-            if(string.Compare(com,"0")==0)
+            if(Convert.ToInt32(com)==0)
             {
                 COM = "No communications capability (surveillance only)";
             }
-            else if (string.Compare(com, "1") == 0)
+            else if (Convert.ToInt32(com) == 1)
             {
                 COM = "Comm. A and Comm. B capability";
             }
-            else if (string.Compare(com, "2") == 0)
+            else if (Convert.ToInt32(com) == 2)
             {
                 COM = "Comm. A, Comm. B and Uplink ELM";
             }
-            else if (string.Compare(com, "3") == 0)
+            else if (Convert.ToInt32(com) == 3)
             {
                 COM = "Comm. A, Comm. B, Uplink ELM and Downlink";
             }
-            else if (string.Compare(com, "4") == 0)
+            else if (Convert.ToInt32(com) == 4)
             {
                 COM = "Level 5 Transponder capability";
             }
@@ -1678,40 +1678,40 @@ namespace ProyectoPGTA_P2
                 COM = "Not assigned";
             }
 
-            if (string.Compare(stat, "0") == 0)
+            if (Convert.ToInt32(stat) == 0)
             {
                 STAT = "No alert, no SPI, aircraft airborne";
             }
-            else if (string.Compare(stat, "1") == 0)
+            else if (Convert.ToInt32(stat) == 1)
             {
                 STAT = "No alert, no SPI, aircraft on ground";
             }
-            else if (string.Compare(stat, "2") == 0)
+            else if (Convert.ToInt32(stat) == 2)
             {
                 STAT = "Alert, no SPI, aircraft airborne";
             }
-            else if (string.Compare(stat, "3") == 0)
+            else if (Convert.ToInt32(stat) == 3)
             {
                 STAT = "Alert, no SPI, aircraft on ground";
             }
-            else if (string.Compare(stat, "4") == 0)
+            else if (Convert.ToInt32(stat) == 4)
             {
                 STAT = "Alert,SPI, aircraft airborne or on ground";
             }
-            else if (string.Compare(stat, "5") == 0)
+            else if (Convert.ToInt32(stat) == 5)
             {
                 STAT = "No alert,SPI, aircraft airborne or on ground";
             }
-            else if (string.Compare(stat, "6") == 0)
+            else if (Convert.ToInt32(stat) == 6)
             {
                 STAT = "Not assigned";
             }
-            else if (string.Compare(stat, "7") == 0)
+            else if (Convert.ToInt32(stat) == 7)
             {
                 STAT = "Unknown";
             }
 
-            if (string.Compare(si, "0") == 0)
+            if (Convert.ToInt32(si,2) == 0)
             {
                 SI = "Transponder capable on SI";
             }
@@ -1719,7 +1719,7 @@ namespace ProyectoPGTA_P2
             {
                 SI = "Transponder capable on II";
             }
-            if (string.Compare(mssc, "0") == 0)
+            if (Convert.ToInt32(mssc, 2) == 0)
             {
                 MSSC = "Not Capability of the specific service of the Mode-S";
             }
@@ -1727,7 +1727,7 @@ namespace ProyectoPGTA_P2
             {
                 MSSC = "Capability of the specific service of the Mode-S";
             }
-            if (string.Compare(arc, "0") == 0)
+            if (Convert.ToInt32(arc, 2) == 0)
             {
                 ARC = "100ft of resolution";
             }
@@ -1735,7 +1735,7 @@ namespace ProyectoPGTA_P2
             {
                 ARC = "25ft of resolution";
             }
-            if (string.Compare(aic, "0") == 0)
+            if (Convert.ToInt32(aic, 2) == 0)
             {
                 AIC = "Not capable of identify itself";
             }
@@ -1750,22 +1750,6 @@ namespace ProyectoPGTA_P2
         {
             return this.data;
         }
-
-        private int BinaryToDecimal(string binary)
-        {
-            char[] binaryArray = binary.ToCharArray();
-            Array.Reverse(binaryArray);
-            int decimalValue = 0;
-            for (int i = 0; i < binaryArray.Length; i++)
-            {
-                if (binaryArray[i] == '1')
-                {
-                    decimalValue += (int)Math.Pow(2, i);
-                }
-            }
-            return decimalValue;
-        }
-
     }
 
     //Data Item I048/260, ACAS Resolution Advisory Report.
