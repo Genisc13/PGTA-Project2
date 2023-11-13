@@ -1209,13 +1209,13 @@ namespace ProyectoPGTA_P2
                 float BarometricAlt = 0f;
                 float InertialVerticalVel = 0f;
 
-                int shift = i * 7;
+                int shift = i * 8;
                 BDSDATA = String.Concat(arrayString[shift + 1], arrayString[shift + 2], arrayString[shift + 3], arrayString[shift + 4], arrayString[shift + 5], arrayString[shift + 6], arrayString[shift + 7]);
 
                 string dataBDSstr;
 
-                BDS1 = Convert.ToInt32(String.Concat(arrayString[8][0], arrayString[8][1], arrayString[8][2], arrayString[8][3]), 2).ToString();
-                BDS2 = Convert.ToInt32(String.Concat(arrayString[8][4], arrayString[8][5], arrayString[8][6], arrayString[8][7]), 2).ToString();
+                BDS1 = Convert.ToInt32(String.Concat(arrayString[shift + 8][0], arrayString[shift + 8][1], arrayString[shift + 8][2], arrayString[shift + 8][3]), 2).ToString();
+                BDS2 = Convert.ToInt32(String.Concat(arrayString[shift + 8][4], arrayString[shift + 8][5], arrayString[shift + 8][6], arrayString[shift + 8][7]), 2).ToString();
 
                 BDSver = BDS1 + "." + BDS2;
 
