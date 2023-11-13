@@ -36,7 +36,7 @@ namespace ProyectoPGTA_P2
                 string hexByte = arrayHex[i];
                 string binaryByte = Convert.ToString(Convert.ToInt32(hexByte, 16), 2).PadLeft(8, '0');
                 
-                if (i>=3 && i<=6  && finishFSPEC == false)
+                if (i>=3 && i<=6 && finishFSPEC == false)
                 {
                     n = 0;
                     while (n < binaryByte.Length)
@@ -69,6 +69,7 @@ namespace ProyectoPGTA_P2
                     i++;
                     continue;
                 }
+
                 //Item 1
                 if (items[0] == true)
                 {
@@ -142,6 +143,12 @@ namespace ProyectoPGTA_P2
                     continue;
 
                 }
+                /*
+                else
+                {
+                    itemContainer.SetDataItem5(new DataItem5());
+                }
+                */
                 //Item 6
                 else if (items[5] == true)
                 {

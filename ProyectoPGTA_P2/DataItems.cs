@@ -365,7 +365,7 @@ namespace ProyectoPGTA_P2
             float milsec = (seconds - truncseconds) * 1000;
             int truncmilsec = (int)Math.Truncate(milsec);
 
-            this.data = new List<string> { "Time (sec)", trunchours.ToString() + ":" + truncminutes.ToString() + ":" + truncseconds.ToString() + ":" + truncmilsec.ToString()};
+            this.data = new List<string> { "Time", trunchours.ToString() + ":" + truncminutes.ToString() + ":" + truncseconds.ToString() + ":" + truncmilsec.ToString()};
         }
         public List<string> GetData()
         {
@@ -382,7 +382,7 @@ namespace ProyectoPGTA_P2
         public List<string> arrayString;
         public string TYP = "N/A";
         public string SIM = "N/A";
-        public string RPD = "N/A";
+        public string RDP = "N/A";
         public string SPI = "N/A";
         public string RAB = "N/A";
         public string FX1 = "N/A";
@@ -455,17 +455,17 @@ namespace ProyectoPGTA_P2
                     break;
             }
 
-            RPD = a[4].ToString();
-            switch (RPD)
+            RDP = a[4].ToString();
+            switch (RDP)
             {
                 case "0":
-                    RPD = "Report from RDP Chain 1";
+                    RDP = "Report from RPD Chain 1";
                     break;
                 case "1":
-                    RPD = "Report from RDP Chain 2";
+                    RDP = "Report from RPD Chain 2";
                     break;
                 default:
-                    RPD = "N/A";
+                    RDP = "N/A";
                     break;
             }
 
@@ -685,7 +685,7 @@ namespace ProyectoPGTA_P2
 
                 }
             }
-            data = new List<string> { "TYP", TYP, "SIM", SIM, "RPD", RPD, "SPI", SPI, "RAB", RAB, "TST", TST, "ERR", ERR, "XPP", XPP, "ME", ME, "MI", MI, "FOE/FRI", FOE_FRI, "ADSB_EP", ADSB_EP, "ADSB_VAL", ADSB_VAL, "SCN_EP", SCN_EP, "SCN_VAL", SCN_VAL, "PAI_EP", PAI_EP, "PAI_VAL", PAI_VAL };
+            data = new List<string> { "TYP", TYP, "SIM", SIM, "RDP", RDP, "SPI", SPI, "RAB", RAB, "TST", TST, "ERR", ERR, "XPP", XPP, "ME", ME, "MI", MI, "FOE/FRI", FOE_FRI, "ADSB_EP", ADSB_EP, "ADSB_VAL", ADSB_VAL, "SCN_EP", SCN_EP, "SCN_VAL", SCN_VAL, "PAI_EP", PAI_EP, "PAI_VAL", PAI_VAL };
 
         }
         public List<string> GetData()
@@ -731,6 +731,10 @@ namespace ProyectoPGTA_P2
         public string V, G, L, Mode3;
         public List<string> data;
 
+        public DataItem5()
+        {
+            data = new List<string> { "V", "N/A", "G", "N/A", "L", "N/A", "Mode3", "N/A" };
+        }
         public DataItem5(List<string> arrayhex)
         {
             this.number = 5;
@@ -876,7 +880,7 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public List<string> arrayString = new List<string>();
 
-        public float SRL, SRR, SAM, PRL, PAM, RPD, APD;
+        public string SRL, SRR, SAM, PRL, PAM, RPD, APD;
         public string FX1;
         public List<string> data;
 
@@ -891,115 +895,111 @@ namespace ProyectoPGTA_P2
             }
             int index = 1;
 
-            string SRL_str = arrayString[0][0].ToString();
-            if (SRL_str == "1")
+            SRL = arrayString[0][0].ToString();
+            if (SRL == "1")
             {
-                SRL_str = arrayString[index];
-                SRL = Convert.ToInt32(SRL_str, 2) * 45 / 1024f;
+                SRL = arrayString[index];
+                SRL = (Convert.ToInt32(SRL, 2) * 45 / 1024f).ToString();
+
+                index++;
+            }
+            else
+            {
+                SRL = "N/A";
+            }
+
+            SRR = arrayString[0][1].ToString();
+            if (SRR == "1")
+            {
+                SRR = arrayString[index];
+                SRR = (Convert.ToInt32(SRR, 2)).ToString();
 
                 index++;
 
             }
             else
             {
-                SRL_str = "N/A";
-                SRL = -1;
+                SRR = "N/A";
             }
 
-            string SRR_str = arrayString[0][1].ToString();
-            if (SRR_str == "1")
+            SAM = arrayString[0][2].ToString();
+
+            if (SAM == "1")
             {
-                SRR_str = arrayString[index];
-                SRR = Convert.ToInt32(SRR_str, 2);
+                SAM = arrayString[index];
+                
+                //2s complement
+                
+                byte b = Convert.ToByte(SAM, 2);
+                byte complement = (byte)~b;
+                byte twosComplement = (byte)(complement + 1);
+                SAM = "-" + Convert.ToString(twosComplement, 2).PadLeft(8, '0');
 
                 index++;
 
             }
             else
             {
-                SRR_str = "N/A";
-                SRR = -1;
+                SAM = "N/A";
             }
 
-            string SAM_str = arrayString[0][2].ToString();
-
-            //2s complement
-
-            if (SAM_str == "1")
+            PRL = arrayString[0][3].ToString();
+            if (PRL == "1")
             {
-                SAM_str = arrayString[index];
-                SAM = Convert.ToInt32(SAM_str, 2);
+                PRL = arrayString[index];
+                PRL = (Convert.ToInt32(PRL, 2) * 45 / 1024f).ToString();
 
                 index++;
 
             }
             else
             {
-                SAM_str = "N/A";
-                SAM = -1;
+                PRL = "N/A";
             }
 
-            string PRL_str = arrayString[0][3].ToString();
-            if (PRL_str == "1")
+            PAM = arrayString[0][4].ToString();
+            if (PAM == "1")
             {
-                PRL_str = arrayString[index];
-                PRL = Convert.ToInt32(PRL_str, 2) * 45 / 1024f;
+                PAM = arrayString[index];
+                PAM = (Convert.ToInt32(PAM, 2)).ToString();
 
                 index++;
 
             }
             else
             {
-                PRL_str = "N/A";
-                PRL = -1;
+                PAM = "N/A";
             }
 
-            string PAM_str = arrayString[0][4].ToString();
-            if (PAM_str == "1")
+            RPD = arrayString[0][5].ToString();
+            if (RPD == "1")
             {
-                PAM_str = arrayString[index];
-                PAM = Convert.ToInt32(PAM_str, 2);
+                RPD = arrayString[index];
+                RPD = (Convert.ToInt32(RPD, 2) / 256f).ToString();
 
                 index++;
 
             }
             else
             {
-                PAM_str = "N/A";
-                PAM = -1;
+                RPD = "N/A";
             }
 
-            string RPD_str = arrayString[0][5].ToString();
-            if (RPD_str == "1")
+            APD = arrayString[0][6].ToString();
+            if (APD == "1")
             {
-                RPD_str = arrayString[index];
-                RPD = Convert.ToInt32(RPD_str, 2) / 256f;
+                APD = arrayString[index];
+                APD = (Convert.ToInt32(APD, 2) * 45 / 2048f).ToString();
 
                 index++;
 
             }
             else
             {
-                RPD_str = "N/A";
-                RPD = -1;
-            }
-
-            string APD_str = arrayString[0][6].ToString();
-            if (APD_str == "1")
-            {
-                APD_str = arrayString[index];
-                APD = Convert.ToInt32(APD_str, 2) * 45 / 2048f;
-
-                index++;
-
-            }
-            else
-            {
-                APD_str = "N/A";
-                APD = -1;
+                APD = "N/A";
             }
             
-            data = new List<string> { "SRL", SRL.ToString() + " dg", "SRR", SRR.ToString(), "SAM", SAM.ToString() + " dbm", "PRL", PRL.ToString() + " dg", "PAM", PAM.ToString() + " dbm", "RPD", RPD.ToString() + " NM", "APD", APD.ToString() + " dg" };
+            data = new List<string> { "SRL", SRL + " dg", "SRR", SRR, "SAM", SAM + " dbm", "PRL", PRL + " dg", "PAM", PAM + " dbm", "RPD", RPD + " NM", "APD", APD + " dg" };
         }
         public List<string> GetData()
         {
@@ -1634,6 +1634,7 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public List<string> data;
         public string COM, STAT, SI, MSSC, ARC, AIC, B1A, B1B;
+
         public DataItem21(List<string> arrayhex)
         {
             this.number = 21;
@@ -1744,7 +1745,7 @@ namespace ProyectoPGTA_P2
                 AIC = "Capable of identifying itself";
             }
 
-            data = new List<string> { "COM", COM.ToString(),"STAT",STAT.ToString(), "SI", SI.ToString(), "MSSC",ARC.ToString(), "AIC",AIC.ToString(), "B1A",B1A.ToString(), "B1B",B1B.ToString() };
+            data = new List<string> { "COM", COM.ToString(),"STAT",STAT.ToString(), "SI", SI.ToString(), "MSSC", MSSC, "ARC",ARC.ToString(), "AIC",AIC.ToString(), "B1A",B1A.ToString(), "B1B",B1B.ToString() };
         }
         public List<string> GetData()
         {
