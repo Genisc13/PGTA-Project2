@@ -933,7 +933,8 @@ namespace ProyectoPGTA_P2
                 byte b = Convert.ToByte(SAM, 2);
                 byte complement = (byte)~b;
                 byte twosComplement = (byte)(complement + 1);
-                SAM = "-" + Convert.ToString(twosComplement, 2).PadLeft(8, '0');
+                SAM = Convert.ToString(twosComplement, 2).PadLeft(8, '0');
+                SAM = "-" + Convert.ToInt32(SAM, 2).ToString();
 
                 index++;
 
@@ -1019,6 +1020,11 @@ namespace ProyectoPGTA_P2
         {
             this.number = 8;
             this.arrayHex = arrayhex;
+
+            for (int i = 0; i < arrayhex.Count; i++)
+            {
+                arrayhex[i] = arrayhex[i].PadLeft(2, '0');
+            }
 
             AircraftAddress = String.Concat(this.arrayHex[0], this.arrayHex[1], this.arrayHex[2]);
             data = new List<string> { "Aircraft Address", AircraftAddress };
