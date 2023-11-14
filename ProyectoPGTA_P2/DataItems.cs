@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ProyectoPGTA_P2
 {
@@ -374,7 +377,7 @@ namespace ProyectoPGTA_P2
             float milsec = (seconds - truncseconds) * 1000;
             int truncmilsec = (int)Math.Truncate(milsec);
 
-            this.data = new List<string> { "Time", trunchours.ToString() + ":" + truncminutes.ToString() + ":" + truncseconds.ToString() + ":" + truncmilsec.ToString()};
+            this.data = new List<string> { "Time", trunchours.ToString().PadLeft(2, '0') + ":" + truncminutes.ToString().PadLeft(2, '0') + ":" + truncseconds.ToString().PadLeft(2, '0') + ":" + truncmilsec.ToString().PadLeft(3, '0') };
         }
         public List<string> GetData()
         {
@@ -389,17 +392,17 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
 
         public List<string> arrayString;
-        public string TYP;
-        public string SIM;
-        public string RDP;
-        public string SPI;
-        public string RAB;
-        public string FX1="1";
-        public string TST;
-        public string ERR;
-        public string XPP, ME, MI, FOE_FRI;
-        public string FX2;
-        public string ADSB_EP, ADSB_VAL, SCN_EP, SCN_VAL, PAI_EP, PAI_VAL;
+        public string TYP = "N/A";
+        public string SIM = "N/A";
+        public string RDP = "N/A";
+        public string SPI = "N/A";
+        public string RAB = "N/A";
+        public string FX1 = "N/A";
+        public string TST = "N/A";
+        public string ERR = "N/A";
+        public string XPP = "N/A", ME = "N/A", MI = "N/A", FOE_FRI = "N/A";
+        public string FX2 = "N/A";
+        public string ADSB_EP = "N/A", ADSB_VAL = "N/A", SCN_EP = "N/A", SCN_VAL = "N/A", PAI_EP = "N/A", PAI_VAL = "N/A";
 
         public List<string> data;
         
@@ -928,7 +931,7 @@ namespace ProyectoPGTA_P2
             if (SRL == "1")
             {
                 SRL = arrayString[index];
-                SRL = (Convert.ToInt32(SRL, 2) * 45 / 1024f).ToString();
+                SRL = (Convert.ToInt32(SRL, 2) * 45 / 1024f).ToString() + " dg";
 
                 index++;
             }
@@ -963,7 +966,7 @@ namespace ProyectoPGTA_P2
                 byte complement = (byte)~b;
                 byte twosComplement = (byte)(complement + 1);
                 SAM = Convert.ToString(twosComplement, 2).PadLeft(8, '0');
-                SAM = "-" + Convert.ToInt32(SAM, 2).ToString();
+                SAM = "-" + Convert.ToInt32(SAM, 2).ToString() + " dbm";
 
                 index++;
 
@@ -977,7 +980,7 @@ namespace ProyectoPGTA_P2
             if (PRL == "1")
             {
                 PRL = arrayString[index];
-                PRL = (Convert.ToInt32(PRL, 2) * 45 / 1024f).ToString();
+                PRL = (Convert.ToInt32(PRL, 2) * 45 / 1024f).ToString() + " dg";
 
                 index++;
 
@@ -991,7 +994,7 @@ namespace ProyectoPGTA_P2
             if (PAM == "1")
             {
                 PAM = arrayString[index];
-                PAM = (Convert.ToInt32(PAM, 2)).ToString();
+                PAM = (Convert.ToInt32(PAM, 2)).ToString() + " dbm";
 
                 index++;
 
@@ -1005,7 +1008,7 @@ namespace ProyectoPGTA_P2
             if (RPD == "1")
             {
                 RPD = arrayString[index];
-                RPD = (Convert.ToInt32(RPD, 2) / 256f).ToString();
+                RPD = (Convert.ToInt32(RPD, 2) / 256f).ToString() + " NM";
 
                 index++;
 
@@ -1019,7 +1022,7 @@ namespace ProyectoPGTA_P2
             if (APD == "1")
             {
                 APD = arrayString[index];
-                APD = (Convert.ToInt32(APD, 2) * 45 / 2048f).ToString();
+                APD = (Convert.ToInt32(APD, 2) * 45 / 2048f).ToString() + " dg";
 
                 index++;
 
@@ -1029,7 +1032,7 @@ namespace ProyectoPGTA_P2
                 APD = "N/A";
             }
             
-            data = new List<string> { "SRL", SRL + " dg", "SRR", SRR, "SAM", SAM + " dbm", "PRL", PRL + " dg", "PAM", PAM + " dbm", "RPD", RPD + " NM", "APD", APD + " dg" };
+            data = new List<string> { "SRL", SRL, "SRR", SRR, "SAM", SAM, "PRL", PRL, "PAM", PAM, "RPD", RPD, "APD", APD };
         }
         public List<string> GetData()
         {
@@ -1215,27 +1218,21 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public string[] arrayString;
-        public int REP;
-
+        public int REP = -9999;
         public List<string> data = new List<string>();
-
         public DataItem10()
         {
-            data = new List<string> { "BDS", "N/D" };
+            data = new List<string> { "BDS version: ", "N/D", "Repetitions", "N/D", "MCP/FCU Selected Altitude: ", "N/D", "FMS Selected Altitude: ", "N/D", "Barometric Pressure Setting: ", "N/D", "Status of MCP/FCU MODE: ", "N/D", "VNAV Mode: ", "N/D", "Alt Hold Mode: ", "N/D", "Approach Mode: ", "N/D", "Status of target Altitude Source: ", "N/D", "Target Altitude Source: ", "N/D", "Roll Angle: ", "N/D" , "True Track Angle: ", "N/D", "GS: ", "N/D", "Track Angle Rate: ", "N/D", "TAS: ", "N/D",  "Magnetic heading: ", "N/D", "IAS: ", "N/D", "MACH: ", "N/D", "Barometric Altitude Rate: ", "N/D", "Inertial Vertical Velocity", "N/D" };
         }
-
         public DataItem10(List<string> arrayhex)
         {
             this.number = 10;
             this.arrayHex = arrayhex;
-
             this.arrayString = new string[arrayhex.Count];
-
             for (int i = 0; i < arrayhex.Count; i++)
             {
                 arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
             }
-
             REP = Convert.ToInt32(arrayString[0], 2);
 
             for (int i = 0; i < REP; i++)
@@ -1243,18 +1240,28 @@ namespace ProyectoPGTA_P2
                 string BDSDATA, BDSver;
                 string BDS1, BDS2;
 
+                //Param BDS4.0
+                string MCPSelectedAlt = "N/A";
+                string FMSSelectedAlt = "N/A";
+                string BarPressure = "N/A";
+                string StatusMCP = "N/A";
+                string VNAV = "N/A";
+                string ALTHoldMode = "N/A";
+                string APPMode = "N/A";
+                string StatusTargetAltSource = "N/A";
+                string TargetAltSource = "N/A";
                 //Param BDS5.0
-                float RollAngle = 0f;
-                float TrueTrackAngle = 0f;
-                float GS = 0f;
-                float TrackAngleRate = 0f;
-                float TAS = 0f;
+                string RollAngle = "N/A";
+                string TrueTrackAngle = "N/A";
+                string GS = "N/A";
+                string TrackAngleRate = "N/A";
+                string TAS = "N/A";
                 //Param BDS6.0
-                float MagneticHeading = 0f;
-                float IAS = 0f;
-                float MACH = 0f;
-                float BarometricAlt = 0f;
-                float InertialVerticalVel = 0f;
+                string MagneticHeading = "N/A";
+                string IAS = "N/A";
+                string MACH = "N/A";
+                string BarometricAlt = "N/A";
+                string InertialVerticalVel = "N/A";
 
                 int shift = i * 8;
                 BDSDATA = String.Concat(arrayString[shift + 1], arrayString[shift + 2], arrayString[shift + 3], arrayString[shift + 4], arrayString[shift + 5], arrayString[shift + 6], arrayString[shift + 7]);
@@ -1269,27 +1276,97 @@ namespace ProyectoPGTA_P2
                 switch (BDSver)
                 {
                     case "4.0":
-                        //NADA AUN
-                        dataBDSstr = "BDS 4.0";
+                        MCPSelectedAlt = (Convert.ToInt32(String.Concat(BDSDATA[1], BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11], BDSDATA[12]), 2) * 16).ToString() + " ft";
+                        FMSSelectedAlt = (Convert.ToInt32(String.Concat(BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22], BDSDATA[23], BDSDATA[24], BDSDATA[25]), 2) * 16).ToString() + " ft";
+                        BarPressure = (Convert.ToInt32(String.Concat(BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33], BDSDATA[34], BDSDATA[35], BDSDATA[36], BDSDATA[37], BDSDATA[38]), 2) * 0.1f).ToString() + " mb";
+                        StatusMCP = BDSDATA[47].ToString();
+                        switch (StatusMCP)
+                        {
+                            case "0":
+                                StatusMCP = "No mode information provided";
+                                break;
+                            case "1":
+                                StatusMCP = "Mode information deliberately provided";
+                                break;
+                        }
+                        VNAV = BDSDATA[48].ToString();
+                        switch (VNAV)
+                        {
+                            case "0":
+                                VNAV = "Not active";
+                                break;
+                            case "1":
+                                VNAV = "Active";
+                                break;
+                        }
+                        ALTHoldMode = BDSDATA[49].ToString();
+                        switch (ALTHoldMode)
+                        {
+                            case "0":
+                                ALTHoldMode = "Not active";
+                                break;
+                            case "1":
+                                ALTHoldMode = "Active";
+                                break;
+                        }
+                        APPMode = BDSDATA[50].ToString();
+                        switch (APPMode)
+                        {
+                            case "0":
+                                APPMode = "Not active";
+                                break;
+                            case "1":
+                                ALTHoldMode = "Active";
+                                break;
+                        }
+                        StatusTargetAltSource = BDSDATA[53].ToString();
+                        switch (StatusTargetAltSource)
+                        {
+                            case "0":
+                                StatusTargetAltSource = "No source informatiuon provided";
+                                break;
+                            case "1":
+                                StatusTargetAltSource = "Mode information deliberately provided";
+                                break;
+                        }
+
+                        TargetAltSource = String.Concat(BDSDATA[54], BDSDATA[55]).ToString();
+                        switch (TargetAltSource)
+                        {
+                            case "00":
+                                TargetAltSource = "Unkown";
+                                break;
+                            case "01":
+                                TargetAltSource = "Aircraft altitude";
+                                break;
+                            case "10":
+                                TargetAltSource = "FCU/MCP selected altitude";
+                                break;
+                            case "11":
+                                TargetAltSource = "FMS selected altitude";
+                                break;
+                        }
+
                         break;
                     case "5.0":
-                        RollAngle = Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10]), 2) * 45 / 256f;
-                        TrueTrackAngle = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2) * 90 / 512f;
-                        GS = Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 2f;
-                        TrackAngleRate = ((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 8 / 256f;
-                        TAS = Convert.ToInt32(String.Concat(BDSDATA[46], BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 2f;
+                        RollAngle = (Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10]), 2) * 45 / 256f).ToString() + " º";
+                        TrueTrackAngle = (Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2) * 90 / 512f).ToString() + " º";
+                        GS = (Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 2f).ToString() + " kt";
+                        TrackAngleRate = (((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 8 / 256f).ToString() + " º/s";
+                        TAS = (Convert.ToInt32(String.Concat(BDSDATA[46], BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 2f).ToString() + " kt";
 
-                        dataBDSstr = "REP;" + REP.ToString() + ";BDS Version;" + BDSver + ";Roll Angle:;" + RollAngle.ToString() +";True Track Angle:;" +TrueTrackAngle.ToString()+ ";Ground Speed;"+GS.ToString()+";Track Angle Rate:;"+TrackAngleRate.ToString()+";True Air Speed:;" + TAS.ToString();
+                        //dataBDSstr = "REP;" + REP.ToString() + ";BDS Version;" + BDSver + ";Roll Angle:;" + RollAngle.ToString() +";True Track Angle:;" +TrueTrackAngle.ToString()+ ";Ground Speed;"+GS.ToString()+";Track Angle Rate:;"+TrackAngleRate.ToString()+";True Air Speed:;" + TAS.ToString();
                         
                         break;
                     case "6.0":
-                        MagneticHeading = Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11]), 2) * 90 / 512f;
-                        IAS = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2);
-                        MACH = Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 4f;
-                        BarometricAlt = ((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 32f;
-                        InertialVerticalVel = ((-1) ^ Convert.ToInt32(BDSDATA[46])) * Convert.ToInt32(String.Concat(BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 32f;
+                        MagneticHeading = (Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11]), 2) * 90 / 512f).ToString() + " º";
+                        IAS = (Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2)).ToString() + " kt";
+                        MACH = (Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 4f).ToString();
+                        BarometricAlt = (((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 32f).ToString() + " ft/min";
 
-                        dataBDSstr = "Magnetic Heading:;" + MagneticHeading.ToString()+";Indicated Air Speed:;" +IAS.ToString() + ";MACH Number: ;"+MACH.ToString()+ ";Barometric Altitude:;"+ BarometricAlt.ToString()+";Inertial Vertical Velocity;" +InertialVerticalVel.ToString();
+                        InertialVerticalVel = (((-1) ^ Convert.ToInt32(BDSDATA[46])) * Convert.ToInt32(String.Concat(BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 32f).ToString() + " ft/min";
+
+                        //dataBDSstr = "Magnetic Heading:;" + MagneticHeading.ToString()+";Indicated Air Speed:;" +IAS.ToString() + ";MACH Number: ;"+MACH.ToString()+ ";Barometric Altitude:;"+ BarometricAlt.ToString()+";Inertial Vertical Velocity;" +InertialVerticalVel.ToString();
                         
                         break;
                     default:
@@ -1297,7 +1374,8 @@ namespace ProyectoPGTA_P2
                         break;
                 }
 
-                data.Add(dataBDSstr);
+                //data.Add(dataBDSstr);
+                data = new List<string> { "BDS version: ", BDSver, "Repetitions", i.ToString() + "/" + REP.ToString(), "MCP/FCU Selected Altitude: ", "N/D", "FMS Selected Altitude: ", FMSSelectedAlt, "Barometric Pressure Setting: ", BarPressure, "Status of MCP/FCU MODE: ", StatusMCP, "VNAV Mode: ", VNAV, "Alt Hold Mode: ", ALTHoldMode, "Approach Mode: ", "N/D", "Status of target Altitude Source: ", StatusTargetAltSource, "Target Altitude Source: ", TargetAltSource, "Roll Angle: ", RollAngle, "True Track Angle: ", TrueTrackAngle, "GS: ", GS, "Track Angle Rate: ", TrackAngleRate, "TAS: ", TAS, "Magnetic heading: ",MagneticHeading, "IAS: ", IAS, "MACH: ", MACH, "Barometric Altitude Rate: ", BarometricAlt, "Inertial Vertical Velocity", InertialVerticalVel};
             }
 
         }
