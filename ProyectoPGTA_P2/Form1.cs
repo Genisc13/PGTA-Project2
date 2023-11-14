@@ -36,14 +36,15 @@ namespace ProyectoPGTA_P2
 
                 // Crear un StringBuilder para almacenar el contenido CSV
                 StringBuilder csvContent = new StringBuilder();
-
+                int i = 1;
                 foreach (CAT48 items in lista)
                 {
                     Dictionary<int, List<string>> datos = items.GetDataDecodedPerItem();
                     StringBuilder rowDataBuilder = new StringBuilder();
                     // Itera a través de los datos y agrega cada fila al contenido CSV
-                    int i = 1;
+                    
                     rowDataBuilder.Append(i.ToString());
+                    rowDataBuilder.Append(";");
                     foreach (var kvp in datos)
                     {
                         if (kvp.Key >= 1 && kvp.Key <= 28)
@@ -67,6 +68,7 @@ namespace ProyectoPGTA_P2
                     }
                     string rowData = rowDataBuilder.ToString();
                     csvContent.AppendLine(rowData);
+                    i++;
                 }
 
                 // Guarda el contenido en un archivo CSV
@@ -74,6 +76,9 @@ namespace ProyectoPGTA_P2
 
                 // Muestra un mensaje de confirmación
                 MessageBox.Show("Archivo CSV generado exitosamente." + filePath + "Data.csv");
+                SimulationForm simulationForm = new SimulationForm();
+
+                simulationForm.Show();
             }
         }
 
