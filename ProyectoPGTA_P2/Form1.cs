@@ -37,6 +37,7 @@ namespace ProyectoPGTA_P2
                 // Crear un StringBuilder para almacenar el contenido CSV
                 StringBuilder csvContent = new StringBuilder();
                 int i = 1;
+
                 foreach (CAT48 items in lista)
                 {
                     Dictionary<int, List<string>> datos = items.GetDataDecodedPerItem();

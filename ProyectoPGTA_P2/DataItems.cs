@@ -306,6 +306,10 @@ namespace ProyectoPGTA_P2
         public string SAC, SIC;
         public List<string> data;
 
+        public DataItem1() {
+            data = new List<string> { "SAC", "N/D", "SIC", "N/D" };
+        }
+
         public DataItem1(List<string> arrayhex)
         {
             this.number = 1;
@@ -340,6 +344,11 @@ namespace ProyectoPGTA_P2
         public float time;
 
         public List<string> data;
+
+        public DataItem2()
+        {
+            data = new List<string> { "Time", "N/D" };
+        }
 
         public DataItem2(List<string> arrayhex)
         {
@@ -380,20 +389,25 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
 
         public List<string> arrayString;
-        public string TYP = "N/A";
-        public string SIM = "N/A";
-        public string RDP = "N/A";
-        public string SPI = "N/A";
-        public string RAB = "N/A";
-        public string FX1 = "N/A";
-        public string TST = "N/A";
-        public string ERR = "N/A";
-        public string XPP = "N/A", ME = "N/A", MI = "N/A", FOE_FRI = "N/A";
-        public string FX2 = "N/A";
-        public string ADSB_EP = "N/A", ADSB_VAL = "N/A", SCN_EP = "N/A", SCN_VAL = "N/A", PAI_EP = "N/A", PAI_VAL = "N/A";
+        public string TYP;
+        public string SIM;
+        public string RDP;
+        public string SPI;
+        public string RAB;
+        public string FX1="1";
+        public string TST;
+        public string ERR;
+        public string XPP, ME, MI, FOE_FRI;
+        public string FX2;
+        public string ADSB_EP, ADSB_VAL, SCN_EP, SCN_VAL, PAI_EP, PAI_VAL;
 
         public List<string> data;
         
+        public DataItem3()
+        {
+            data = new List<string> { "TYP", "N/D", "SIM", "N/D", "RDP", "N/D", "SPI", "N/D", "RAB", "N/D", "TST", "N/D", "ERR", "N/D", "XPP", "N/D", "ME", "N/D", "MI", "N/D", "FOE/FRI", "N/D", "ADSB_EP", "N/D", "ADSB_VAL", "N/D", "SCN_EP", "N/D", "SCN_VAL", "N/D", "PAI_EP", "N/D", "PAI_VAL", "N/D" };
+
+        }
 
         public DataItem3(List<string> arrayhex)
         {
@@ -702,6 +716,11 @@ namespace ProyectoPGTA_P2
         public float RHD, THETA;
         public List<string> data;
 
+        public DataItem4()
+        {
+            data = new List<string> { "RHD", "N/D", "THETA", "N/D" };
+        }
+
         public DataItem4(List<string> arrayhex)
         {
             this.number = 4;
@@ -733,7 +752,7 @@ namespace ProyectoPGTA_P2
 
         public DataItem5()
         {
-            data = new List<string> { "V", "N/A", "G", "N/A", "L", "N/A", "Mode3", "N/A" };
+            data = new List<string> { "V", "N/D", "G", "N/D", "L", "N/D", "Mode3", "N/D" };
         }
         public DataItem5(List<string> arrayhex)
         {
@@ -820,6 +839,11 @@ namespace ProyectoPGTA_P2
         public float FL;
         public List<string> data;
 
+        public DataItem6()
+        {
+            data = new List<string> { "V", "N/D", "G", "N/D", "FL", "N/D"};
+        }
+
         public DataItem6(List<string> arrayhex)
         {
             this.number = 6;
@@ -883,6 +907,11 @@ namespace ProyectoPGTA_P2
         public string SRL, SRR, SAM, PRL, PAM, RPD, APD;
         public string FX1;
         public List<string> data;
+
+        public DataItem7()
+        {
+            data = new List<string> { "SRL", "N/D", "SRR", "N/D", "SAM", "N/D", "PRL", "N/D", "PAM", "N/D", "RPD", "N/D", "APD","N/D" };
+        }
 
         public DataItem7(List<string> arrayhex)
         {
@@ -1016,6 +1045,12 @@ namespace ProyectoPGTA_P2
         public string AircraftAddress;
 
         public List<string> data;
+
+        public DataItem8()
+        {
+            data = new List<string>{ "Aircraft Address", "N/D" };
+        }
+
         public DataItem8(List<string> arrayhex)
         {
             this.number = 8;
@@ -1046,6 +1081,12 @@ namespace ProyectoPGTA_P2
         public string AircraftIdentification;
 
         public List<string> data;
+
+        public DataItem9()
+        {
+            data = new List<string> { "Aircraft Identification", "N/D" };
+        }
+
         public DataItem9(List<string> arrayhex)
         {
             this.number = 9;
@@ -1177,6 +1218,12 @@ namespace ProyectoPGTA_P2
         public int REP;
 
         public List<string> data = new List<string>();
+
+        public DataItem10()
+        {
+            data = new List<string> { "BDS", "N/D" };
+        }
+
         public DataItem10(List<string> arrayhex)
         {
             this.number = 10;
@@ -1270,6 +1317,11 @@ namespace ProyectoPGTA_P2
 
         public string[] arrayString;
 
+        public DataItem11()
+        {
+            data = new List<string> { "Track Number", "N/D"};
+        }
+
         public DataItem11(List<string> arrayhex)
         {
             this.number = 11;
@@ -1299,6 +1351,11 @@ namespace ProyectoPGTA_P2
         public List<string> data;
         public float Xcord, Ycord;
         public string[] arrayString;
+
+        public DataItem12()
+        {
+            data = new List<string> { "X", "N/D", "Y", "N/D" };
+        }
 
         public DataItem12(List<string> arrayhex)
         {
@@ -1330,6 +1387,12 @@ namespace ProyectoPGTA_P2
         public List<string> data;
         public float GS, HEAD;
         public string[] arrayString;
+
+        public DataItem13()
+        {
+            data = new List<string> { "Ground Speed", "N/D", "Heading", "N/D" };
+        }
+        
         public DataItem13(List<string> arrayhex)
         {
             this.number = 13;
@@ -1364,6 +1427,12 @@ namespace ProyectoPGTA_P2
         public int FX2;
 
         public string[] arrayString;
+
+        public DataItem14()
+        {
+            data = new List<string> { "CNF", "N/D", "RAD", "N/D", "DOU", "N/D", "MAH", "N/D", "CDM", "N/D", "TRE", "N/D", "GHO", "N/D", "SUP", "N/D", "TCC", "N/D" };
+        }
+
         public DataItem14(List<string> arrayhex)
         {
             this.number = 14;
@@ -1594,6 +1663,10 @@ namespace ProyectoPGTA_P2
         public int Height3D;
 
         public string[] arrayString;
+        public DataItem19()
+        {
+            data = new List<string> { "3D Height", "N/D" };
+        }
         public DataItem19(List<string> arrayhex)
         {
             this.number = 19;
@@ -1640,7 +1713,12 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public List<string> data;
         public string COM, STAT, SI, MSSC, ARC, AIC, B1A, B1B;
-
+    
+        public DataItem21()
+        {
+            data = new List<string> { "COM", "N/D", "STAT", "N/D", "SI", "N/D", "MSSC", "N/D", "ARC", "N/D", "AIC", "N/D", "B1A", "N/D", "B1B", "N/D" };
+        }
+        
         public DataItem21(List<string> arrayhex)
         {
             this.number = 21;

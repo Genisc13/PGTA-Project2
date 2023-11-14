@@ -27,434 +27,511 @@ namespace ProyectoPGTA_P2
             itemContainer = new DataItem();
             int i = 3;
             //Console.WriteLine("Creando paquete CAT48...");
-            bool finishFSPEC = false;
-            while (i < arrayHex.Count)
+            bool finishFSPEC = false;           
+            //Console.WriteLine("Editando Byte");
+            List<string> arrayItem;
+            int n;
+            
+            while (i >= 3 && i <= 6 && finishFSPEC == false)
             {
-                //Console.WriteLine("Editando Byte");
-                List<string> arrayItem;
-                int n;
-                string hexByte = arrayHex[i];
-                string binaryByte = Convert.ToString(Convert.ToInt32(hexByte, 16), 2).PadLeft(8, '0');
                 
-                if (i>=3 && i<=6 && finishFSPEC == false)
+                string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
+                n = 0;
+                while (n < binaryByte.Length)
                 {
-                    n = 0;
-                    while (n < binaryByte.Length)
+                    if (binaryByte[n] == '1')
                     {
-                        if (binaryByte[n]=='1')
+                        if (n >= 0 && n <= 6)
                         {
-                            if (n >= 0 && n <= 6 )
+                            if (i == 3)
                             {
-                                if (i == 3)
-                                {
-                                    this.items[n] = true;
-                                }else if (i == 4)
-                                {
-                                    this.items[n+7] = true;
-                                }else if (i== 5)
-                                {
-                                    this.items[n + 14] = true;
-                                }else if (i == 6)
-                                {
-                                    this.items[n + 21] = true;
-                                }
-                                
-                            }                                
-                        }else if (n == 7)
+                                this.items[n] = true;
+                            }
+                            else if (i == 4)
+                            {
+                                this.items[n + 7] = true;
+                            }
+                            else if (i == 5)
+                            {
+                                this.items[n + 14] = true;
+                            }
+                            else if (i == 6)
+                            {
+                                this.items[n + 21] = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(n >= 0 && n <= 6)
+                        {
+
+                            if (i == 3)
+                            {
+                                this.items[n] = false;
+                            }
+                            else if (i == 4)
+                            {
+                                this.items[n + 7] = false;
+                            }
+                            else if (i == 5)
+                            {
+                                this.items[n + 14] = false;
+                            }
+                            else if (i == 6)
+                            {
+                                this.items[n + 21] = false;
+                            }
+                        }
+                        else
                         {
                             finishFSPEC = true;
-                        }
-                        n++;                        
+                        }                       
                     }
-                    i++;
-                    continue;
+                    n++;
                 }
+                i++;
+                
+            }
+            //Item 1
+            if (items[0] == true)
+            {
+                arrayItem = new List<string>
+                {
+                    arrayHex[i],
+                    arrayHex[i + 1]
+                };
+                itemContainer.SetDataItem1(new DataItem1(arrayItem));
+                i += 2;
+                items[0] = false;
+            }
+            else
+            {
+                itemContainer.SetDataItem1(new DataItem1());
+            }
+            //Item 2
+            if (items[1] == true)
+            {
 
-                //Item 1
-                if (items[0] == true)
+                arrayItem = new List<string>(3)
                 {
-                    arrayItem = new List<string>
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1]
-                    };
-                    itemContainer.SetDataItem1(new DataItem1(arrayItem));
-                    i+=2;
-                    items[0] = false;
-                    continue;
-                }
-                //Item 2
-                else if (items[1] == true)
-                {
-                    arrayItem = new List<string>(3)
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1],
-                        arrayHex[i + 2]
-                    };
-                    itemContainer.SetDataItem2(new DataItem2(arrayItem));
-                    i += 3;
-                    items[1] = false;
-                    continue;
-                }
-                //Item 3
-                else if (items[2] == true)
-                {
-                    arrayItem3.Add(arrayHex[i]);
-                    if (binaryByte[7]=='1')
-                    {                        
+                    arrayHex[i],
+                    arrayHex[i + 1],
+                    arrayHex[i + 2]
+                };
+                itemContainer.SetDataItem2(new DataItem2(arrayItem));
+                i += 3;
+                items[1] = false;
+            }
+            else
+            {
+                itemContainer.SetDataItem2(new DataItem2());
+            }
+            //Item 3
+            if (items[2] == true)
+            {
+                string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
+                bool found = true;
+                arrayItem3.Add(arrayHex[i]);
+                while (found) {
+                    binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
+                    
+                    if (binaryByte[7] == '1')
+                    {                                              
                         i++;
-                        continue;
+                        arrayItem3.Add(arrayHex[i]);
                     }
                     else
-                    {                       
+                    {
                         i++;
                         itemContainer.SetDataItem3(new DataItem3(arrayItem3));
+                        found = false;
                         items[2] = false;
-                        continue;
                     }
-                }
-                //Item 4
-                else if (items[3] == true)
+                }              
+            }
+            else
+            {
+                itemContainer.SetDataItem3(new DataItem3());
+            }
+            //Item 4
+            if (items[3] == true)
+            {
+                arrayItem = new List<string>
                 {
-                    arrayItem = new List<string>
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1],
-                        arrayHex[i + 2],
-                        arrayHex[i + 3]
-                    };
-                    itemContainer.SetDataItem4(new DataItem4(arrayItem));
-                    i += 4;
-                    items[3] = false;
-                    continue;
-                }
-                //Item 5
-                else if (items[4] == true)
+                    arrayHex[i],
+                    arrayHex[i + 1],
+                    arrayHex[i + 2],
+                    arrayHex[i + 3]
+                };
+                itemContainer.SetDataItem4(new DataItem4(arrayItem));
+                i += 4;
+                items[3] = false;                   
+            }
+            else
+            {
+                itemContainer.SetDataItem4(new DataItem4());
+            }
+            //Item 5
+            if (items[4] == true)
+            {
+                arrayItem = new List<string>
                 {
-                    arrayItem = new List<string>
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1]
-                    };
-                    itemContainer.SetDataItem5(new DataItem5(arrayItem));
-                    i += 2;
-                    items[4] = false;
-                    continue;
+                    arrayHex[i],
+                    arrayHex[i + 1]
+                };
+                itemContainer.SetDataItem5(new DataItem5(arrayItem));
+                i += 2;
+                items[4] = false;
+            }            
+            else
+            {
+                itemContainer.SetDataItem5(new DataItem5());
+            }
+            
+            //Item 6
+            if (items[5] == true)
+            {
+                arrayItem = new List<string>
+                {
+                    arrayHex[i],
+                    arrayHex[i + 1]
+                };
+                itemContainer.SetDataItem6(new DataItem6(arrayItem));
+                i += 2;
+                items[5] = false;
 
-                }
-                /*
-                else
+            }
+            else
+            {
+                itemContainer.SetDataItem6(new DataItem6());
+            }
+            //Item 7
+            if (items[6] == true)
+            {
+                string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
+                arrayItem = new List<string>();
+                n = 0;
+                int count = 0;
+                int next = 0;
+                while (n < binaryByte.Length)
                 {
-                    itemContainer.SetDataItem5(new DataItem5());
-                }
-                */
-                //Item 6
-                else if (items[5] == true)
-                {
-                    arrayItem = new List<string>
+                    binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i+next], 16), 2).PadLeft(8, '0');
+                    if (binaryByte[n] == '1')
                     {
-                        arrayHex[i],
-                        arrayHex[i + 1]
-                    };
-                    itemContainer.SetDataItem6(new DataItem6(arrayItem));
-                    i += 2;
-                    items[5] = false;
-                    continue;
-
-                }
-                //Item 7
-                else if (items[6] == true)
-                {
-                    arrayItem = new List<string>();
-                    n = 0;
-                    int count = 0;
-                    int next = 0;
-                    while (n < binaryByte.Length)
-                    {
-                        binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i+next], 16), 2).PadLeft(8, '0');
-                        if (binaryByte[n] == '1')
+                        if (n == 7)
                         {
-                            if (n == 7)
-                            {
-                                //FX
-                                next++;
-                                n = 0;
-                                continue;
-                            }
-                            else
-                            {
-                                count++;
-                            }                      
-                        }                        
-                        n++;
-                    }
-                    n = 0 + next;
-                    while (n <= count+next)
-                    {
-                        arrayItem.Add(arrayHex[i+n]);
-                        n++;
-                    }
-                    i+=n;
-                    itemContainer.SetDataItem7(new DataItem7(arrayItem));
-                    items[6] = false;
-                    continue;
+                            //FX
+                            next++;
+                            n = 0;
+                            continue;
+                        }
+                        else
+                        {
+                            count++;
+                        }                      
+                    }                        
+                    n++;
+                }
+                n = 0 + next;
+                while (n <= count+next)
+                {
+                    arrayItem.Add(arrayHex[i+n]);
+                    n++;
+                }
+                i+=n;
+                itemContainer.SetDataItem7(new DataItem7(arrayItem));
+                items[6] = false;                   
+            }
+            else
+            {
+                itemContainer.SetDataItem7(new DataItem7());
+            }
+            //Item 8
+            if (items[7] == true)
+            {
+                arrayItem = new List<string>(3)
+                {
+                    arrayHex[i],
+                    arrayHex[i + 1],
+                    arrayHex[i + 2]
+                };
+                itemContainer.SetDataItem8(new DataItem8(arrayItem));
+                i += 3;
+                items[7] = false;
+            }
+            else
+            {
+                itemContainer.SetDataItem8(new DataItem8());
+            }
+            //Item 9
+            if (items[8] == true)
+            {
+                arrayItem = new List<string>(3)
+                {
+                    arrayHex[i],
+                    arrayHex[i + 1],
+                    arrayHex[i + 2],
+                    arrayHex[i + 3],
+                    arrayHex[i + 4],
+                    arrayHex[i + 5],                        
+                };
+                itemContainer.SetDataItem9(new DataItem9(arrayItem));
+                i += 6;
+                items[8] = false;
+            }
+            else
+            {
+                itemContainer.SetDataItem9(new DataItem9());
+            }
+            //Item 10
+            if (items[9] == true)
+            {
+                arrayItem = new List<string>();
+                int REP = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);                    
+                n = 0;
+                while (n <= REP*8)
+                {
+                    arrayItem.Add(arrayHex[i + n]);
+                    n++;
+                }
+                itemContainer.SetDataItem10(new DataItem10(arrayItem));
+                i += REP * 8;
+                items[9] = false;
+            }
+            else
+            {
+                itemContainer.SetDataItem10(new DataItem10());
+            }
+            //Item 11
+            if (items[10] == true)
+            {
+                arrayItem = new List<string>
+                {
+                    arrayHex[i],
+                    arrayHex[i + 1]
+                };
+                itemContainer.SetDataItem11(new DataItem11(arrayItem));
+                i += 2;
+                items[10] = false;
+            }
+            else
+            {
+                itemContainer.SetDataItem11(new DataItem11());
+            }
+            //Item 12
+            if (items[11] == true)
+            {
+                arrayItem = new List<string>
+                {
+                    arrayHex[i],
+                    arrayHex[i + 1],
+                    arrayHex[i + 2],
+                    arrayHex[i + 3]
+                };
+                itemContainer.SetDataItem12(new DataItem12(arrayItem));
+                i += 4;
+                items[11] = false;
+            }
+            else
+            {
+                itemContainer.SetDataItem12(new DataItem12());
+            }
+            //Item 13
+            if (items[12] == true)
+            {
+                arrayItem = new List<string>
+                {
+                    arrayHex[i],
+                    arrayHex[i + 1],
+                    arrayHex[i + 2],
+                    arrayHex[i + 3]
+                };
+                itemContainer.SetDataItem13(new DataItem13(arrayItem));
+                i += 4;
+                items[12] = false;
+            }
+            else
+            {
+                itemContainer.SetDataItem13(new DataItem13());
+            }
+            //Item 14
+            if (items[13] == true)
+            {
+                string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
+                bool found = true;
+                arrayItem14.Add(arrayHex[i]);
+                while (found)
+                {
+                    binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
                     
-                }
-                //Item 8
-                else if (items[7] == true)
-                {
-                    arrayItem = new List<string>(3)
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1],
-                        arrayHex[i + 2]
-                    };
-                    itemContainer.SetDataItem8(new DataItem8(arrayItem));
-                    i += 3;
-                    items[7] = false;
-                    continue;
-
-                }
-                //Item 9
-                else if (items[8] == true)
-                {
-                    arrayItem = new List<string>(3)
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1],
-                        arrayHex[i + 2],
-                        arrayHex[i + 3],
-                        arrayHex[i + 4],
-                        arrayHex[i + 5],                        
-                    };
-                    itemContainer.SetDataItem9(new DataItem9(arrayItem));
-                    i += 6;
-                    items[8] = false;
-                    continue;
-                }
-                //Item 10
-                else if (items[9] == true)
-                {
-                    arrayItem = new List<string>();
-                    int REP = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);                    
-                    n = 0;
-                    while (n <= REP*8)
-                    {
-                        arrayItem.Add(arrayHex[i + n]);
-                        n++;
-                    }
-                    itemContainer.SetDataItem10(new DataItem10(arrayItem));
-                    i += REP * 8;
-                    items[9] = false;
-                    continue;
-                }
-                //Item 11
-                else if (items[10] == true)
-                {
-                    arrayItem = new List<string>
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1]
-                    };
-                    itemContainer.SetDataItem11(new DataItem11(arrayItem));
-                    i += 2;
-                    items[10] = false;
-                    continue;
-                }
-                //Item 12
-                else if (items[11] == true)
-                {
-                    arrayItem = new List<string>
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1],
-                        arrayHex[i + 2],
-                        arrayHex[i + 3]
-                    };
-                    itemContainer.SetDataItem12(new DataItem12(arrayItem));
-                    i += 4;
-                    items[11] = false;
-                    continue;
-                }
-                //Item 13
-                else if (items[12] == true)
-                {
-                    arrayItem = new List<string>
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1],
-                        arrayHex[i + 2],
-                        arrayHex[i + 3]
-                    };
-                    itemContainer.SetDataItem13(new DataItem13(arrayItem));
-                    i += 4;
-                    items[12] = false;
-                    continue;
-                }
-                //Item 14
-                else if (items[13] == true)
-                {
-                    arrayItem14.Add(arrayHex[i]);
                     if (binaryByte[7] == '1')
-                    {                        
+                    {
                         i++;
-                        continue;
+                        arrayItem14.Add(arrayHex[i]);
                     }
                     else
-                    {                        
+                    {
                         i++;
                         itemContainer.SetDataItem14(new DataItem14(arrayItem14));
+                        found = false;
                         items[13] = false;
-                        continue;
                     }
-                }
-                //Item 15
-                else if (items[14] == true)
+                }                
+            }
+            else
+            {
+                itemContainer.SetDataItem14(new DataItem14());
+            }
+            //Item 15
+            if (items[14] == true)
+            {
+                i += 4;
+                items[14] = false;
+            }
+            //Item 16
+            if (items[15] == true)
+            {
+                string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
+                bool found = true;
+                while (found)
                 {
-                    i += 4;
-                    items[14] = false;
-                    continue;
-                }
-                //Item 16
-                else if (items[15] == true)
-                {
+                    binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
                     if (binaryByte[7] == '1')
                     {
                         i++;
                         continue;
                     }
                     else
-                    {                      
+                    {
                         i++;
                         items[13] = false;
-                        continue;
+                        found = false;
                     }
-                }
-                //Item 17
-                else if (items[16] == true)
+                }              
+            }
+            //Item 17
+            if (items[16] == true)
+            {
+                i += 2;
+                items[16] = false;
+            }
+            //Item 18
+            if (items[17] == true)
+            {
+                i += 4;
+                items[17] = false;
+            }
+            //Item 19
+            if (items[18] == true)
+            {
+                arrayItem = new List<string>
                 {
-                    i += 2;
-                    items[16] = false;
-                    continue;
-                }
-                //Item 18
-                else if (items[17] == true)
+                    arrayHex[i],
+                    arrayHex[i + 1]
+                };
+                itemContainer.SetDataItem19(new DataItem19(arrayItem));
+                i += 2;
+                items[18] = false;
+            }
+            else
+            {
+                itemContainer.SetDataItem19(new DataItem19());
+            }
+            //Item 20
+            if (items[19] == true)
+            {
+                string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
+                bool found = true;
+                while (found)
                 {
-                    i += 4;
-                    items[17] = false;
-                    continue;
-                }
-                //Item 19
-                else if (items[18] == true)
-                {
-                    arrayItem = new List<string>
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1]
-                    };
-                    itemContainer.SetDataItem19(new DataItem19(arrayItem));
-                    i += 2;
-                    items[18] = false;
-                    continue;
-                }
-                //Item 20
-                else if (items[19] == true)
-                {
+                    binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
                     if (binaryByte[7] == '1')
                     {
                         i++;
-                        continue;
                     }
                     else
                     {
                         i++;
                         items[19] = false;
-                        continue;
+                        found= false;
                     }
-                }
-                //Item 21
-                else if (items[20] == true)
-                {
-                    arrayItem = new List<string>
-                    {
-                        arrayHex[i],
-                        arrayHex[i + 1]
-                    };
-                    itemContainer.SetDataItem21(new DataItem21(arrayItem));
-                    i += 2;
-                    items[20] = false;
-                    continue;
-                }
-                //Item 22
-                else if (items[21] == true)
-                {
-                    i += 7;
-                    items[21] = false;
-                    continue;
-                }
-                //Item 23
-                else if (items[22] == true)
-                {
-                    i += 1;
-                    items[22] = false;
-                    continue;
-                }
-                //Item 24
-                else if (items[23] == true)
-                {
-                    i += 2;
-                    items[23] = false;
-                    continue;
-                }
-                //Item 25
-                else if (items[24] == true)
-                {
-                    i += 1;
-                    items[24] = false;
-                    continue;
-                }
-                //Item 26
-                else if (items[25] == true)
-                {
-                    i += 2;
-                    items[25] = false;
-                    continue;
-                }
-                //Item 27
-                else if (items[26] == true)
-                {
-                    arrayItem = new List<string>();
-                    int length = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);
-                    n = 0;
-                    while (n < length)
-                    {
-                        arrayItem.Add(arrayHex[i + n]);
-                        n++;
-                    }
-                    i += n;
-                    itemContainer.SetDataItem27(new DataItem27(arrayItem));
-                    items[26] = false;
-                    continue;
-                }
-                //Item 28
-                else if (items[27] == true)
-                {
-                    arrayItem = new List<string>();
-                    int length = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);
-                    n = 0;
-                    while (n < length)
-                    {
-                        arrayItem.Add(arrayHex[i + n]);
-                        n++;
-                    }
-                    i += n;
-                    itemContainer.SetDataItem28(new DataItem28(arrayItem));
-                    items[27] = false;
-                    continue;
-                }
-                i++;
+                }               
             }
+            //Item 21
+            if (items[20] == true)
+            {
+                arrayItem = new List<string>
+                {
+                    arrayHex[i],
+                    arrayHex[i + 1]
+                };
+                itemContainer.SetDataItem21(new DataItem21(arrayItem));
+                i += 2;
+                items[20] = false;
+            }
+            else
+            {
+                itemContainer.SetDataItem21(new DataItem21());
+            }
+            //Item 22
+            if (items[21] == true)
+            {
+                i += 7;
+                items[21] = false;
+            }
+            //Item 23
+            if (items[22] == true)
+            {
+                i += 1;
+                items[22] = false;
+            }
+            //Item 24
+            if (items[23] == true)
+            {
+                i += 2;
+                items[23] = false;
+            }
+            //Item 25
+            if (items[24] == true)
+            {
+                i += 1;
+                items[24] = false;
+            }
+            //Item 26
+            if (items[25] == true)
+            {
+                i += 2;
+                items[25] = false;
+            }
+            //Item 27
+            if (items[26] == true)
+            {
+                arrayItem = new List<string>();
+                int length = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);
+                n = 0;
+                while (n < length)
+                {
+                    arrayItem.Add(arrayHex[i + n]);
+                    n++;
+                }
+                i += n;
+                items[26] = false;
+            }
+            //Item 28
+            if (items[27] == true)
+            {
+                arrayItem = new List<string>();
+                int length = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);
+                n = 0;
+                while (n < length)
+                {
+                    arrayItem.Add(arrayHex[i + n]);
+                    n++;
+                }
+                items[27] = false;
+            }
+
             //Una vez tenemos todos los DataItems decodificados hemos de hacer algo con ellos.
             if (itemContainer.GetDataItem1()!=null)
             {
