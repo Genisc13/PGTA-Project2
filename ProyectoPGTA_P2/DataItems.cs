@@ -1213,9 +1213,9 @@ namespace ProyectoPGTA_P2
                 case "100111":
                     result = "9"; break;
                 case "000001":
-                    result = " "; break;
+                    result = "·"; break; //espacio
                 default:
-                    result = ""; break;
+                    result = "-"; break; //no coincide con ninguno
             }
 
             return result;
@@ -1302,7 +1302,7 @@ namespace ProyectoPGTA_P2
                     case "4.0":
                         MCPSelectedAlt = (Convert.ToInt32(String.Concat(BDSDATA[1], BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11], BDSDATA[12]), 2) * 16).ToString() + " ft";
                         FMSSelectedAlt = (Convert.ToInt32(String.Concat(BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22], BDSDATA[23], BDSDATA[24], BDSDATA[25]), 2) * 16).ToString() + " ft";
-                        BarPressure = (Convert.ToInt32(String.Concat(BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33], BDSDATA[34], BDSDATA[35], BDSDATA[36], BDSDATA[37], BDSDATA[38]), 2) * 0.1f).ToString() + " mb";
+                        BarPressure = (Convert.ToInt32(String.Concat(BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33], BDSDATA[34], BDSDATA[35], BDSDATA[36], BDSDATA[37], BDSDATA[38]), 2) * 0.1f + 800).ToString() + " mb";
                         StatusMCP = BDSDATA[47].ToString();
                         switch (StatusMCP)
                         {
