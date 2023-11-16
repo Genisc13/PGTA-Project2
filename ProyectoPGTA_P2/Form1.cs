@@ -36,6 +36,8 @@ namespace ProyectoPGTA_P2
 
                 // Crear un StringBuilder para almacenar el contenido CSV
                 StringBuilder csvContent = new StringBuilder();
+                csvContent.AppendLine("NUM;SAC;SIC;TIME;TYP;SIM;RDP;SPI;RAB;TST;ERR;XPP;ME;MI;FOE/FRI;ADSB_EP;ADSB_VAL;SCN_EP;SCN_VAL;PAI_EP;PAI_VAL;RHD;THETA;V;G;L;MODE3;V;G;FL;SRL;SRR;SAM;PRL;PAM;RPD;APD;A/C ADDRESS;A/C IDENTIFICATION;BDS VERSION;REPETITIONS;MCP/FCU SELECTED ALTITUDE;FMS SELECTED ALTITUDE;BAROMETRIC PRESSURE SETTING;STATUS OF MCP/FCU MODE;VNAV MODE;ALT HOLD MODE;APP MODE;STATUS OF TARGET ALTITUDE SOURCE;TARGET ALTITUDE SOURCE;ROLL ANGLE;TRUE TRACK ANGLE;GS;TRACK ANGLE RATE;TAS;MAGNETIC HEADING;IAS;MACH;BAROMETRIC ALTITUDE RATE;INERTIAL VERTICAL VELOCITY;TRACK NUMBER;X;Y;GS;HEADING;CNF;RAD;DOU;MAH;CDM;TRE;GHO;SUP;TCC;3D HEIGHT;COM;STAT;SI;MSSC;ARC;AIC;B1A;B1B");
+
                 int i = 1;
 
                 foreach (CAT48 items in lista)
@@ -43,18 +45,21 @@ namespace ProyectoPGTA_P2
                     Dictionary<int, List<string>> datos = items.GetDataDecodedPerItem();
                     StringBuilder rowDataBuilder = new StringBuilder();
                     // Itera a través de los datos y agrega cada fila al contenido CSV
-                    
+
                     rowDataBuilder.Append(i.ToString());
                     rowDataBuilder.Append(";");
+                    
+
                     foreach (var kvp in datos)
                     {
                         if (kvp.Key >= 1 && kvp.Key <= 28)
                         {
-                            rowDataBuilder.Append("DataItem: " + kvp.Key);
+                            //rowDataBuilder.Append("DataItem: " + kvp.Key);
+                            
 
                             foreach (string value in kvp.Value)
                             {
-                                rowDataBuilder.Append(";");
+                                //rowDataBuilder.Append(";");
                                 if (value.Contains(","))
                                 {
                                     rowDataBuilder.Append(value.Replace(",","."));
@@ -62,9 +67,10 @@ namespace ProyectoPGTA_P2
                                 else
                                 {
                                     rowDataBuilder.Append(value);
-                                } 
+                                }
+                                rowDataBuilder.Append(";");
                             }
-                            rowDataBuilder.Append(";");
+                            
                         }
                     }
                     string rowData = rowDataBuilder.ToString();

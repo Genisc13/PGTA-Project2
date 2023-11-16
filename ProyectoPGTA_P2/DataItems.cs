@@ -310,7 +310,8 @@ namespace ProyectoPGTA_P2
         public List<string> data;
 
         public DataItem1() {
-            data = new List<string> { "SAC", "N/D", "SIC", "N/D" };
+            //data = new List<string> { "SAC", "N/D", "SIC", "N/D" };
+            data = new List<string> { "N/D", "N/D" };
         }
 
         public DataItem1(List<string> arrayhex)
@@ -323,10 +324,8 @@ namespace ProyectoPGTA_P2
             int SACint = Convert.ToInt32(SAC, 16);
             int SICint = Convert.ToInt32(SIC, 16);
 
-            //Console.WriteLine("SAC: " + SAC);
-            //Console.WriteLine("SIC: " + SIC);
-
-            data = new List<string>{ "SAC", SACint.ToString(), "SIC", SICint.ToString() };
+            //data = new List<string>{ "SAC", SACint.ToString(), "SIC", SICint.ToString() };
+            data = new List<string> { SACint.ToString(), SICint.ToString() };
         }
 
         public List<string> GetData()
@@ -350,7 +349,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem2()
         {
-            data = new List<string> { "Time", "N/D" };
+            //data = new List<string> { "Time", "N/D" };
+            data = new List<string> { "N/D" };
         }
 
         public DataItem2(List<string> arrayhex)
@@ -377,7 +377,8 @@ namespace ProyectoPGTA_P2
             float milsec = (seconds - truncseconds) * 1000;
             int truncmilsec = (int)Math.Truncate(milsec);
 
-            this.data = new List<string> { "Time", trunchours.ToString().PadLeft(2, '0') + ":" + truncminutes.ToString().PadLeft(2, '0') + ":" + truncseconds.ToString().PadLeft(2, '0') + ":" + truncmilsec.ToString().PadLeft(3, '0') };
+            //data = new List<string> { "Time", trunchours.ToString().PadLeft(2, '0') + ":" + truncminutes.ToString().PadLeft(2, '0') + ":" + truncseconds.ToString().PadLeft(2, '0') + ":" + truncmilsec.ToString().PadLeft(3, '0') };
+            data = new List<string> { trunchours.ToString().PadLeft(2, '0') + ":" + truncminutes.ToString().PadLeft(2, '0') + ":" + truncseconds.ToString().PadLeft(2, '0') + ":" + truncmilsec.ToString().PadLeft(3, '0') };
         }
         public List<string> GetData()
         {
@@ -408,7 +409,8 @@ namespace ProyectoPGTA_P2
         
         public DataItem3()
         {
-            data = new List<string> { "TYP", "N/D", "SIM", "N/D", "RDP", "N/D", "SPI", "N/D", "RAB", "N/D", "TST", "N/D", "ERR", "N/D", "XPP", "N/D", "ME", "N/D", "MI", "N/D", "FOE/FRI", "N/D", "ADSB_EP", "N/D", "ADSB_VAL", "N/D", "SCN_EP", "N/D", "SCN_VAL", "N/D", "PAI_EP", "N/D", "PAI_VAL", "N/D" };
+            //data = new List<string> { "TYP", "N/D", "SIM", "N/D", "RDP", "N/D", "SPI", "N/D", "RAB", "N/D", "TST", "N/D", "ERR", "N/D", "XPP", "N/D", "ME", "N/D", "MI", "N/D", "FOE/FRI", "N/D", "ADSB_EP", "N/D", "ADSB_VAL", "N/D", "SCN_EP", "N/D", "SCN_VAL", "N/D", "PAI_EP", "N/D", "PAI_VAL", "N/D" };
+            data = new List<string> { "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D" };
 
         }
 
@@ -702,7 +704,8 @@ namespace ProyectoPGTA_P2
 
                 }
             }
-            data = new List<string> { "TYP", TYP, "SIM", SIM, "RDP", RDP, "SPI", SPI, "RAB", RAB, "TST", TST, "ERR", ERR, "XPP", XPP, "ME", ME, "MI", MI, "FOE/FRI", FOE_FRI, "ADSB_EP", ADSB_EP, "ADSB_VAL", ADSB_VAL, "SCN_EP", SCN_EP, "SCN_VAL", SCN_VAL, "PAI_EP", PAI_EP, "PAI_VAL", PAI_VAL };
+            //data = new List<string> { "TYP", TYP, "SIM", SIM, "RDP", RDP, "SPI", SPI, "RAB", RAB, "TST", TST, "ERR", ERR, "XPP", XPP, "ME", ME, "MI", MI, "FOE/FRI", FOE_FRI, "ADSB_EP", ADSB_EP, "ADSB_VAL", ADSB_VAL, "SCN_EP", SCN_EP, "SCN_VAL", SCN_VAL, "PAI_EP", PAI_EP, "PAI_VAL", PAI_VAL };
+            data = new List<string> { TYP, SIM, RDP, SPI, RAB, TST, ERR, XPP, ME, MI, FOE_FRI, ADSB_EP, ADSB_VAL, SCN_EP, SCN_VAL, PAI_EP, PAI_VAL };
 
         }
         public List<string> GetData()
@@ -721,7 +724,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem4()
         {
-            data = new List<string> { "RHD", "N/D", "THETA", "N/D" };
+            //data = new List<string> { "RHD", "N/D", "THETA", "N/D" };
+            data = new List<string> { "N/D", "N/D" };
         }
 
         public DataItem4(List<string> arrayhex)
@@ -735,7 +739,8 @@ namespace ProyectoPGTA_P2
             RHD = Convert.ToInt32(RHD_16, 16) / 256f;
             THETA = Convert.ToInt32(THETA_16, 16) * 45 / 8192f;
 
-            data = new List<string> { "RHD", RHD.ToString() + " NM", "THETA", THETA.ToString() + " º"};
+            //data = new List<string> { "RHD", RHD.ToString() + " NM", "THETA", THETA.ToString() + " º"};
+            data = new List<string> { RHD.ToString() + " NM", THETA.ToString() + " º" };
         }
         public List<string> GetData()
         {
@@ -755,7 +760,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem5()
         {
-            data = new List<string> { "V", "N/D", "G", "N/D", "L", "N/D", "Mode3", "N/D" };
+            //data = new List<string> { "V", "N/D", "G", "N/D", "L", "N/D", "Mode3", "N/D" };
+            data = new List<string> { "N/D", "N/D", "N/D", "N/D" };
         }
         public DataItem5(List<string> arrayhex)
         {
@@ -823,7 +829,8 @@ namespace ProyectoPGTA_P2
             {
                 Mode3 = Convert.ToString(Convert.ToInt32(Mode3, 2), 8);
             }
-            data = new List<string> { "V", V, "G", G, "L", L, "Mode3", Mode3 };
+            //data = new List<string> { "V", V, "G", G, "L", L, "Mode3", Mode3 };
+            data = new List<string> { V, G, L, Mode3 };
         }
         public List<string> GetData()
         {
@@ -844,7 +851,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem6()
         {
-            data = new List<string> { "V", "N/D", "G", "N/D", "FL", "N/D"};
+            //data = new List<string> { "V", "N/D", "G", "N/D", "FL", "N/D"};
+            data = new List<string> { "N/D", "N/D", "N/D" };
         }
 
         public DataItem6(List<string> arrayhex)
@@ -892,7 +900,8 @@ namespace ProyectoPGTA_P2
             string FL_BIN = String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
             FL = Convert.ToInt32(FL_BIN, 2) / 4f;
 
-            data = new List<string> { "V", V, "G", G, "FL", FL.ToString() };
+            //data = new List<string> { "V", V, "G", G, "FL", FL.ToString() };
+            data = new List<string> { V, G, FL.ToString() };
         }
         public List<string> GetData()
         {
@@ -913,7 +922,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem7()
         {
-            data = new List<string> { "SRL", "N/D", "SRR", "N/D", "SAM", "N/D", "PRL", "N/D", "PAM", "N/D", "RPD", "N/D", "APD","N/D" };
+            //data = new List<string> { "SRL", "N/D", "SRR", "N/D", "SAM", "N/D", "PRL", "N/D", "PAM", "N/D", "RPD", "N/D", "APD","N/D" };
+            data = new List<string> { "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D" };
         }
 
         public DataItem7(List<string> arrayhex)
@@ -1031,8 +1041,9 @@ namespace ProyectoPGTA_P2
             {
                 APD = "N/A";
             }
-            
-            data = new List<string> { "SRL", SRL, "SRR", SRR, "SAM", SAM, "PRL", PRL, "PAM", PAM, "RPD", RPD, "APD", APD };
+
+            //data = new List<string> { "SRL", SRL, "SRR", SRR, "SAM", SAM, "PRL", PRL, "PAM", PAM, "RPD", RPD, "APD", APD };
+            data = new List<string> { SRL, SRR, SAM, PRL, PAM, RPD, APD };
         }
         public List<string> GetData()
         {
@@ -1051,7 +1062,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem8()
         {
-            data = new List<string>{ "Aircraft Address", "N/D" };
+            //data = new List<string>{ "Aircraft Address", "N/D" };
+            data = new List<string> { "N/D" };
         }
 
         public DataItem8(List<string> arrayhex)
@@ -1065,7 +1077,8 @@ namespace ProyectoPGTA_P2
             }
 
             AircraftAddress = String.Concat(this.arrayHex[0], this.arrayHex[1], this.arrayHex[2]);
-            data = new List<string> { "Aircraft Address", AircraftAddress };
+            //data = new List<string> { "Aircraft Address", AircraftAddress };
+            data = new List<string> { AircraftAddress };
         }
         public List<string> GetData()
         {
@@ -1087,7 +1100,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem9()
         {
-            data = new List<string> { "Aircraft Identification", "N/D" };
+            //data = new List<string> { "Aircraft Identification", "N/D" };
+            data = new List<string> { "N/D" };
         }
 
         public DataItem9(List<string> arrayhex)
@@ -1116,7 +1130,8 @@ namespace ProyectoPGTA_P2
 
             AircraftIdentification = String.Join("", AAmatrix);
 
-            data = new List<string> { "Aircraft Identification", AircraftIdentification};
+            //data = new List<string> { "Aircraft Identification", AircraftIdentification};
+            data = new List<string> { AircraftIdentification };
         }
 
         public string decode6bit(string a)
@@ -1222,7 +1237,8 @@ namespace ProyectoPGTA_P2
         public List<string> data = new List<string>();
         public DataItem10()
         {
-            data = new List<string> { "BDS version: ", "N/D", "Repetitions", "N/D", "MCP/FCU Selected Altitude: ", "N/D", "FMS Selected Altitude: ", "N/D", "Barometric Pressure Setting: ", "N/D", "Status of MCP/FCU MODE: ", "N/D", "VNAV Mode: ", "N/D", "Alt Hold Mode: ", "N/D", "Approach Mode: ", "N/D", "Status of target Altitude Source: ", "N/D", "Target Altitude Source: ", "N/D", "Roll Angle: ", "N/D" , "True Track Angle: ", "N/D", "GS: ", "N/D", "Track Angle Rate: ", "N/D", "TAS: ", "N/D",  "Magnetic heading: ", "N/D", "IAS: ", "N/D", "MACH: ", "N/D", "Barometric Altitude Rate: ", "N/D", "Inertial Vertical Velocity", "N/D" };
+            //data = new List<string> { "BDS version: ", "N/D", "Repetitions", "N/D", "MCP/FCU Selected Altitude: ", "N/D", "FMS Selected Altitude: ", "N/D", "Barometric Pressure Setting: ", "N/D", "Status of MCP/FCU MODE: ", "N/D", "VNAV Mode: ", "N/D", "Alt Hold Mode: ", "N/D", "Approach Mode: ", "N/D", "Status of target Altitude Source: ", "N/D", "Target Altitude Source: ", "N/D", "Roll Angle: ", "N/D" , "True Track Angle: ", "N/D", "GS: ", "N/D", "Track Angle Rate: ", "N/D", "TAS: ", "N/D",  "Magnetic heading: ", "N/D", "IAS: ", "N/D", "MACH: ", "N/D", "Barometric Altitude Rate: ", "N/D", "Inertial Vertical Velocity", "N/D" };
+            data = new List<string> { "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D" };
         }
         public DataItem10(List<string> arrayhex)
         {
@@ -1235,34 +1251,34 @@ namespace ProyectoPGTA_P2
             }
             REP = Convert.ToInt32(arrayString[0], 2);
 
+            string BDSDATA = "N/A", BDSver = "";
+            string BDS1 = "N/A", BDS2 = "N/A";
+
+            //Param BDS4.0
+            string MCPSelectedAlt = "N/A";
+            string FMSSelectedAlt = "N/A";
+            string BarPressure = "N/A";
+            string StatusMCP = "N/A";
+            string VNAV = "N/A";
+            string ALTHoldMode = "N/A";
+            string APPMode = "N/A";
+            string StatusTargetAltSource = "N/A";
+            string TargetAltSource = "N/A";
+            //Param BDS5.0
+            string RollAngle = "N/A";
+            string TrueTrackAngle = "N/A";
+            string GS = "N/A";
+            string TrackAngleRate = "N/A";
+            string TAS = "N/A";
+            //Param BDS6.0
+            string MagneticHeading = "N/A";
+            string IAS = "N/A";
+            string MACH = "N/A";
+            string BarometricAlt = "N/A";
+            string InertialVerticalVel = "N/A";
+
             for (int i = 0; i < REP; i++)
             {
-                string BDSDATA, BDSver;
-                string BDS1, BDS2;
-
-                //Param BDS4.0
-                string MCPSelectedAlt = "N/A";
-                string FMSSelectedAlt = "N/A";
-                string BarPressure = "N/A";
-                string StatusMCP = "N/A";
-                string VNAV = "N/A";
-                string ALTHoldMode = "N/A";
-                string APPMode = "N/A";
-                string StatusTargetAltSource = "N/A";
-                string TargetAltSource = "N/A";
-                //Param BDS5.0
-                string RollAngle = "N/A";
-                string TrueTrackAngle = "N/A";
-                string GS = "N/A";
-                string TrackAngleRate = "N/A";
-                string TAS = "N/A";
-                //Param BDS6.0
-                string MagneticHeading = "N/A";
-                string IAS = "N/A";
-                string MACH = "N/A";
-                string BarometricAlt = "N/A";
-                string InertialVerticalVel = "N/A";
-
                 int shift = i * 8;
                 BDSDATA = String.Concat(arrayString[shift + 1], arrayString[shift + 2], arrayString[shift + 3], arrayString[shift + 4], arrayString[shift + 5], arrayString[shift + 6], arrayString[shift + 7]);
 
@@ -1271,7 +1287,15 @@ namespace ProyectoPGTA_P2
                 BDS1 = Convert.ToInt32(String.Concat(arrayString[shift + 8][0], arrayString[shift + 8][1], arrayString[shift + 8][2], arrayString[shift + 8][3]), 2).ToString();
                 BDS2 = Convert.ToInt32(String.Concat(arrayString[shift + 8][4], arrayString[shift + 8][5], arrayString[shift + 8][6], arrayString[shift + 8][7]), 2).ToString();
 
-                BDSver = BDS1 + "." + BDS2;
+                if(BDSver == "")
+                {
+                    BDSver = BDS1 + "." + BDS2;
+                }
+                else
+                {
+                    BDSver = BDSver + ":" + BDS1 + "." + BDS2;
+                }
+                
 
                 switch (BDSver)
                 {
@@ -1375,8 +1399,11 @@ namespace ProyectoPGTA_P2
                 }
 
                 //data.Add(dataBDSstr);
-                data = new List<string> { "BDS version: ", BDSver, "Repetitions", i.ToString() + "/" + REP.ToString(), "MCP/FCU Selected Altitude: ", "N/D", "FMS Selected Altitude: ", FMSSelectedAlt, "Barometric Pressure Setting: ", BarPressure, "Status of MCP/FCU MODE: ", StatusMCP, "VNAV Mode: ", VNAV, "Alt Hold Mode: ", ALTHoldMode, "Approach Mode: ", "N/D", "Status of target Altitude Source: ", StatusTargetAltSource, "Target Altitude Source: ", TargetAltSource, "Roll Angle: ", RollAngle, "True Track Angle: ", TrueTrackAngle, "GS: ", GS, "Track Angle Rate: ", TrackAngleRate, "TAS: ", TAS, "Magnetic heading: ",MagneticHeading, "IAS: ", IAS, "MACH: ", MACH, "Barometric Altitude Rate: ", BarometricAlt, "Inertial Vertical Velocity", InertialVerticalVel};
+                
             }
+
+            //data = new List<string> { "BDS version: ", BDSver, "Repetitions", REP.ToString(), "MCP/FCU Selected Altitude: ", MCPSelectedAlt, "FMS Selected Altitude: ", FMSSelectedAlt, "Barometric Pressure Setting: ", BarPressure, "Status of MCP/FCU MODE: ", StatusMCP, "VNAV Mode: ", VNAV, "Alt Hold Mode: ", ALTHoldMode, "Approach Mode: ", APPMode, "Status of target Altitude Source: ", StatusTargetAltSource, "Target Altitude Source: ", TargetAltSource, "Roll Angle: ", RollAngle, "True Track Angle: ", TrueTrackAngle, "GS: ", GS, "Track Angle Rate: ", TrackAngleRate, "TAS: ", TAS, "Magnetic heading: ", MagneticHeading, "IAS: ", IAS, "MACH: ", MACH, "Barometric Altitude Rate: ", BarometricAlt, "Inertial Vertical Velocity", InertialVerticalVel };
+            data = new List<string> { BDSver, REP.ToString(), MCPSelectedAlt, FMSSelectedAlt, BarPressure, StatusMCP, VNAV, ALTHoldMode, APPMode, StatusTargetAltSource, TargetAltSource, RollAngle, TrueTrackAngle,  GS, TrackAngleRate, TAS, MagneticHeading, IAS, MACH, BarometricAlt, InertialVerticalVel };
 
         }
         public List<string> GetData()
@@ -1397,7 +1424,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem11()
         {
-            data = new List<string> { "Track Number", "N/D"};
+            //data = new List<string> { "Track Number", "N/D"};
+            data = new List<string> { "N/D" };
         }
 
         public DataItem11(List<string> arrayhex)
@@ -1413,7 +1441,8 @@ namespace ProyectoPGTA_P2
 
             TrackNumber = Convert.ToInt32(String.Concat(arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]), 2);
 
-            data = new List<string> { "Track Number", TrackNumber.ToString()};
+            //data = new List<string> { "Track Number", TrackNumber.ToString()};
+            data = new List<string> { TrackNumber.ToString() };
         }
         public List<string> GetData()
         {
@@ -1432,7 +1461,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem12()
         {
-            data = new List<string> { "X", "N/D", "Y", "N/D" };
+            //data = new List<string> { "X", "N/D", "Y", "N/D" };
+            data = new List<string> { "N/D", "N/D" };
         }
 
         public DataItem12(List<string> arrayhex)
@@ -1449,7 +1479,8 @@ namespace ProyectoPGTA_P2
             Xcord = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1]))/128f;
             Ycord = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3]))/128f;
 
-            data = new List<string> { "X", Xcord.ToString() + " NM", "Y", Ycord.ToString() + " NM" };
+            //data = new List<string> { "X", Xcord.ToString() + " NM", "Y", Ycord.ToString() + " NM" };
+            data = new List<string> { Xcord.ToString() + " NM", Ycord.ToString() + " NM" };
         }
         public List<string> GetData()
         {
@@ -1468,7 +1499,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem13()
         {
-            data = new List<string> { "Ground Speed", "N/D", "Heading", "N/D" };
+            //data = new List<string> { "Ground Speed", "N/D", "Heading", "N/D" };
+            data = new List<string> { "N/D", "N/D" };
         }
         
         public DataItem13(List<string> arrayhex)
@@ -1485,7 +1517,8 @@ namespace ProyectoPGTA_P2
             GS = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1]), 2) / 16384f;
             HEAD = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3]), 2) * 45 / 8192f;
 
-            data = new List<string> { "Ground Speed", GS.ToString() + " kt", "Heading", HEAD.ToString() + " º"};
+            //data = new List<string> { "Ground Speed", GS.ToString() + " kt", "Heading", HEAD.ToString() + " º"};
+            data = new List<string> { GS.ToString() + " kt", HEAD.ToString() + " º" };
         }
         public List<string> GetData()
         {
@@ -1508,7 +1541,8 @@ namespace ProyectoPGTA_P2
 
         public DataItem14()
         {
-            data = new List<string> { "CNF", "N/D", "RAD", "N/D", "DOU", "N/D", "MAH", "N/D", "CDM", "N/D", "TRE", "N/D", "GHO", "N/D", "SUP", "N/D", "TCC", "N/D" };
+            //data = new List<string> { "CNF", "N/D", "RAD", "N/D", "DOU", "N/D", "MAH", "N/D", "CDM", "N/D", "TRE", "N/D", "GHO", "N/D", "SUP", "N/D", "TCC", "N/D" };
+            data = new List<string> { "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D" };
         }
 
         public DataItem14(List<string> arrayhex)
@@ -1656,7 +1690,8 @@ namespace ProyectoPGTA_P2
                 FX2 = Convert.ToInt32(arrayString[1][7]);
              }
 
-            data = new List<string>{ "CNF", CNF, "RAD", RAD, "DOU", DOU, "MAH", MAH, "CDM", CDM, "TRE", TRE, "GHO", GHO, "SUP", SUP, "TCC", TCC};
+            //data = new List<string>{ "CNF", CNF, "RAD", RAD, "DOU", DOU, "MAH", MAH, "CDM", CDM, "TRE", TRE, "GHO", GHO, "SUP", SUP, "TCC", TCC};
+            data = new List<string> { CNF, RAD, DOU, MAH, CDM, TRE, GHO, SUP, TCC };
         }
         public List<string> GetData()
         {
@@ -1743,7 +1778,8 @@ namespace ProyectoPGTA_P2
         public string[] arrayString;
         public DataItem19()
         {
-            data = new List<string> { "3D Height", "N/D" };
+            //data = new List<string> { "3D Height", "N/D" };
+            data = new List<string> { "N/D" };
         }
         public DataItem19(List<string> arrayhex)
         {
@@ -1759,7 +1795,8 @@ namespace ProyectoPGTA_P2
 
             Height3D = Convert.ToInt32(String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]), 2)*25;
 
-            data = new List<string> { "3D Height", Height3D.ToString() + " ft" };
+            //data = new List<string> { "3D Height", Height3D.ToString() + " ft" };
+            data = new List<string> { Height3D.ToString() + " ft" };
         }
         public List<string> GetData()
         {
@@ -1794,7 +1831,8 @@ namespace ProyectoPGTA_P2
     
         public DataItem21()
         {
-            data = new List<string> { "COM", "N/D", "STAT", "N/D", "SI", "N/D", "MSSC", "N/D", "ARC", "N/D", "AIC", "N/D", "B1A", "N/D", "B1B", "N/D" };
+            //data = new List<string> { "COM", "N/D", "STAT", "N/D", "SI", "N/D", "MSSC", "N/D", "ARC", "N/D", "AIC", "N/D", "B1A", "N/D", "B1B", "N/D" };
+            data = new List<string> { "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D" };
         }
         
         public DataItem21(List<string> arrayhex)
@@ -1907,7 +1945,8 @@ namespace ProyectoPGTA_P2
                 AIC = "Capable of identifying itself";
             }
 
-            data = new List<string> { "COM", COM.ToString(),"STAT",STAT.ToString(), "SI", SI.ToString(), "MSSC", MSSC, "ARC",ARC.ToString(), "AIC",AIC.ToString(), "B1A",B1A.ToString(), "B1B",B1B.ToString() };
+            //data = new List<string> { "COM", COM.ToString(),"STAT",STAT.ToString(), "SI", SI.ToString(), "MSSC", MSSC, "ARC",ARC.ToString(), "AIC",AIC.ToString(), "B1A",B1A.ToString(), "B1B",B1B.ToString() };
+            data = new List<string> { COM.ToString(), STAT.ToString(), SI.ToString(), MSSC, ARC.ToString(), AIC.ToString(), B1A.ToString(), B1B.ToString() };
         }
         public List<string> GetData()
         {
