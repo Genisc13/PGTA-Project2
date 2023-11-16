@@ -366,7 +366,7 @@ namespace ProyectoPGTA_P2
                 this.timestr += arrayString[i];
             }
 
-            this.time = Convert.ToInt32(timestr,2) / 128f; //hora actual en segundos
+            this.time = Convert.ToInt32(timestr,2) / 128; //hora actual en segundos
 
             float hours = time / 3600f;
             int trunchours = (int)Math.Truncate(hours);
@@ -1374,7 +1374,7 @@ namespace ProyectoPGTA_P2
                         break;
                     case "5.0":
                         RollAngle = (Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10]), 2) * 45 / 256f).ToString() + " º";
-                        TrueTrackAngle = (Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2) * 90 / 512f).ToString() + " º";
+                        TrueTrackAngle = (((-1) ^ Convert.ToInt32(BDSDATA[12]))*Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2) * 90 / 512f).ToString() + " º";
                         GS = (Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 2f).ToString() + " kt";
                         TrackAngleRate = (((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 8 / 256f).ToString() + " º/s";
                         TAS = (Convert.ToInt32(String.Concat(BDSDATA[46], BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 2f).ToString() + " kt";

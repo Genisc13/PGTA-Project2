@@ -296,7 +296,7 @@ namespace ProyectoPGTA_P2
                     n++;
                 }
                 itemContainer.SetDataItem10(new DataItem10(arrayItem));
-                i += REP * 8;
+                i += REP * 8+1;
                 items[9] = false;
             }
             else
