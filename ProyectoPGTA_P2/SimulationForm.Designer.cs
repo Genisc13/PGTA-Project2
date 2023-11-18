@@ -28,27 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBoxMap = new System.Windows.Forms.PictureBox();
             this.AdvanceButton = new System.Windows.Forms.Button();
             this.ReverseButton = new System.Windows.Forms.Button();
             this.InitSim = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMap)).BeginInit();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pictureBoxMap
-            // 
-            this.pictureBoxMap.Location = new System.Drawing.Point(215, 12);
-            this.pictureBoxMap.Name = "pictureBoxMap";
-            this.pictureBoxMap.Size = new System.Drawing.Size(573, 426);
-            this.pictureBoxMap.TabIndex = 0;
-            this.pictureBoxMap.TabStop = false;
-            this.pictureBoxMap.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBoxMap_Paint);
             // 
             // AdvanceButton
             // 
-            this.AdvanceButton.Location = new System.Drawing.Point(52, 62);
+            this.AdvanceButton.Location = new System.Drawing.Point(66, 33);
+            this.AdvanceButton.Margin = new System.Windows.Forms.Padding(2);
             this.AdvanceButton.Name = "AdvanceButton";
-            this.AdvanceButton.Size = new System.Drawing.Size(75, 23);
+            this.AdvanceButton.Size = new System.Drawing.Size(56, 19);
             this.AdvanceButton.TabIndex = 1;
             this.AdvanceButton.Text = "Advance";
             this.AdvanceButton.UseVisualStyleBackColor = true;
@@ -56,9 +50,10 @@
             // 
             // ReverseButton
             // 
-            this.ReverseButton.Location = new System.Drawing.Point(52, 134);
+            this.ReverseButton.Location = new System.Drawing.Point(66, 80);
+            this.ReverseButton.Margin = new System.Windows.Forms.Padding(2);
             this.ReverseButton.Name = "ReverseButton";
-            this.ReverseButton.Size = new System.Drawing.Size(75, 23);
+            this.ReverseButton.Size = new System.Drawing.Size(56, 19);
             this.ReverseButton.TabIndex = 2;
             this.ReverseButton.Text = "Reverse";
             this.ReverseButton.UseVisualStyleBackColor = true;
@@ -66,35 +61,49 @@
             // 
             // InitSim
             // 
-            this.InitSim.Location = new System.Drawing.Point(52, 199);
+            this.InitSim.Location = new System.Drawing.Point(66, 130);
+            this.InitSim.Margin = new System.Windows.Forms.Padding(2);
             this.InitSim.Name = "InitSim";
-            this.InitSim.Size = new System.Drawing.Size(75, 23);
+            this.InitSim.Size = new System.Drawing.Size(56, 19);
             this.InitSim.TabIndex = 3;
             this.InitSim.Text = "InitSimulation";
             this.InitSim.UseVisualStyleBackColor = true;
             this.InitSim.Click += new System.EventHandler(this.InitSim_Click);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Location = new System.Drawing.Point(12, 12);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.AdvanceButton);
+            this.splitContainer1.Panel1.Controls.Add(this.InitSim);
+            this.splitContainer1.Panel1.Controls.Add(this.ReverseButton);
+            this.splitContainer1.Size = new System.Drawing.Size(576, 342);
+            this.splitContainer1.SplitterDistance = 192;
+            this.splitContainer1.TabIndex = 4;
+            // 
             // SimulationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.InitSim);
-            this.Controls.Add(this.ReverseButton);
-            this.Controls.Add(this.AdvanceButton);
-            this.Controls.Add(this.pictureBoxMap);
+            this.ClientSize = new System.Drawing.Size(600, 366);
+            this.Controls.Add(this.splitContainer1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SimulationForm";
             this.Text = "SimulationForm";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMap)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox pictureBoxMap;
         private System.Windows.Forms.Button AdvanceButton;
         private System.Windows.Forms.Button ReverseButton;
         private System.Windows.Forms.Button InitSim;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }

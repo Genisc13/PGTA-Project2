@@ -15,12 +15,36 @@ namespace ProyectoPGTA_P2
         private List<List<Avion>> simulacion;
         private int pasoActual;
         public Timer timerSimulacion = new Timer();
+        public GMap.NET.WindowsForms.GMapControl gmap;
         public SimulationForm()
         {
             InitializeComponent();
-
+            gmap = new GMap.NET.WindowsForms.GMapControl();
+            gmap.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
+            gmap.Dock = DockStyle.Fill;
+            gmap.MapProvider = GMap.NET.MapProviders.BingMapProvider.Instance;
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
+            gmap.ShowCenter = false;
+            gmap.Position = new GMap.NET.PointLatLng(40.4165, -3.70256);
+            gmap.MinZoom = 1;
+            gmap.MaxZoom = 20;
+            gmap.Zoom = 5;
+            splitContainer1.Panel2.Controls.Add(gmap);
+            gmap.DragButton = MouseButtons.Left;
+            gmap.MouseDoubleClick += Gmap_MouseDoubleClick;
             InicializarSimulacion();
+            ActivateOverlay();
             
+        }
+
+        private void Gmap_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // Obtener las coordenadas del punto donde se hizo doble clic
+            double latitud = gmap.FromLocalToLatLng(e.X, e.Y).Lat;
+            double longitud = gmap.FromLocalToLatLng(e.X, e.Y).Lng;
+
+            // Puedes mostrar las coordenadas en un MessageBox, por ejemplo
+            MessageBox.Show($"Coordenadas: Latitud {latitud}, Longitud {longitud}");
         }
         private void InicializarSimulacion()
         {
@@ -29,8 +53,9 @@ namespace ProyectoPGTA_P2
             // Agrega algunos aviones a la simulación
             simulacion.Add(new List<Avion>
             {
-                new Avion(100, 150),
-                new Avion(200, 300),
+                new Avion(40.5, -2,"Avion 1"),
+                new Avion(40.6235, -2.456, "Avion 2"),
+                new Avion(41.6239, -1.4657, "Avion 3")
                 // Agrega más aviones según sea necesario
             });
 
@@ -40,33 +65,24 @@ namespace ProyectoPGTA_P2
         private void TimerSimulacion_Tick(object sender, EventArgs e)
         {
             // Actualiza la posición de los aviones para el próximo paso de la simulación
-            pasoActual = (pasoActual + 1) % simulacion.Count;
-            pictureBoxMap.Invalidate(); // Vuelve a dibujar el mapa con la nueva posición de los aviones
-        }
-        private void PictureBoxMapa_Paint(object sender, PaintEventArgs e)
-        {
-            // Dibuja los aviones en el PictureBox
-            foreach (var avion in simulacion[pasoActual])
-            {
-                avion.Dibujar(e.Graphics);
-            }
-        }
+            pasoActual = (pasoActual + 1) % simulacion.Count;        }
         public class Avion
         {
-            public int X { get; set; }
-            public int Y { get; set; }
+            public double X { get; set; }
+            public double Y { get; set; }
 
-            public Avion(int x, int y)
+            public string Name { get; set; }
+
+            public Avion(double x, double y, string name)
             {
                 X = x;
                 Y = y;
+                Name = name;
             }
 
-            public void Dibujar(Graphics g)
+            public void Dibujar()
             {
-                // Dibuja el avión en la posición actual
-                g.FillEllipse(Brushes.Red, X, Y, 10, 10);
-                // Puedes personalizar el dibujo del avión según tus necesidades
+                
             }
         }
 
@@ -80,12 +96,20 @@ namespace ProyectoPGTA_P2
 
         }
 
-        private void PictureBoxMap_Paint(object sender, PaintEventArgs e)
+        private void ActivateOverlay()
         {
             // Dibuja los aviones en el PictureBox
             foreach (var avion in simulacion[pasoActual])
             {
-                avion.Dibujar(e.Graphics);
+                GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.X, avion.Y);
+                // Crear un marcador
+                GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red); ;
+                marcador.ToolTipText = avion.Name;
+
+                // Añadir el marcador al mapa
+                GMap.NET.WindowsForms.GMapOverlay overlay = new GMap.NET.WindowsForms.GMapOverlay("Aviones");
+                overlay.Markers.Add(marcador);
+                gmap.Overlays.Add(overlay);
             }
         }
 
