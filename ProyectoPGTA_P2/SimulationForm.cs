@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Accord;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -49,8 +50,44 @@ namespace ProyectoPGTA_P2
         private void InicializarSimulacion(List<CAT48> avionList)
         {
             simulacion = new List<Avion>();
+            List<string> PLANES = new List<string>();
 
             int totaltime = Convert.ToInt32(avionList[avionList.Count - 1].itemContainer.GetDataItem2().time) - Convert.ToInt32(avionList[0].itemContainer.GetDataItem2().time);
+
+            for (int i  = 0; i < avionList.Count; i++) { 
+                
+                for (int j = 0; j < PLANES.Count; j++)
+                {
+                    if (avionList[i].itemContainer.GetDataItem8().AircraftAddress != PLANES[j])
+                    {
+                        PLANES.Add(avionList[i].itemContainer.GetDataItem8().AircraftAddress);
+                        Avion plane = new Avion(avionList[i].itemContainer.GetDataItem8().AircraftAddress);
+                        simulacion.Add(plane);
+                    }
+                }
+            }
+
+            for (int i = 0;i < PLANES.Count; i++)
+            {
+                Avion plane = new Avion(avionList[i].itemContainer.GetDataItem8().AircraftAddress);
+
+                for (int j = 0;j < totaltime; j++)
+                {
+                    for (int k = 0; k < avionList.Count; k++)
+                    {
+                        
+                        if (avionList[k].itemContainer.GetDataItem8().AircraftAddress == PLANES[i] && avionList[k].itemContainer.GetDataItem2().time == j)
+                        {
+                            plane.positionList[j] = new Position(avionList[k].itemContainer.GetDataItem12().Xcord, avionList[k].itemContainer.GetDataItem12().Ycord, j, true);
+                        }
+                        else
+                        {
+                            plane.positionList[j] = new Position(0, 0, j, false);
+                        }
+                    }
+                    
+                }
+            }
 
             /*
             for (int i = 0; i < avionList.Count; i++) //iterar sobre todos los aviones
