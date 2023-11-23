@@ -51,34 +51,51 @@ namespace ProyectoPGTA_P2
         {
             simulacion = new List<Avion>();
             List<string> PLANES = new List<string>();
-
+            
             int totaltime = Convert.ToInt32(avionList[avionList.Count - 1].itemContainer.GetDataItem2().time) - Convert.ToInt32(avionList[0].itemContainer.GetDataItem2().time);
 
-            for (int i  = 0; i < avionList.Count; i++) { 
-                
+            PLANES.Add(avionList[0].itemContainer.GetDataItem8().AircraftAddress);
+
+            for (int i  = 0; i < avionList.Count; i++) {
+                bool found = false;
                 for (int j = 0; j < PLANES.Count; j++)
                 {
-                    if (avionList[i].itemContainer.GetDataItem8().AircraftAddress != PLANES[j])
+                    if (avionList[i].itemContainer.GetDataItem8().AircraftAddress == PLANES[j])
                     {
-                        PLANES.Add(avionList[i].itemContainer.GetDataItem8().AircraftAddress);
-                        Avion plane = new Avion(avionList[i].itemContainer.GetDataItem8().AircraftAddress);
-                        simulacion.Add(plane);
+                        found = true;
+                        //Avion plane = new Avion(avionList[i].itemContainer.GetDataItem8().AircraftAddress);
+                        //simulacion.Add(plane);
+                        break;
+                    }
+                    else if (avionList[i].itemContainer.GetDataItem8().AircraftAddress == null)
+                    {
+                        found = true;
+                        break;
+                    }
+                    else
+                    {
+                        found = false;
                     }
                 }
+                if (found == false)
+                {
+                    PLANES.Add(avionList[i].itemContainer.GetDataItem8().AircraftAddress);
+                }
+                
             }
 
             for (int i = 0;i < PLANES.Count; i++)
             {
                 Avion plane = new Avion(avionList[i].itemContainer.GetDataItem8().AircraftAddress);
 
-                for (int j = 0;j < totaltime; j++)
+                for (int j = 0;j < totaltime; j++) //encontrar todas sus posiciones
                 {
                     for (int k = 0; k < avionList.Count; k++)
                     {
                         
-                        if (avionList[k].itemContainer.GetDataItem8().AircraftAddress == PLANES[i] && avionList[k].itemContainer.GetDataItem2().time == j)
+                        if (avionList[k].itemContainer.GetDataItem8().AircraftAddress == PLANES[i])
                         {
-                            plane.positionList[j] = new Position(avionList[k].itemContainer.GetDataItem12().Xcord, avionList[k].itemContainer.GetDataItem12().Ycord, j, true);
+                            plane.positionList[j] = new Position(avionList[k].itemContainer.GetDataItem4().X, avionList[k].itemContainer.GetDataItem4().Y, Convert.ToInt32(avionList[k].itemContainer.GetDataItem2().time), true);
                         }
                         else
                         {
@@ -87,6 +104,8 @@ namespace ProyectoPGTA_P2
                     }
                     
                 }
+
+                simulacion.Add(plane);
             }
 
             /*
@@ -159,14 +178,14 @@ namespace ProyectoPGTA_P2
 
         public class Position
         {
-            public double X { get; set; }
-            public double Y { get; set; }
+            public float X { get; set; }
+            public float Y { get; set; }
 
             public int Time { get; set; }
 
             public bool Draw { get; set; }
 
-            public Position(double x, double y, int time, bool draw)
+            public Position(float x, float y, int time, bool draw)
             {
                 X = x;
                 Y = y;
@@ -189,10 +208,10 @@ namespace ProyectoPGTA_P2
         private void ActivateOverlay()
         {
             // Dibuja los aviones en el PictureBox
-            /*
-            foreach (var avion in simulacion[pasoActual])
+            
+            foreach (var avion in simulacion)
             {
-                GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.X, avion.Y);
+                GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.positionList[pasoActual].X, avion.positionList[pasoActual].Y);
                 // Crear un marcador
                 GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red); ;
                 marcador.ToolTipText = avion.Name;
@@ -201,7 +220,7 @@ namespace ProyectoPGTA_P2
                 GMap.NET.WindowsForms.GMapOverlay overlay = new GMap.NET.WindowsForms.GMapOverlay("Aviones");
                 overlay.Markers.Add(marcador);
                 gmap.Overlays.Add(overlay);
-            }*/
+            }
         }
 
         private void InitSim_Click(object sender, EventArgs e)

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MultiCAT6.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisioForge.Libs.MediaFoundation.OPM;
 
 namespace ProyectoPGTA_P2
 {
@@ -531,6 +533,24 @@ namespace ProyectoPGTA_P2
                 }
                 items[27] = false;
             }
+
+        //Calcular posiciones
+
+            //Latitud: 41º 18’ 02,5284’’ N
+            //Longitud: 02º 06’ 07,4095’’ E
+            //Elevación terreno: 2,007 m
+            //Altura antena: 25,25 m
+
+            CoordinatesPolar radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD, itemContainer.GetDataItem4().THETA, );
+
+            CoordinatesXYZ radarCartesian = GeoUtils.change_radar_spherical2radar_cartesian(radarPolar);
+
+            CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84( , , );
+
+            CoordinatesXYZ geocentricSystem = GeoUtils.change_radar_cartesian2geocentric(radarCoordinates, radarCartesian);
+
+            CoordinatesWGS84 geodesic = GeoUtils.change_geocentric2geodesic(geocentricSystem);
+
 
             //Una vez tenemos todos los DataItems decodificados hemos de hacer algo con ellos.
             if (itemContainer.GetDataItem1()!=null)

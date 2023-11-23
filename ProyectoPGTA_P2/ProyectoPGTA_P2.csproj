@@ -211,6 +211,7 @@
     <Compile Include="CAT48.cs" />
     <Compile Include="DataItems.cs" />
     <Compile Include="GeneralMatrix.cs" />
+    <Compile Include="GeoUtils.cs" />
     <Compile Include="Reader.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

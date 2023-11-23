@@ -80,15 +80,15 @@
             this.splitContainer1.Panel1.Controls.Add(this.AdvanceButton);
             this.splitContainer1.Panel1.Controls.Add(this.InitSim);
             this.splitContainer1.Panel1.Controls.Add(this.ReverseButton);
-            this.splitContainer1.Size = new System.Drawing.Size(576, 342);
-            this.splitContainer1.SplitterDistance = 192;
+            this.splitContainer1.Size = new System.Drawing.Size(965, 474);
+            this.splitContainer1.SplitterDistance = 321;
             this.splitContainer1.TabIndex = 4;
             // 
             // SimulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 366);
+            this.ClientSize = new System.Drawing.Size(988, 492);
             this.Controls.Add(this.splitContainer1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SimulationForm";

@@ -7,6 +7,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using MultiCAT6.Utils;
+using VisioForge.Libs.MediaFoundation.OPM;
 
 namespace ProyectoPGTA_P2
 {
