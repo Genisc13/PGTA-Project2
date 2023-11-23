@@ -12,11 +12,11 @@ namespace ProyectoPGTA_P2
 {
     public partial class SimulationForm : Form
     {
-        private List<List<Avion>> simulacion;
+        private List<Avion> simulacion;
         private int pasoActual;
         public Timer timerSimulacion = new Timer();
         public GMap.NET.WindowsForms.GMapControl gmap;
-        public SimulationForm()
+        public SimulationForm(List<CAT48> avionList)
         {
             InitializeComponent();
             gmap = new GMap.NET.WindowsForms.GMapControl();
@@ -32,7 +32,7 @@ namespace ProyectoPGTA_P2
             splitContainer1.Panel2.Controls.Add(gmap);
             gmap.DragButton = MouseButtons.Left;
             gmap.MouseDoubleClick += Gmap_MouseDoubleClick;
-            InicializarSimulacion();
+            InicializarSimulacion(avionList);
             ActivateOverlay();
             
         }
@@ -46,18 +46,54 @@ namespace ProyectoPGTA_P2
             // Puedes mostrar las coordenadas en un MessageBox, por ejemplo
             MessageBox.Show($"Coordenadas: Latitud {latitud}, Longitud {longitud}");
         }
-        private void InicializarSimulacion()
+        private void InicializarSimulacion(List<CAT48> avionList)
         {
-            simulacion = new List<List<Avion>>();
+            simulacion = new List<Avion>();
+
+            int totaltime = Convert.ToInt32(avionList[avionList.Count - 1].itemContainer.GetDataItem2().time) - Convert.ToInt32(avionList[0].itemContainer.GetDataItem2().time);
+
+            /*
+            for (int i = 0; i < avionList.Count; i++) //iterar sobre todos los aviones
+            {
+                for (int j = 0; j < simulacion.Count; j++) //iterar sobre la lista de simulación
+                {
+                    if (avionList[i].itemContainer.GetDataItem8().AircraftAddress != simulacion[j].Name) //comprobar si ya está incluido el avión
+                    {
+                        Avion plane = new Avion(avionList[i].itemContainer.GetDataItem8().AircraftAddress); //crear nuevo objeto avión
+
+                        //esto probablemente podria ir fuera
+                        for (int k = 0; k < totaltime; k++) //alomejor deberiamos analizar cada 4s
+                        {
+                            for (int l = 0; l < avionList.Count; l++) //buscar todas las posiciones del avión
+                            {
+                                if (avionList[l].itemContainer.GetDataItem2().time == k) //si hay una linea con el mismo time entonces creamos esa posición en el avión
+                                {
+                                    new Position(avionList[l].itemContainer.GetDataItem12().Xcord, avionList[l].itemContainer.GetDataItem12().Ycord, k, true);
+                                    new Position(avionList[l].itemContainer.GetDataItem12().Xcord, avionList[l].itemContainer.GetDataItem12().Ycord, k+1, true);
+                                    new Position(avionList[l].itemContainer.GetDataItem12().Xcord, avionList[l].itemContainer.GetDataItem12().Ycord, k+2, true);
+                                    new Position(avionList[l].itemContainer.GetDataItem12().Xcord, avionList[l].itemContainer.GetDataItem12().Ycord, k+3, true);
+                                }
+                                else //si no hay un report de posición a esa hora, creamos una posición vacía con draw false
+                                {
+                                    new Position(0, 0, k, false);
+                                }
+                            }
+
+                        }
+
+                        simulacion.Add( plane );
+                    }
+                }
+                
+            }
+            */
 
             // Agrega algunos aviones a la simulación
-            simulacion.Add(new List<Avion>
+            /*simulacion.Add(new List<Avion>
             {
-                new Avion(40.5, -2,"Avion 1"),
-                new Avion(40.6235, -2.456, "Avion 2"),
-                new Avion(41.6239, -1.4657, "Avion 3")
+                
                 // Agrega más aviones según sea necesario
-            });
+            });*/
 
             // Puedes seguir añadiendo más listas con la información de cada paso de la simulación
             // simulacion.Add(new List<Avion> { /* ... */ });
@@ -65,24 +101,41 @@ namespace ProyectoPGTA_P2
         private void TimerSimulacion_Tick(object sender, EventArgs e)
         {
             // Actualiza la posición de los aviones para el próximo paso de la simulación
-            pasoActual = (pasoActual + 1) % simulacion.Count;        }
+            pasoActual = (pasoActual + 1); //% simulacion.Count;
+        }
         public class Avion
         {
-            public double X { get; set; }
-            public double Y { get; set; }
+            public Position[] positionList;
 
             public string Name { get; set; }
 
-            public Avion(double x, double y, string name)
+            public Avion(string name)
             {
-                X = x;
-                Y = y;
-                Name = name;
+                this.Name = name;
             }
 
             public void Dibujar()
             {
                 
+            }
+        }
+
+        public class Position
+        {
+            public double X { get; set; }
+            public double Y { get; set; }
+
+            public int Time { get; set; }
+
+            public bool Draw { get; set; }
+
+            public Position(double x, double y, int time, bool draw)
+            {
+                X = x;
+                Y = y;
+                Time = time;
+                Draw = draw;
+
             }
         }
 
@@ -99,6 +152,7 @@ namespace ProyectoPGTA_P2
         private void ActivateOverlay()
         {
             // Dibuja los aviones en el PictureBox
+            /*
             foreach (var avion in simulacion[pasoActual])
             {
                 GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.X, avion.Y);
@@ -110,7 +164,7 @@ namespace ProyectoPGTA_P2
                 GMap.NET.WindowsForms.GMapOverlay overlay = new GMap.NET.WindowsForms.GMapOverlay("Aviones");
                 overlay.Markers.Add(marcador);
                 gmap.Overlays.Add(overlay);
-            }
+            }*/
         }
 
         private void InitSim_Click(object sender, EventArgs e)

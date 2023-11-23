@@ -366,7 +366,7 @@ namespace ProyectoPGTA_P2
                 this.timestr += arrayString[i];
             }
 
-            this.time = Convert.ToInt32(timestr,2) / 128; //hora actual en segundos
+            this.time = Convert.ToInt32(timestr,2) / 128f; //hora actual en segundos
 
             float hours = time / 3600f;
             int trunchours = (int)Math.Truncate(hours);
@@ -378,7 +378,7 @@ namespace ProyectoPGTA_P2
             int truncmilsec = (int)Math.Truncate(milsec);
 
             //data = new List<string> { "Time", trunchours.ToString().PadLeft(2, '0') + ":" + truncminutes.ToString().PadLeft(2, '0') + ":" + truncseconds.ToString().PadLeft(2, '0') + ":" + truncmilsec.ToString().PadLeft(3, '0') };
-            data = new List<string> { trunchours.ToString().PadLeft(2, '0') + ":" + truncminutes.ToString().PadLeft(2, '0') + ":" + truncseconds.ToString().PadLeft(2, '0') + ":" + truncmilsec.ToString().PadLeft(3, '0') };
+            data = new List<string> { trunchours.ToString().PadLeft(2, '0') + ":" + truncminutes.ToString().PadLeft(2, '0') + ":" + truncseconds.ToString().PadLeft(2, '0') + ":" + truncmilsec.ToString().PadLeft(3, '0'), (Convert.ToInt32(timestr, 2) / 128).ToString() };
         }
         public List<string> GetData()
         {
