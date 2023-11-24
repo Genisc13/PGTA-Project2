@@ -11,8 +11,8 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyMetadata("Sentry.ProjectDirectory", "C:\\Users\\alexr\\Desktop\\DRIVE\\XX\\ESTUDIOS\\UNI\\4A\\PGTA\\PGTA-Project2\\ProyectoPGTA_P" +
-    "2\\")]
+[assembly: System.Reflection.AssemblyMetadata("Sentry.ProjectDirectory", "C:\\Users\\baiales\\Desktop\\DRIVE\\XX\\ESTUDIOS\\UNI\\4A\\PGTA\\PGTA-Project2\\ProyectoPGTA" +
+    "_P2\\")]
 
 // Generado por la clase WriteCodeFragment de MSBuild.
 

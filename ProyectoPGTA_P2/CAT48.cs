@@ -1,4 +1,5 @@
-﻿using MultiCAT6.Utils;
+﻿using GLib;
+using MultiCAT6.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -534,23 +535,54 @@ namespace ProyectoPGTA_P2
                 items[27] = false;
             }
 
-        //Calcular posiciones
+            //Calcular posiciones
 
+            //GMS
             //Latitud: 41º 18’ 02,5284’’ N
             //Longitud: 02º 06’ 07,4095’’ E
+            
+            //Geográficas
+            //Lat 41.3007023
+            //Long 2.1020581944444445
+
             //Elevación terreno: 2,007 m
             //Altura antena: 25,25 m
 
-            CoordinatesPolar radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD, itemContainer.GetDataItem4().THETA, );
+            CoordinatesPolar radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD, itemContainer.GetDataItem4().THETA, itemContainer.GetDataItem6().FL*100*0.3048);
 
             CoordinatesXYZ radarCartesian = GeoUtils.change_radar_spherical2radar_cartesian(radarPolar);
 
-            CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84( , , );
+            CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84(41.300702, 2.102058, 2.007 + 25.25); //coordenadas del radar en geográficas en vez de GMS comentado por ahora
+                                                                                                          //CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84("41º 18’ 02,5284’’ N", "02º 06’ 07,4095’’ E", 2.007 + 25.25);
 
+
+            /*LINEAS DE ABAJO COMENTADAS PARA QUE NO DE ERROR
             CoordinatesXYZ geocentricSystem = GeoUtils.change_radar_cartesian2geocentric(radarCoordinates, radarCartesian);
 
             CoordinatesWGS84 geodesic = GeoUtils.change_geocentric2geodesic(geocentricSystem);
 
+            itemContainer.GetDataItem12().Xcord = (float)geodesic.Lon;
+            itemContainer.GetDataItem12().Ycord = (float)geodesic.Lat;
+            itemContainer.GetDataItem12().Zcord = (float)geodesic.Height;
+
+            DataItem12 newDI12 = new DataItem12();
+            newDI12.Xcord = (float)geodesic.Lon;
+            newDI12.Ycord = (float)geodesic.Lat;
+            newDI12.Zcord = (float)geodesic.Height;
+
+            newDI12.data = new List<string> { "A".ToString(), "B".ToString(), "C".ToString() };
+
+            itemContainer.SetDataItem12(newDI12);
+            */
+
+            DataItem12 newDI12 = new DataItem12();
+            newDI12.Xcord = (float)0;
+            newDI12.Ycord = (float)0;
+            newDI12.Zcord = (float)0;
+
+            newDI12.data = new List<string> { "A".ToString(), "B".ToString(), "C".ToString() };
+
+            itemContainer.SetDataItem12(newDI12);
 
             //Una vez tenemos todos los DataItems decodificados hemos de hacer algo con ellos.
             if (itemContainer.GetDataItem1()!=null)

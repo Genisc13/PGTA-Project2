@@ -904,6 +904,10 @@ namespace ProyectoPGTA_P2
             string FL_BIN = String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
             FL = Convert.ToInt32(FL_BIN, 2) / 4f;
 
+            if (FL < 0){
+                FL = 0;
+            }
+
             //data = new List<string> { "V", V, "G", G, "FL", FL.ToString() };
             data = new List<string> { V, G, FL.ToString() };
         }
@@ -1144,82 +1148,82 @@ namespace ProyectoPGTA_P2
 
             switch (a)
             {
-                case "100000":
+                case "000001":
                     result = "A"; break;
-                case "010000":
+                case "000010":
                     result = "B"; break;
-                case "110000":
+                case "000011":
                     result = "C"; break;
-                case "001000":
-                    result = "D"; break;
-                case "101000":
-                    result = "E"; break;
-                case "011000":
-                    result = "F"; break;
-                case "111000":
-                    result = "G"; break;
                 case "000100":
+                    result = "D"; break;
+                case "000101":
+                    result = "E"; break;
+                case "000110":
+                    result = "F"; break;
+                case "000111":
+                    result = "G"; break;
+                case "001000":
                     result = "H"; break;
-                case "100100":
+                case "001001":
                     result = "I"; break;
-                case "010100":
+                case "001010":
                     result = "J"; break;
-                case "110100":
+                case "001011":
                     result = "K"; break;
                 case "001100":
                     result = "L"; break;
-                case "101100":
+                case "001101":
                     result = "M"; break;
-                case "011100":
+                case "001110":
                     result = "N"; break;
-                case "111100":
+                case "001111":
                     result = "O"; break;
-                case "000010":
+                case "010000":
                     result = "P"; break;
-                case "100010":
+                case "010001":
                     result = "Q"; break;
                 case "010010":
                     result = "R"; break;
-                case "110010":
-                    result = "S"; break;
-                case "001010":
-                    result = "T"; break;
-                case "101010":
-                    result = "U"; break;
-                case "011010":
-                    result = "V"; break;
-                case "111010":
-                    result = "W"; break;
-                case "000110":
-                    result = "X"; break;
-                case "100110":
-                    result = "Y"; break;
-                case "010110":
-                    result = "Z"; break;
-                case "000011":
-                    result = "0"; break;
-                case "100011":
-                    result = "1"; break;
                 case "010011":
+                    result = "S"; break;
+                case "010100":
+                    result = "T"; break;
+                case "010101":
+                    result = "U"; break;
+                case "010110":
+                    result = "V"; break;
+                case "010111":
+                    result = "W"; break;
+                case "011000":
+                    result = "X"; break;
+                case "011001":
+                    result = "Y"; break;
+                case "011010":
+                    result = "Z"; break;
+                case "110000":
+                    result = "0"; break;
+                case "110001":
+                    result = "1"; break;
+                case "110010":
                     result = "2"; break;
                 case "110011":
                     result = "3"; break;
-                case "001011":
+                case "110100":
                     result = "4"; break;
-                case "101011":
+                case "110101":
                     result = "5"; break;
-                case "011011":
+                case "110110":
                     result = "6"; break;
-                case "111011":
+                case "110111":
                     result = "7"; break;
-                case "000111":
+                case "111000":
                     result = "8"; break;
-                case "100111":
+                case "111001":
                     result = "9"; break;
-                case "000001":
-                    result = "·"; break; //espacio
+                case "100000":
+                    result = " "; break; //espacio
                 default:
-                    result = "-"; break; //no coincide con ninguno
+                    result = "·"; break; //no coincide con ninguno
             }
 
             return result;
@@ -1460,13 +1464,13 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public List<string> data;
-        public float Xcord, Ycord;
+        public float Xcord, Ycord, Zcord;
         public string[] arrayString;
 
         public DataItem12()
         {
             //data = new List<string> { "X", "N/D", "Y", "N/D" };
-            data = new List<string> { "N/D", "N/D" };
+            data = new List<string> { "N/D", "N/D" , "N/D"};
         }
 
         public DataItem12(List<string> arrayhex)
@@ -1484,7 +1488,7 @@ namespace ProyectoPGTA_P2
             Ycord = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3]))/128f;
 
             //data = new List<string> { "X", Xcord.ToString() + " NM", "Y", Ycord.ToString() + " NM" };
-            data = new List<string> { Xcord.ToString() + " NM", Ycord.ToString() + " NM" };
+            data = new List<string> { Xcord.ToString() , Ycord.ToString(), Zcord.ToString() };
         }
         public List<string> GetData()
         {

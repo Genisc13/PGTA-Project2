@@ -15,6 +15,7 @@ namespace ProyectoPGTA_P2
     {
         private List<Avion> simulacion;
         private int pasoActual;
+        static int totaltime;
         public Timer timerSimulacion = new Timer();
         public GMap.NET.WindowsForms.GMapControl gmap;
         public SimulationForm(List<CAT48> avionList)
@@ -52,7 +53,7 @@ namespace ProyectoPGTA_P2
             simulacion = new List<Avion>();
             List<string> PLANES = new List<string>();
             
-            int totaltime = Convert.ToInt32(avionList[avionList.Count - 1].itemContainer.GetDataItem2().time) - Convert.ToInt32(avionList[0].itemContainer.GetDataItem2().time);
+            totaltime = Convert.ToInt32(avionList[avionList.Count - 1].itemContainer.GetDataItem2().time) - Convert.ToInt32(avionList[0].itemContainer.GetDataItem2().time);
 
             PLANES.Add(avionList[0].itemContainer.GetDataItem8().AircraftAddress);
 
@@ -95,7 +96,7 @@ namespace ProyectoPGTA_P2
                         
                         if (avionList[k].itemContainer.GetDataItem8().AircraftAddress == PLANES[i])
                         {
-                            plane.positionList[j] = new Position(avionList[k].itemContainer.GetDataItem4().X, avionList[k].itemContainer.GetDataItem4().Y, Convert.ToInt32(avionList[k].itemContainer.GetDataItem2().time), true);
+                            plane.positionList[j] = new Position(avionList[k].itemContainer.GetDataItem12().Xcord, avionList[k].itemContainer.GetDataItem12().Ycord, Convert.ToInt32(avionList[k].itemContainer.GetDataItem2().time), true);
                         }
                         else
                         {
@@ -108,51 +109,6 @@ namespace ProyectoPGTA_P2
                 simulacion.Add(plane);
             }
 
-            /*
-            for (int i = 0; i < avionList.Count; i++) //iterar sobre todos los aviones
-            {
-                for (int j = 0; j < simulacion.Count; j++) //iterar sobre la lista de simulación
-                {
-                    if (avionList[i].itemContainer.GetDataItem8().AircraftAddress != simulacion[j].Name) //comprobar si ya está incluido el avión
-                    {
-                        Avion plane = new Avion(avionList[i].itemContainer.GetDataItem8().AircraftAddress); //crear nuevo objeto avión
-
-                        //esto probablemente podria ir fuera
-                        for (int k = 0; k < totaltime; k++) //alomejor deberiamos analizar cada 4s
-                        {
-                            for (int l = 0; l < avionList.Count; l++) //buscar todas las posiciones del avión
-                            {
-                                if (avionList[l].itemContainer.GetDataItem2().time == k) //si hay una linea con el mismo time entonces creamos esa posición en el avión
-                                {
-                                    new Position(avionList[l].itemContainer.GetDataItem12().Xcord, avionList[l].itemContainer.GetDataItem12().Ycord, k, true);
-                                    new Position(avionList[l].itemContainer.GetDataItem12().Xcord, avionList[l].itemContainer.GetDataItem12().Ycord, k+1, true);
-                                    new Position(avionList[l].itemContainer.GetDataItem12().Xcord, avionList[l].itemContainer.GetDataItem12().Ycord, k+2, true);
-                                    new Position(avionList[l].itemContainer.GetDataItem12().Xcord, avionList[l].itemContainer.GetDataItem12().Ycord, k+3, true);
-                                }
-                                else //si no hay un report de posición a esa hora, creamos una posición vacía con draw false
-                                {
-                                    new Position(0, 0, k, false);
-                                }
-                            }
-
-                        }
-
-                        simulacion.Add( plane );
-                    }
-                }
-                
-            }
-            */
-
-            // Agrega algunos aviones a la simulación
-            /*simulacion.Add(new List<Avion>
-            {
-                
-                // Agrega más aviones según sea necesario
-            });*/
-
-            // Puedes seguir añadiendo más listas con la información de cada paso de la simulación
-            // simulacion.Add(new List<Avion> { /* ... */ });
         }
         private void TimerSimulacion_Tick(object sender, EventArgs e)
         {
@@ -161,7 +117,7 @@ namespace ProyectoPGTA_P2
         }
         public class Avion
         {
-            public Position[] positionList;
+            public Position[] positionList = new Position[totaltime];
 
             public string Name { get; set; }
 

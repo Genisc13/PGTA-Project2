@@ -79,7 +79,13 @@ namespace ProyectoPGTA_P2
                 if (CAT == 48)
                 {
                     CAT48 newcat10 = new CAT48(arraystring);
-                    listaCAT48.Add(newcat10);
+
+                    string Mode3 = newcat10.itemContainer.GetDataItem3().TYP;
+
+                    if (Mode3 == "Single ModeS All-Call" || Mode3 == "Single ModeS Roll-Call" || Mode3 == "ModeS All-Call + PSR" || Mode3 == "ModeS Roll-Call + PSR") { 
+                        listaCAT48.Add(newcat10); //Solo agregar si es Mode S Call
+                    }
+                    
                     //Console.WriteLine("Hecha una categoría");
                 }
                 else
