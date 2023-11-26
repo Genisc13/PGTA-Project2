@@ -19,7 +19,8 @@ namespace ProyectoPGTA_P2
         Dictionary<int, List<string>> decodedDataPerItem;
 
         public CAT48(List<string> arrayhex)
-        {   
+        {
+            GeoUtils geoUtils = new GeoUtils();
             this.arrayHex = arrayhex;
             this.CAT = int.Parse(arrayHex[0], System.Globalization.NumberStyles.HexNumber);
             this.Length = int.Parse(arrayHex[1]+arrayHex[2], System.Globalization.NumberStyles.HexNumber);
@@ -556,10 +557,10 @@ namespace ProyectoPGTA_P2
                                                                                                           //CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84("41º 18’ 02,5284’’ N", "02º 06’ 07,4095’’ E", 2.007 + 25.25);
 
 
-            /*LINEAS DE ABAJO COMENTADAS PARA QUE NO DE ERROR
-            CoordinatesXYZ geocentricSystem = GeoUtils.change_radar_cartesian2geocentric(radarCoordinates, radarCartesian);
+            //LINEAS DE ABAJO COMENTADAS PARA QUE NO DE ERROR
+            CoordinatesXYZ geocentricSystem = geoUtils.change_radar_cartesian2geocentric(radarCoordinates, radarCartesian);
 
-            CoordinatesWGS84 geodesic = GeoUtils.change_geocentric2geodesic(geocentricSystem);
+            CoordinatesWGS84 geodesic = geoUtils.change_geocentric2geodesic(geocentricSystem);
 
             itemContainer.GetDataItem12().Xcord = (float)geodesic.Lon;
             itemContainer.GetDataItem12().Ycord = (float)geodesic.Lat;
@@ -570,19 +571,19 @@ namespace ProyectoPGTA_P2
             newDI12.Ycord = (float)geodesic.Lat;
             newDI12.Zcord = (float)geodesic.Height;
 
-            newDI12.data = new List<string> { "A".ToString(), "B".ToString(), "C".ToString() };
+            newDI12.data = new List<string> { newDI12.Xcord.ToString(), newDI12.Ycord.ToString(), newDI12.Zcord.ToString() };
 
             itemContainer.SetDataItem12(newDI12);
-            */
+            
 
-            DataItem12 newDI12 = new DataItem12();
+            /*DataItem12 newDI12 = new DataItem12();
             newDI12.Xcord = (float)0;
             newDI12.Ycord = (float)0;
             newDI12.Zcord = (float)0;
 
             newDI12.data = new List<string> { "A".ToString(), "B".ToString(), "C".ToString() };
 
-            itemContainer.SetDataItem12(newDI12);
+            itemContainer.SetDataItem12(newDI12);*/
 
             //Una vez tenemos todos los DataItems decodificados hemos de hacer algo con ellos.
             if (itemContainer.GetDataItem1()!=null)
