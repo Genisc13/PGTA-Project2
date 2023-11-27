@@ -134,14 +134,14 @@ namespace ProyectoPGTA_P2
 
         public class Position
         {
-            public float X { get; set; }
-            public float Y { get; set; }
+            public double X { get; set; }
+            public double Y { get; set; }
 
             public int Time { get; set; }
 
             public bool Draw { get; set; }
 
-            public Position(float x, float y, int time, bool draw)
+            public Position(double x, double y, int time, bool draw)
             {
                 X = x;
                 Y = y;

@@ -541,39 +541,36 @@ namespace ProyectoPGTA_P2
             //GMS
             //Latitud: 41º 18’ 02,5284’’ N
             //Longitud: 02º 06’ 07,4095’’ E
-            
+
             //Geográficas
             //Lat 41.3007023
             //Long 2.1020581944444445
 
             //Elevación terreno: 2,007 m
             //Altura antena: 25,25 m
+            CoordinatesPolar radarPolar;
 
-            CoordinatesPolar radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD, itemContainer.GetDataItem4().THETA, itemContainer.GetDataItem6().FL*100*0.3048);
+            if (itemContainer.GetDataItem6().FL < 0)
+            {
+                radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin((0 * 100 * 0.3048) / (itemContainer.GetDataItem4().RHD * 1852)));
+            }
+            else
+            {
+                radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin((itemContainer.GetDataItem6().FL * 100 * 0.3048) / (itemContainer.GetDataItem4().RHD * 1852)));
+            }
+            
 
             CoordinatesXYZ radarCartesian = GeoUtils.change_radar_spherical2radar_cartesian(radarPolar);
 
-            CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84(41.300702, 2.102058, 2.007 + 25.25); //coordenadas del radar en geográficas en vez de GMS comentado por ahora
+            CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84(41.3007023 * (Math.PI / 180), 2.10205819444 * (Math.PI / 180), 2.007 + 25.25); //coordenadas del radar en geográficas en vez de GMS comentado por ahora
                                                                                                           //CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84("41º 18’ 02,5284’’ N", "02º 06’ 07,4095’’ E", 2.007 + 25.25);
 
 
             //LINEAS DE ABAJO COMENTADAS PARA QUE NO DE ERROR
             CoordinatesXYZ geocentricSystem = geoUtils.change_radar_cartesian2geocentric(radarCoordinates, radarCartesian);
 
-            CoordinatesWGS84 geodesic = geoUtils.change_geocentric2geodesic(geocentricSystem);
-
-            itemContainer.GetDataItem12().Xcord = (float)geodesic.Lon;
-            itemContainer.GetDataItem12().Ycord = (float)geodesic.Lat;
-            itemContainer.GetDataItem12().Zcord = (float)geodesic.Height;
-
-            DataItem12 newDI12 = new DataItem12();
-            newDI12.Xcord = (float)geodesic.Lon;
-            newDI12.Ycord = (float)geodesic.Lat;
-            newDI12.Zcord = (float)geodesic.Height;
-
-            newDI12.data = new List<string> { newDI12.Xcord.ToString(), newDI12.Ycord.ToString(), newDI12.Zcord.ToString() };
-
-            itemContainer.SetDataItem12(newDI12);
+            CoordinatesWGS84 geodesic = geoUtils.change_geocentric2geodesic(geocentricSystem);           
+            itemContainer.GetDataItem12().SetData((float)geodesic.Lon * (180/Math.PI), (float)geodesic.Lat * (180 / Math.PI), (float)geodesic.Height);            
             
 
             /*DataItem12 newDI12 = new DataItem12();

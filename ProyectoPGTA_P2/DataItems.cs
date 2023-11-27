@@ -1464,7 +1464,7 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
         public List<string> data;
-        public float Xcord, Ycord, Zcord;
+        public double Xcord, Ycord, Zcord;
         public string[] arrayString;
 
         public DataItem12()
@@ -1489,6 +1489,13 @@ namespace ProyectoPGTA_P2
 
             //data = new List<string> { "X", Xcord.ToString() + " NM", "Y", Ycord.ToString() + " NM" };
             data = new List<string> { Xcord.ToString() , Ycord.ToString(), Zcord.ToString() };
+        }
+        public void SetData(double X, double Y, double Z)
+        {
+            Xcord = X;
+            Ycord = Y;
+            Zcord = Z;
+            data = new List<string> { X.ToString() + "º", Y.ToString() + "º", Z.ToString() + "m" };
         }
         public List<string> GetData()
         {
