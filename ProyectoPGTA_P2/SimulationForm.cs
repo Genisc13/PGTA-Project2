@@ -136,7 +136,8 @@ namespace ProyectoPGTA_P2
         {
             // Actualiza la posición de los aviones para el próximo paso de la simulación
             pasoActual += 4; //% simulacion.Count;
-            ActivateOverlay();
+            gmap.Overlays.Clear();
+            ActivateOverlay();           
         }
         public class Avion
         {
@@ -180,12 +181,30 @@ namespace ProyectoPGTA_P2
 
         private void AdvanceButton_Click(object sender, EventArgs e)
         {
+            if (pasoActual <= totaltime)
+            {
+                pasoActual += 4; //% simulacion.Count;
+                gmap.Overlays.Clear();                
+                ActivateOverlay();
 
+            }
+            else {
+                MessageBox.Show("Estás en el último paso, no puedes ir más alante");
+            }           
         }
 
         private void ReverseButton_Click(object sender, EventArgs e)
         {
-
+            if(pasoActual > 4)
+            {
+                pasoActual -= 4; //% simulacion.Count;
+                gmap.Overlays.Clear();                
+                ActivateOverlay();
+            }
+            else
+            {
+                MessageBox.Show("Estás en el primer paso, no puedes ir más atrás");
+            }            
         }
 
         private void ActivateOverlay()
@@ -197,9 +216,9 @@ namespace ProyectoPGTA_P2
             {
                 foreach(var position in avion.positionList)
                 {
-                    if((position.Time - initialTime) < pasoActual && (position.Time-initialTime)> pasoActual-4)
+                    if((position.Time - initialTime) < pasoActual && (position.Time-initialTime) > pasoActual - 4)
                     {
-                        GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(position.X, position.Y);
+                        GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(position.Y, position.X);
                         // Crear un marcador
                         GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red); ;
                         marcador.ToolTipText = avion.Name;
@@ -209,7 +228,9 @@ namespace ProyectoPGTA_P2
                 }                
             }
             // Añadir el marcador al mapa                       
-            gmap.Overlays.Add(overlay);            
+            gmap.Overlays.Add(overlay);
+            gmap.Position = new GMap.NET.PointLatLng(41.38879, 2.15899);
+            gmap.Update();           
         }
 
         private void InitSim_Click(object sender, EventArgs e)
