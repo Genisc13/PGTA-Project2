@@ -61,6 +61,8 @@ namespace ProyectoPGTA_P2
                 bool found = false;
                 for (int j = 0; j < PLANES.Count; j++)
                 {
+                    string address = avionList[i].itemContainer.GetDataItem8().AircraftAddress;
+                    string planestring = PLANES[j];
                     if (avionList[i].itemContainer.GetDataItem8().AircraftAddress == PLANES[j])
                     {
                         found = true;
@@ -85,15 +87,15 @@ namespace ProyectoPGTA_P2
                 
             }
 
-            for (int i = 0;i < PLANES.Count; i++)
+            for (int i = 0; i < 3/*PLANES.Count*/; i++)
             {
                 Avion plane = new Avion(avionList[i].itemContainer.GetDataItem8().AircraftAddress);
 
-                for (int j = 0;j < totaltime; j++) //encontrar todas sus posiciones
+                for (int j = 0; j < totaltime; j++) //encontrar todas sus posiciones
                 {
                     for (int k = 0; k < avionList.Count; k++)
                     {
-                        
+
                         if (avionList[k].itemContainer.GetDataItem8().AircraftAddress == PLANES[i])
                         {
                             plane.positionList[j] = new Position(avionList[k].itemContainer.GetDataItem12().Xcord, avionList[k].itemContainer.GetDataItem12().Ycord, Convert.ToInt32(avionList[k].itemContainer.GetDataItem2().time), true);
@@ -103,8 +105,8 @@ namespace ProyectoPGTA_P2
                             plane.positionList[j] = new Position(0, 0, j, false);
                         }
                     }
-                    
-                }
+
+                } //no sale de este bucle REVISAR
 
                 simulacion.Add(plane);
             }
@@ -185,6 +187,7 @@ namespace ProyectoPGTA_P2
             timerSimulacion.Interval = 1000; // Ajusta el intervalo según tus necesidades
             timerSimulacion.Tick += TimerSimulacion_Tick;
             timerSimulacion.Start();
+
         }
     }
 }

@@ -573,15 +573,6 @@ namespace ProyectoPGTA_P2
             itemContainer.GetDataItem12().SetData((float)geodesic.Lon * (180/Math.PI), (float)geodesic.Lat * (180 / Math.PI), (float)geodesic.Height);            
             
 
-            /*DataItem12 newDI12 = new DataItem12();
-            newDI12.Xcord = (float)0;
-            newDI12.Ycord = (float)0;
-            newDI12.Zcord = (float)0;
-
-            newDI12.data = new List<string> { "A".ToString(), "B".ToString(), "C".ToString() };
-
-            itemContainer.SetDataItem12(newDI12);*/
-
             //Una vez tenemos todos los DataItems decodificados hemos de hacer algo con ellos.
             if (itemContainer.GetDataItem1()!=null)
             {
