@@ -9,6 +9,7 @@ using System.Xml;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using MultiCAT6.Utils;
 using VisioForge.Libs.MediaFoundation.OPM;
+using System.Security.Cryptography;
 
 namespace ProyectoPGTA_P2
 {
@@ -902,7 +903,32 @@ namespace ProyectoPGTA_P2
             }
 
             string FL_BIN = String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
-            FL = Convert.ToInt32(FL_BIN, 2) / 4f;
+            string FL_BIN1 = String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7]);
+            string FL_BIN2 = String.Concat(arrayString[1]);
+
+            if (FL_BIN1[0].ToString() == "1") //2s comp
+            {
+                byte b1 = Convert.ToByte(FL_BIN1, 2);
+                byte complement1 = (byte)~b1;
+                //byte twosComplement1 = (byte)(complement1 + 1);
+                FL_BIN1 = Convert.ToString(complement1, 2).PadLeft(6, '0');
+
+                byte b2 = Convert.ToByte(FL_BIN2, 2);
+                byte complement2 = (byte)~b2;
+                byte twosComplement2 = (byte)(complement2 + 1);
+                FL_BIN2 = Convert.ToString(twosComplement2, 2).PadLeft(8, '0');
+
+                FL_BIN = string.Concat(FL_BIN1, FL_BIN2);
+                FL_BIN = String.Concat(FL_BIN1[2], FL_BIN1[3], FL_BIN1[4], FL_BIN1[5], FL_BIN1[6], FL_BIN1[7], FL_BIN2[0], FL_BIN2[1], FL_BIN2[2], FL_BIN2[3], FL_BIN2[4], FL_BIN2[5], FL_BIN2[6], FL_BIN2[7]);
+
+                FL = -Convert.ToInt32(FL_BIN, 2) / 4f;
+            }
+            else
+            {
+                FL = Convert.ToInt32(FL_BIN, 2) / 4f;
+            }
+            
+            
 
             if (FL < 0){
                 FL = 0;

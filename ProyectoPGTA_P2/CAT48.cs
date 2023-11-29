@@ -550,14 +550,22 @@ namespace ProyectoPGTA_P2
             //Altura antena: 25,25 m
             CoordinatesPolar radarPolar;
 
+            if (itemContainer.GetDataItem8().AircraftAddress == "346088")
+            {
+                int a = 1;
+            }
+
             if (itemContainer.GetDataItem6().FL < 0)
             {
                 radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin((0 * 100 * 0.3048) / (itemContainer.GetDataItem4().RHD * 1852)));
             }
             else
             {
-                radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin((itemContainer.GetDataItem6().FL * 100 * 0.3048) / (itemContainer.GetDataItem4().RHD * 1852)));
+                double asin = (itemContainer.GetDataItem6().FL * 100 * 0.3048) / (itemContainer.GetDataItem4().RHD * 1852);
+
+                radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
             }
+            
             
 
             CoordinatesXYZ radarCartesian = GeoUtils.change_radar_spherical2radar_cartesian(radarPolar);
@@ -570,7 +578,7 @@ namespace ProyectoPGTA_P2
             CoordinatesXYZ geocentricSystem = geoUtils.change_radar_cartesian2geocentric(radarCoordinates, radarCartesian);
 
             CoordinatesWGS84 geodesic = geoUtils.change_geocentric2geodesic(geocentricSystem);           
-            itemContainer.GetDataItem12().SetData((float)geodesic.Lon * (180/Math.PI), (float)geodesic.Lat * (180 / Math.PI), (float)geodesic.Height);            
+            itemContainer.GetDataItem12().SetData((float)geodesic.Lat * (180/Math.PI), (float)geodesic.Lon * (180 / Math.PI), (float)geodesic.Height);            
             
 
             //Una vez tenemos todos los DataItems decodificados hemos de hacer algo con ellos.

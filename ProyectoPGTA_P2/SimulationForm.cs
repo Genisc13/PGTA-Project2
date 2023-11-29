@@ -218,7 +218,7 @@ namespace ProyectoPGTA_P2
                 {
                     if((position.Time - initialTime) < pasoActual && (position.Time-initialTime) > pasoActual - 4)
                     {
-                        GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(position.Y, position.X);
+                        GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(position.X, position.Y);
                         // Crear un marcador
                         GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red); ;
                         marcador.ToolTipText = avion.Name;
