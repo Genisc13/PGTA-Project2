@@ -561,7 +561,7 @@ namespace ProyectoPGTA_P2
             }
             else
             {
-                double asin = (itemContainer.GetDataItem6().FL * 100 * 0.3048) / (itemContainer.GetDataItem4().RHD * 1852);
+                double asin = (2*6371000*((itemContainer.GetDataItem6().FL * 100 * 0.3048)- 2.007 + 25.25)+ (itemContainer.GetDataItem6().FL * 100 * 0.3048)* (itemContainer.GetDataItem6().FL * 100 * 0.3048)-(2.007 + 25.25) *(2.007 + 25.25)-(itemContainer.GetDataItem4().RHD * 1852)* itemContainer.GetDataItem4().RHD * 1852)/((2* itemContainer.GetDataItem4().RHD * 1852)*(6371000+ 2.007 + 25.25));
 
                 if (asin > 1)
                 {

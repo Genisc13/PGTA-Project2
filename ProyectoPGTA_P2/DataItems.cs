@@ -380,7 +380,7 @@ namespace ProyectoPGTA_P2
             float milsec = (seconds - truncseconds) * 1000;
             int truncmilsec = (int)Math.Truncate(milsec);
 
-            time = Convert.ToInt32(timestr, 2) / 128;
+            //time = Convert.ToInt32(timestr, 2) / 128;
 
             //data = new List<string> { "Time", trunchours.ToString().PadLeft(2, '0') + ":" + truncminutes.ToString().PadLeft(2, '0') + ":" + truncseconds.ToString().PadLeft(2, '0') + ":" + truncmilsec.ToString().PadLeft(3, '0') };
             data = new List<string> { trunchours.ToString().PadLeft(2, '0') + ":" + truncminutes.ToString().PadLeft(2, '0') + ":" + truncseconds.ToString().PadLeft(2, '0') + ":" + truncmilsec.ToString().PadLeft(3, '0'), time.ToString() };

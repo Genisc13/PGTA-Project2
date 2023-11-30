@@ -33,6 +33,7 @@
             this.InitSim = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.StopSimulation = new System.Windows.Forms.Button();
+            this.SimulTime = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -74,11 +75,12 @@
             // splitContainer1
             // 
             this.splitContainer1.Location = new System.Drawing.Point(16, 15);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.SimulTime);
             this.splitContainer1.Panel1.Controls.Add(this.StopSimulation);
             this.splitContainer1.Panel1.Controls.Add(this.AdvanceButton);
             this.splitContainer1.Panel1.Controls.Add(this.InitSim);
@@ -98,6 +100,13 @@
             this.StopSimulation.UseVisualStyleBackColor = true;
             this.StopSimulation.Click += new System.EventHandler(this.StopSimulation_Click);
             // 
+            // SimulTime
+            // 
+            this.SimulTime.Location = new System.Drawing.Point(233, 88);
+            this.SimulTime.Name = "SimulTime";
+            this.SimulTime.Size = new System.Drawing.Size(100, 22);
+            this.SimulTime.TabIndex = 5;
+            // 
             // SimulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -108,6 +117,7 @@
             this.Name = "SimulationForm";
             this.Text = "SimulationForm";
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -120,5 +130,6 @@
         private System.Windows.Forms.Button InitSim;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button StopSimulation;
+        private System.Windows.Forms.TextBox SimulTime;
     }
 }
