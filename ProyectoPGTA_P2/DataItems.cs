@@ -784,10 +784,10 @@ namespace ProyectoPGTA_P2
             switch (V)
             {
                 case "0":
-                    V = "Código validado";
+                    V = "Codigo validado";
                     break;
                 case "1":
-                    V = "Código no validado";
+                    V = "Codigo no validado";
                     break;
                 default:
                     V = "N/A";
@@ -799,10 +799,10 @@ namespace ProyectoPGTA_P2
             switch (G)
             {
                 case "0":
-                    G = "Código default";
+                    G = "Codigo default";
                     break;
                 case "1":
-                    G = "Código distorsionado";
+                    G = "Codigo distorsionado";
                     break;
                 default:
                     G = "N/A";
@@ -814,10 +814,10 @@ namespace ProyectoPGTA_P2
             switch (L)
             {
                 case "0":
-                    L = "Código Mode-3/A derivado de la respuesta XPDR";
+                    L = "Codigo Mode-3/A derivado de la respuesta XPDR";
                     break;
                 case "1":
-                    L = "Código Mode-3/A no se ha extraido en el ultimo escaneo";
+                    L = "Codigo Mode-3/A no se ha extraido en el ultimo escaneo";
                     break;
                 default:
                     L = "N/A";
@@ -826,7 +826,7 @@ namespace ProyectoPGTA_P2
             }
 
             Mode3 = string.Concat(arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
-            if (L == "Código Mode-3/A no se ha extraído en el último escaneo")
+            if (L == "Codigo Mode-3/A no se ha extraído en el último escaneo")
             {
                 Mode3 = "N/A";
             }
@@ -876,10 +876,10 @@ namespace ProyectoPGTA_P2
             switch (V)
             {
                 case "0":
-                    V = "Código validado";
+                    V = "Codigo validado";
                     break;
                 case "1":
-                    V = "Código no validado";
+                    V = "Codigo no validado";
                     break;
                 default:
                     V = "N/A";
@@ -894,7 +894,7 @@ namespace ProyectoPGTA_P2
                     G = "Default";
                     break;
                 case "1":
-                    G = "Código distorsionado";
+                    G = "Codigo distorsionado";
                     break;
                 default:
                     G = "N/A";
@@ -927,8 +927,12 @@ namespace ProyectoPGTA_P2
             {
                 FL = Convert.ToInt32(FL_BIN, 2) / 4f;
             }
-            
-            
+            float newFl;
+            if (FL < 60)
+            {
+                newFl = FL + (float)(1013.4 - 1013.25) * (30 / 100);
+                FL = newFl;
+            }          
 
             if (FL < 0){
                 FL = 0;

@@ -216,12 +216,27 @@ namespace ProyectoPGTA_P2
             {
                 foreach(var position in avion.positionList)
                 {
-                    if((position.Time - initialTime) < pasoActual && (position.Time-initialTime) > pasoActual - 4)
+                    if((position.Time - initialTime) < pasoActual-4 && (position.Time - initialTime) > pasoActual - 8){
+                        if(!((position.Time - initialTime) < pasoActual && (position.Time - initialTime) > pasoActual - 4))
+                        {
+                            GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(position.X, position.Y);
+                            // Crear un marcador
+                            GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red)
+                            {
+                                ToolTipText = avion.Name
+                            };
+                            overlay.Markers.Add(marcador);
+                            break;
+                        }
+                    }
+                    if ((position.Time - initialTime) < pasoActual && (position.Time-initialTime) > pasoActual - 4)
                     {
                         GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(position.X, position.Y);
                         // Crear un marcador
-                        GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red); ;
-                        marcador.ToolTipText = avion.Name;
+                        GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red)
+                        {
+                            ToolTipText = avion.Name
+                        };
                         overlay.Markers.Add(marcador);
                         break;
                     }                              
@@ -236,10 +251,15 @@ namespace ProyectoPGTA_P2
         private void InitSim_Click(object sender, EventArgs e)
         {
             // Inicia un temporizador para actualizar la simulación en intervalos regulares
-            timerSimulacion.Interval = 1000; // Ajusta el intervalo según tus necesidades
+            timerSimulacion.Interval = 500; // Ajusta el intervalo según tus necesidades
             timerSimulacion.Tick += TimerSimulacion_Tick;
             timerSimulacion.Start();
 
+        }
+
+        private void StopSimulation_Click(object sender, EventArgs e)
+        {
+            timerSimulacion.Stop();
         }
     }
 }
