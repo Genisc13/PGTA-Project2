@@ -21,10 +21,12 @@ namespace ProyectoPGTA_P2
         private int initialTime;
         public Timer timerSimulacion = new Timer();
         public GMap.NET.WindowsForms.GMapControl gmap;
+        public Dictionary<string, bool> ACVisibles;
         public SimulationForm(List<CAT48> avionList)
         {
             InitializeComponent();
             initialTime = Convert.ToInt32(Math.Truncate(avionList[0].itemContainer.GetDataItem2().time));
+            ACVisibles = new Dictionary<string, bool>();
             gmap = new GMap.NET.WindowsForms.GMapControl();
             gmap.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
             gmap.Dock = DockStyle.Fill;
@@ -248,15 +250,33 @@ namespace ProyectoPGTA_P2
                 {                   
                     if ((avion.positionList[j].Time - initialTime) <= pasoActual + offset && (avion.positionList[j].Time - initialTime) >= pasoActual)
                     {
-                        GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.positionList[j].X, avion.positionList[j].Y);
-                        // Crear un marcador
-                        GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red)
+                        if(avion.Name== "346088")
                         {
-                            ToolTipText = avion.Name + " on time: " + avion.positionList[j].Time.ToString()
-                        };
-                        overlay.Markers.Add(marcador);                      
-                        break;
-                    }
+                            int a = 1;
+                        }
+                        if(double.IsNaN(avion.positionList[j].X) && double.IsNaN(avion.positionList[j].Y))
+                        {
+                            GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.positionList[j-1].X, avion.positionList[j-1].Y);
+                            // Crear un marcador
+                            GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red)
+                            {
+                                ToolTipText = avion.Name + " on time: " + avion.positionList[j-1].Time.ToString()
+                            };
+                            overlay.Markers.Add(marcador);
+                            break;
+                        }
+                        else
+                        {
+                            GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.positionList[j].X, avion.positionList[j].Y);
+                            // Crear un marcador
+                            GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red)
+                            {
+                                ToolTipText = avion.Name + " on time: " + avion.positionList[j].Time.ToString()
+                            };
+                            overlay.Markers.Add(marcador);
+                            break;
+                        }
+                    }                                 
                 }
 
                 i++;
@@ -297,7 +317,7 @@ namespace ProyectoPGTA_P2
 
             // Añadir el marcador al mapa                       
             gmap.Overlays.Add(overlay);
-            gmap.Position = new GMap.NET.PointLatLng(41.38879, 2.15899);
+            gmap.Position = new GMap.NET.PointLatLng(41.297445, 2.0832941);
             gmap.Update();           
         }
 
@@ -313,6 +333,56 @@ namespace ProyectoPGTA_P2
         private void StopSimulation_Click(object sender, EventArgs e)
         {
             timerSimulacion.Stop();
+        }
+
+        private void GenerarRuta_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                gmap.Overlays.Clear();
+
+                if (AirCraftForRoute.Text == "")
+                {
+                    MessageBox.Show("You have to use the name of the aircraft");
+                }
+                else
+                {
+                    string aircraftName = AirCraftForRoute.Text;
+
+                    // Check if the specified aircraft exists in your simulation
+                    if (simulacion.ContainsKey(aircraftName))
+                    {
+                        Avion aircraft = simulacion[aircraftName];
+
+                        // Create a route with the positions of the specified aircraft
+                        GMap.NET.WindowsForms.GMapRoute route = new GMap.NET.WindowsForms.GMapRoute(
+                            aircraft.positionList.Select(pos => new GMap.NET.PointLatLng(pos.Y, pos.X)), "Route");
+
+                        // Set the route color and width
+                        route.Stroke = new Pen(Color.Blue, 3);
+
+                        // Create a new overlay for the route
+                        GMap.NET.WindowsForms.GMapOverlay routeOverlay = new GMap.NET.WindowsForms.GMapOverlay("RouteOverlay");
+
+                        // Add the route to the overlay
+                        routeOverlay.Routes.Add(route);
+
+                        // Add the overlay to the map
+                        gmap.Overlays.Add(routeOverlay);
+
+                        gmap.Position = new GMap.NET.PointLatLng(41.297445, 2.0832941);
+                        gmap.Update();
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Aircraft with name '{aircraftName}' not found in the simulation.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
         }
     }
 }
