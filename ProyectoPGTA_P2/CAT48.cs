@@ -563,6 +563,12 @@ namespace ProyectoPGTA_P2
             {
                 double asin = (itemContainer.GetDataItem6().FL * 100 * 0.3048) / (itemContainer.GetDataItem4().RHD * 1852);
 
+                if (asin > 1)
+                {
+                    int b = 2;
+                    //asin = 1;
+                }
+
                 radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
             }
             

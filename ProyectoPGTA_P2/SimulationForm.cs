@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ProyectoPGTA_P2.SimulationForm;
 
 namespace ProyectoPGTA_P2
 {
@@ -54,9 +55,10 @@ namespace ProyectoPGTA_P2
         private void InicializarSimulacion(List<CAT48> avionList)
         {
             simulacion = new Dictionary<string, Avion>();
-            totaltime = Convert.ToInt32(avionList[avionList.Count - 1].itemContainer.GetDataItem2().time) - Convert.ToInt32(avionList[0].itemContainer.GetDataItem2().time); 
+            totaltime = Convert.ToInt32(avionList[avionList.Count - 1].itemContainer.GetDataItem2().time) - Convert.ToInt32(avionList[0].itemContainer.GetDataItem2().time);
 
-            foreach( CAT48 avion in avionList)
+            /*
+             foreach( CAT48 avion in avionList)
             {
                 string address = avion.itemContainer.GetDataItem8().AircraftAddress;
                 if (!simulacion.ContainsKey(address))
@@ -69,6 +71,22 @@ namespace ProyectoPGTA_P2
                 {
                     simulacion[address].AddPosition(new Position(avion.itemContainer.GetDataItem12().Xcord, avion.itemContainer.GetDataItem12().Ycord, Convert.ToInt32(avion.itemContainer.GetDataItem2().time), true));
                 }               
+            };
+            */
+
+            for (int i = 0; i < avionList.Count; i++)
+            {
+                string address = avionList[i].itemContainer.GetDataItem8().AircraftAddress;
+                if (!simulacion.ContainsKey(address))
+                {
+                    Avion plane = new Avion(address);
+                    plane.positionList.Add(new Position(avionList[i].itemContainer.GetDataItem12().Xcord, avionList[i].itemContainer.GetDataItem12().Ycord, Convert.ToInt32(avionList[i].itemContainer.GetDataItem2().time), true));
+                    simulacion.Add(address, plane);
+                }
+                else
+                {
+                    simulacion[address].AddPosition(new Position(avionList[i].itemContainer.GetDataItem12().Xcord, avionList[i].itemContainer.GetDataItem12().Ycord, Convert.ToInt32(simulacion[address].positionList[simulacion[address].positionList.Count-1].Time)+4, true));
+                }
             };
 
             /*simulacion = new List<Avion>();
@@ -212,14 +230,18 @@ namespace ProyectoPGTA_P2
             GMap.NET.WindowsForms.GMapOverlay overlay = new GMap.NET.WindowsForms.GMapOverlay("Aviones");
             // Dibuja los aviones en el PictureBox
 
-            foreach (var avion in simulacion.Values)
+            int i = 0;
+            int offset = 4;
+
+            foreach(Avion avion in simulacion.Values)
             {
-                foreach(var position in avion.positionList)
+                for (int j = 0; j < avion.positionList.Count; j++)
                 {
-                    if((position.Time - initialTime) < pasoActual-4 && (position.Time - initialTime) > pasoActual - 8){
-                        if(!((position.Time - initialTime) < pasoActual && (position.Time - initialTime) > pasoActual - 4))
+                    if ((avion.positionList[j].Time - initialTime) <= pasoActual && (avion.positionList[j].Time - initialTime) >= initialTime)
+                    {
+                        if (!((avion.positionList[j].Time - initialTime) <= pasoActual && (avion.positionList[j].Time - initialTime) >= (pasoActual - offset)))
                         {
-                            GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(position.X, position.Y);
+                            GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.positionList[j].X, avion.positionList[j].Y);
                             // Crear un marcador
                             GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red)
                             {
@@ -229,7 +251,41 @@ namespace ProyectoPGTA_P2
                             break;
                         }
                     }
-                    if ((position.Time - initialTime) < pasoActual && (position.Time-initialTime) > pasoActual - 4)
+                    if ((avion.positionList[j].Time - initialTime) <= pasoActual && (avion.positionList[j].Time - initialTime) >= (pasoActual - offset))
+                    {
+                        GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.positionList[j].X, avion.positionList[j].Y);
+                        // Crear un marcador
+                        GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red)
+                        {
+                            ToolTipText = avion.Name
+                        };
+                        overlay.Markers.Add(marcador);
+                        break;
+                    }
+                }
+
+                i++;
+            }
+            /*
+            foreach (var avion in simulacion.Values)
+            {
+                foreach(var position in avion.positionList)
+                {
+                    if ((position.Time - initialTime) <= pasoActual && (position.Time - initialTime) > pasoActual - 8)
+                    {
+                        if ((position.Time - initialTime) <= pasoActual && (position.Time - initialTime) > pasoActual - 4)
+                        {
+                            GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(position.X, position.Y);
+                            // Crear un marcador
+                            GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red)
+                            {
+                                ToolTipText = avion.Name
+                            };
+                            overlay.Markers.Add(marcador);
+                            break;
+                        }                       
+                    }
+                    if ((position.Time - initialTime) <= pasoActual && (position.Time-initialTime) > pasoActual - 4)
                     {
                         GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(position.X, position.Y);
                         // Crear un marcador
@@ -242,6 +298,8 @@ namespace ProyectoPGTA_P2
                     }                              
                 }                
             }
+            */
+
             // Añadir el marcador al mapa                       
             gmap.Overlays.Add(overlay);
             gmap.Position = new GMap.NET.PointLatLng(41.38879, 2.15899);
@@ -251,7 +309,7 @@ namespace ProyectoPGTA_P2
         private void InitSim_Click(object sender, EventArgs e)
         {
             // Inicia un temporizador para actualizar la simulación en intervalos regulares
-            timerSimulacion.Interval = 500; // Ajusta el intervalo según tus necesidades
+            timerSimulacion.Interval = 100; // Ajusta el intervalo según tus necesidades
             timerSimulacion.Tick += TimerSimulacion_Tick;
             timerSimulacion.Start();
 
