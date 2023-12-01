@@ -557,11 +557,11 @@ namespace ProyectoPGTA_P2
 
             if (itemContainer.GetDataItem6().FL < 0)
             {
-                radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin((0 * 100 * 0.3048) / (itemContainer.GetDataItem4().RHD * 1852)));
+                radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin((0 * 100 * 0.3048) / (itemContainer.GetDataItem4().RHO * 1852)));
             }
             else
             {
-                double asin = (2*6371000*((itemContainer.GetDataItem6().FL * 100 * 0.3048)- 2.007 + 25.25)+ (itemContainer.GetDataItem6().FL * 100 * 0.3048)* (itemContainer.GetDataItem6().FL * 100 * 0.3048)-(2.007 + 25.25) *(2.007 + 25.25)-(itemContainer.GetDataItem4().RHD * 1852)* itemContainer.GetDataItem4().RHD * 1852)/((2* itemContainer.GetDataItem4().RHD * 1852)*(6371000+ 2.007 + 25.25));
+                double asin = (2*6371000*((itemContainer.GetDataItem6().FL * 100 * 0.3048)- 2.007 + 25.25)+ (itemContainer.GetDataItem6().FL * 100 * 0.3048)* (itemContainer.GetDataItem6().FL * 100 * 0.3048)-(2.007 + 25.25) *(2.007 + 25.25)-(itemContainer.GetDataItem4().RHO * 1852)* itemContainer.GetDataItem4().RHO * 1852)/((2* itemContainer.GetDataItem4().RHO * 1852)*(6371000+ 2.007 + 25.25));
 
                 if (asin > 1)
                 {
@@ -569,7 +569,7 @@ namespace ProyectoPGTA_P2
                     //asin = 1;
                 }
 
-                radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHD * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
+                radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
             }
             
             

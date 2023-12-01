@@ -22,6 +22,9 @@ namespace ProyectoPGTA_P2
         public Timer timerSimulacion = new Timer();
         public GMap.NET.WindowsForms.GMapControl gmap;
         public Dictionary<string, bool> ACVisibles;
+
+        int startspeed = 1*4000;
+
         public SimulationForm(List<CAT48> avionList)
         {
             InitializeComponent();
@@ -43,7 +46,10 @@ namespace ProyectoPGTA_P2
             InicializarSimulacion(avionList);
             ActivateOverlay();
             SimulTime.Text = initialTime.ToString();
-            
+
+            timerSimulacion.Interval = startspeed;
+            SIMspeed.Text = (4000 / startspeed).ToString() + "x";
+
         }
 
         private void Gmap_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -256,13 +262,14 @@ namespace ProyectoPGTA_P2
                         }
                         if(double.IsNaN(avion.positionList[j].X) && double.IsNaN(avion.positionList[j].Y))
                         {
-                            GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.positionList[j-1].X, avion.positionList[j-1].Y);
+                            /*GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.positionList[j-1].X, avion.positionList[j-1].Y);
                             // Crear un marcador
                             GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red)
                             {
                                 ToolTipText = avion.Name + " on time: " + avion.positionList[j-1].Time.ToString()
                             };
                             overlay.Markers.Add(marcador);
+                            */
                             break;
                         }
                         else
@@ -324,7 +331,7 @@ namespace ProyectoPGTA_P2
         private void InitSim_Click(object sender, EventArgs e)
         {
             // Inicia un temporizador para actualizar la simulación en intervalos regulares
-            timerSimulacion.Interval = 100; // Ajusta el intervalo según tus necesidades
+            //timerSimulacion.Interval = startspeed; // Ajusta el intervalo según tus necesidades 4000 = realtime
             timerSimulacion.Tick += TimerSimulacion_Tick;
             timerSimulacion.Start();
 
@@ -382,6 +389,25 @@ namespace ProyectoPGTA_P2
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (timerSimulacion.Interval/2 > 0)
+            {
+                timerSimulacion.Interval = timerSimulacion.Interval / 2;
+                SIMspeed.Text = Math.Round(4000f / timerSimulacion.Interval, 2).ToString() + "x";
+            }
+            
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            if (timerSimulacion.Interval*2 > 0)
+            {
+                timerSimulacion.Interval *= 2;
+                SIMspeed.Text = Math.Round(4000f / timerSimulacion.Interval, 2).ToString() + "x";
             }
         }
     }

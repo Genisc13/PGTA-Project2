@@ -724,12 +724,12 @@ namespace ProyectoPGTA_P2
         public int number;
         public List<string> arrayHex;
 
-        public float RHD, THETA;
+        public float RHO, THETA;
         public List<string> data;
 
         public DataItem4()
         {
-            //data = new List<string> { "RHD", "N/D", "THETA", "N/D" };
+            //data = new List<string> { "RHO", "N/D", "THETA", "N/D" };
             data = new List<string> { "N/D", "N/D" };
         }
 
@@ -738,14 +738,17 @@ namespace ProyectoPGTA_P2
             this.number = 4;
             this.arrayHex = arrayhex;
 
-            string RHD_16 = String.Concat(arrayhex[0], arrayhex[1]);
-            string THETA_16 = String.Concat(arrayhex[2], arrayhex[3]);
+            int count = arrayhex.Count;
 
-            RHD = Convert.ToInt32(RHD_16, 16) / 256f;
-            THETA = Convert.ToInt32(THETA_16, 16) * 45 / 8192f;
+            string RHD_16 = String.Concat(arrayhex[0].PadLeft(2, '0'), arrayhex[1].PadLeft(2, '0'));
+            string THETA_16 = String.Concat(arrayhex[2].PadLeft(2, '0'), arrayhex[3].PadLeft(2, '0'));
 
-            //data = new List<string> { "RHD", RHD.ToString() + " NM", "THETA", THETA.ToString() + " º"};
-            data = new List<string> { RHD.ToString() + " NM", THETA.ToString() + " º" };
+            RHO = (float)Math.Round(Convert.ToInt32(RHD_16, 16) / 256d, 4);
+
+            THETA = (float)Math.Round(Convert.ToInt32(THETA_16, 16) * 45 / 8192f,4);
+
+            //data = new List<string> { "RHO", RHD.ToString() + " NM", "THETA", THETA.ToString() + " º"};
+            data = new List<string> { RHO.ToString() + " NM", THETA.ToString() + " º" };
         }
         public List<string> GetData()
         {
