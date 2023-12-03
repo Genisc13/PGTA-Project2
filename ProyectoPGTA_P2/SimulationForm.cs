@@ -361,9 +361,14 @@ namespace ProyectoPGTA_P2
                     {
                         Avion aircraft = simulacion[aircraftName];
 
+                        GMap.NET.PointLatLng[] routePoints = new GMap.NET.PointLatLng[aircraft.positionList.Count];
+                        for (int i=0; i < aircraft.positionList.Count; i++)
+                        {
+                            routePoints[i] = new GMap.NET.PointLatLng(aircraft.positionList[i].X, aircraft.positionList[i].Y);
+                        }
+
                         // Create a route with the positions of the specified aircraft
-                        GMap.NET.WindowsForms.GMapRoute route = new GMap.NET.WindowsForms.GMapRoute(
-                            aircraft.positionList.Select(pos => new GMap.NET.PointLatLng(pos.Y, pos.X)), "Route");
+                        GMap.NET.WindowsForms.GMapRoute route = new GMap.NET.WindowsForms.GMapRoute(routePoints, "Route");
 
                         // Set the route color and width
                         route.Stroke = new Pen(Color.Blue, 3);
