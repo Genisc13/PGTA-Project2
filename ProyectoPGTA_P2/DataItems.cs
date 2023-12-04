@@ -1323,7 +1323,7 @@ namespace ProyectoPGTA_P2
                 int shift = i * 8;
                 BDSDATA = String.Concat(arrayString[shift + 1], arrayString[shift + 2], arrayString[shift + 3], arrayString[shift + 4], arrayString[shift + 5], arrayString[shift + 6], arrayString[shift + 7]);
 
-                string dataBDSstr;
+                //string dataBDSstr;
 
                 BDS1 = Convert.ToInt32(String.Concat(arrayString[shift + 8][0], arrayString[shift + 8][1], arrayString[shift + 8][2], arrayString[shift + 8][3]), 2).ToString();
                 BDS2 = Convert.ToInt32(String.Concat(arrayString[shift + 8][4], arrayString[shift + 8][5], arrayString[shift + 8][6], arrayString[shift + 8][7]), 2).ToString();
@@ -1435,7 +1435,7 @@ namespace ProyectoPGTA_P2
                         
                         break;
                     default:
-                        dataBDSstr = "Null";
+                        //dataBDSstr = "Null";
                         break;
                 }
 

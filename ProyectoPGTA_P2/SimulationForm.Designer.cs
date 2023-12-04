@@ -32,13 +32,13 @@
             this.ReverseButton = new System.Windows.Forms.Button();
             this.InitSim = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.SIMspeed = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.AirCraftForRoute = new System.Windows.Forms.TextBox();
             this.GenerarRuta = new System.Windows.Forms.Button();
             this.SimulTime = new System.Windows.Forms.TextBox();
             this.StopSimulation = new System.Windows.Forms.Button();
-            this.SIMspeed = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -79,7 +79,8 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Location = new System.Drawing.Point(12, 12);
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -94,9 +95,17 @@
             this.splitContainer1.Panel1.Controls.Add(this.AdvanceButton);
             this.splitContainer1.Panel1.Controls.Add(this.InitSim);
             this.splitContainer1.Panel1.Controls.Add(this.ReverseButton);
-            this.splitContainer1.Size = new System.Drawing.Size(965, 474);
-            this.splitContainer1.SplitterDistance = 320;
+            this.splitContainer1.Size = new System.Drawing.Size(988, 492);
+            this.splitContainer1.SplitterDistance = 327;
             this.splitContainer1.TabIndex = 4;
+            // 
+            // SIMspeed
+            // 
+            this.SIMspeed.Location = new System.Drawing.Point(175, 179);
+            this.SIMspeed.Margin = new System.Windows.Forms.Padding(2);
+            this.SIMspeed.Name = "SIMspeed";
+            this.SIMspeed.Size = new System.Drawing.Size(63, 20);
+            this.SIMspeed.TabIndex = 10;
             // 
             // button2
             // 
@@ -155,14 +164,6 @@
             this.StopSimulation.Text = "StopSimulation";
             this.StopSimulation.UseVisualStyleBackColor = true;
             this.StopSimulation.Click += new System.EventHandler(this.StopSimulation_Click);
-            // 
-            // SIMspeed
-            // 
-            this.SIMspeed.Location = new System.Drawing.Point(175, 179);
-            this.SIMspeed.Margin = new System.Windows.Forms.Padding(2);
-            this.SIMspeed.Name = "SIMspeed";
-            this.SIMspeed.Size = new System.Drawing.Size(63, 20);
-            this.SIMspeed.TabIndex = 10;
             // 
             // SimulationForm
             // 

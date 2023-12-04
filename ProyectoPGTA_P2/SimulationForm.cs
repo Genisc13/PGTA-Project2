@@ -255,11 +255,7 @@ namespace ProyectoPGTA_P2
                 for (int j = 0; j < avion.positionList.Count; j++)
                 {                   
                     if ((avion.positionList[j].Time - initialTime) <= pasoActual + offset && (avion.positionList[j].Time - initialTime) >= pasoActual)
-                    {
-                        if(avion.Name== "346088")
-                        {
-                            int a = 1;
-                        }
+                    {                      
                         if(double.IsNaN(avion.positionList[j].X) && double.IsNaN(avion.positionList[j].Y))
                         {
                             /*GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.positionList[j-1].X, avion.positionList[j-1].Y);
