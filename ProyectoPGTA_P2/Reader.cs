@@ -94,9 +94,5 @@ namespace ProyectoPGTA_P2
                 }
             }
         }
-        public DataTable GetDataTableCAT48()
-        {
-            return this.tablaCAT48;
-        }
     }
 }

@@ -129,10 +129,10 @@ namespace ProyectoPGTA_P2
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = openFileDialog.FileName;
-                CargarCSV(filePath);
+                LoadCSV(filePath);
             }
         }
-        private void CargarCSV(string filePath)
+        private void LoadCSV(string filePath)
         {
             try
             {

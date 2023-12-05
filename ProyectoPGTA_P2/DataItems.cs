@@ -313,7 +313,6 @@ namespace ProyectoPGTA_P2
         public List<string> data;
 
         public DataItem1() {
-            //data = new List<string> { "SAC", "N/D", "SIC", "N/D" };
             data = new List<string> { "N/D", "N/D" };
         }
 
@@ -327,7 +326,6 @@ namespace ProyectoPGTA_P2
             int SACint = Convert.ToInt32(SAC, 16);
             int SICint = Convert.ToInt32(SIC, 16);
 
-            //data = new List<string>{ "SAC", SACint.ToString(), "SIC", SICint.ToString() };
             data = new List<string> { SACint.ToString(), SICint.ToString() };
         }
 
@@ -1414,8 +1412,14 @@ namespace ProyectoPGTA_P2
 
                         break;
                     case "5.0":
-                        RollAngle = (Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10]), 2) * 45 / 256f).ToString() + " º";
-                        TrueTrackAngle = (((-1) ^ Convert.ToInt32(BDSDATA[12]))*Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2) * 90 / 512f).ToString() + " º";
+                        RollAngle = (((-1) ^ Convert.ToInt32(BDSDATA[1])) * Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10]), 2) * 45 / 256f).ToString() + " º";
+
+                        float TTA = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2) * 90 / 512f % 360;
+                        if(((-1) ^ Convert.ToInt32(BDSDATA[12])) == 1 && TTA > 180)
+                        {
+                            TTA -= 180;
+                        }
+                        TrueTrackAngle = (TTA).ToString() + " º";
                         GS = (Convert.ToInt32(String.Concat(BDSDATA[24], BDSDATA[25], BDSDATA[26], BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33]), 2) * 2f).ToString() + " kt";
                         TrackAngleRate = (((-1) ^ Convert.ToInt32(BDSDATA[35])) * Convert.ToInt32(String.Concat(BDSDATA[36], BDSDATA[37], BDSDATA[38], BDSDATA[39], BDSDATA[40], BDSDATA[41], BDSDATA[42], BDSDATA[43], BDSDATA[44]), 2) * 8 / 256f).ToString() + " º/s";
                         TAS = (Convert.ToInt32(String.Concat(BDSDATA[46], BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 2f).ToString() + " kt";
@@ -1562,11 +1566,14 @@ namespace ProyectoPGTA_P2
                 arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
             }
 
-            GS = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1]), 2) / 16384f;
+            string GSstr = String.Concat(arrayString[0], arrayString[1]);
+
+            GS = Convert.ToInt32(GSstr, 2);
+            GS = GS * 0.22f;
             HEAD = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3]), 2) * 45 / 8192f;
 
             //data = new List<string> { "Ground Speed", GS.ToString() + " kt", "Heading", HEAD.ToString() + " º"};
-            data = new List<string> { GS.ToString() + " NM/s", HEAD.ToString() + " º" };
+            data = new List<string> { GS.ToString() + " kt", HEAD.ToString() + " º" };
         }
         public List<string> GetData()
         {

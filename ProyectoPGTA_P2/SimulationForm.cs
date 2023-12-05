@@ -178,9 +178,7 @@ namespace ProyectoPGTA_P2
         public class Avion
         {
             public List<Position> positionList = new List<Position>(totaltime);
-
             public string Name { get; set; }
-
             public Avion(string name)
             {
                 this.Name = name;
@@ -189,29 +187,20 @@ namespace ProyectoPGTA_P2
             {
                 positionList.Add(pos);
             }
-
-            public void Dibujar()
-            {
-                
-            }
         }
 
         public class Position
         {
             public double X { get; set; }
             public double Y { get; set; }
-
             public float Time { get; set; }
-
             public bool Draw { get; set; }
-
             public Position(double x, double y, float time, bool draw)
             {
                 X = x;
                 Y = y;
                 Time = time;
                 Draw = draw;
-
             }
         }
 
