@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static ProyectoPGTA_P2.SimulationForm;
+using Accord.Math;
 
 namespace ProyectoPGTA_P2
 {
@@ -410,6 +412,52 @@ namespace ProyectoPGTA_P2
                 timerSimulacion.Interval *= 2;
                 SIMspeed.Text = Math.Round(4000f / timerSimulacion.Interval, 2).ToString() + "x";
             }
+        }
+
+        private void ExportKMLButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FolderBrowserDialog ofd = new FolderBrowserDialog();
+                ofd.SelectedPath = "..\\";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = ofd.SelectedPath;
+                    StringBuilder kmlContent = new StringBuilder();
+
+                    kmlContent.AppendLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                    kmlContent.AppendLine("<kml xmlns=\"http://www.opengis.net/kml/2.2\">");
+                    kmlContent.AppendLine("<Document>");
+
+                    // Iterate over all aircraft in the simulation
+                    foreach (var aircraft in simulacion.Values)
+                    {
+                        kmlContent.AppendLine("<Placemark>");
+                        kmlContent.AppendLine($"<name>{aircraft.Name}</name>");
+                        kmlContent.AppendLine("<LineString>");
+                        kmlContent.AppendLine("<coordinates>" + GetCoordinatesString(aircraft.positionList) + "</coordinates>");
+                        kmlContent.AppendLine("</LineString>");
+                        kmlContent.AppendLine("</Placemark>");
+                    }
+
+                    kmlContent.AppendLine("</Document>");
+                    kmlContent.AppendLine("</kml>");
+
+                    // Save the KML content to a file
+                    //string filePath = "AircraftRoutes.kml";
+                    File.WriteAllText(filePath+"\\"+ "AircraftRoutes.kml", kmlContent.ToString());
+
+                    MessageBox.Show($"KML file created successfully: {filePath}\\AircraftRoutes.kml");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
+        private string GetCoordinatesString(List<Position> positions)
+        {
+            return string.Join(" ", positions.Select(pos => $"{pos.Y.ToString().Replace(",", ".")},{pos.X.ToString().Replace(",", ".")}"));
         }
     }
 }
