@@ -59,7 +59,7 @@ namespace ProyectoPGTA_P2
             double longitud = gmap.FromLocalToLatLng(e.X, e.Y).Lng;
 
             // Puedes mostrar las coordenadas en un MessageBox, por ejemplo
-            MessageBox.Show($"Coordenadas: Latitud {latitud}, Longitud {longitud}");
+            MessageBox.Show($"Coordinates: Latitude {latitud}, Longitude {longitud}");
         }
         private void InicializarSimulacion(List<CAT48> avionList)
         {
@@ -170,7 +170,7 @@ namespace ProyectoPGTA_P2
             }
             else
             {
-                MessageBox.Show("Estás en el último paso, no puedes ir más alante");
+                MessageBox.Show("Currenyly on the last step of the simulation, can not advance fordward");
             }
         }
         public class Avion
@@ -223,7 +223,7 @@ namespace ProyectoPGTA_P2
                 SimulTime.Text = (initialTime + pasoActual).ToString();
             }
             else {
-                MessageBox.Show("Estás en el último paso, no puedes ir más alante");
+                MessageBox.Show("Currenyly on the last step of the simulation, can not advance fordward");
             }           
         }
 
@@ -238,13 +238,13 @@ namespace ProyectoPGTA_P2
             }
             else
             {
-                MessageBox.Show("Estás en el primer paso, no puedes ir más atrás");
+                MessageBox.Show("Currently in the first step of the simulation, can not reverse");
             }            
         }
 
         private void ActivateOverlay()
         {
-            GMap.NET.WindowsForms.GMapOverlay overlay = new GMap.NET.WindowsForms.GMapOverlay("Aviones");
+            GMap.NET.WindowsForms.GMapOverlay overlay = new GMap.NET.WindowsForms.GMapOverlay("Planes");
             // Dibuja los aviones en el PictureBox
 
             int i = 0;

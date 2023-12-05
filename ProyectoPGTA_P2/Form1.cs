@@ -32,7 +32,7 @@ namespace ProyectoPGTA_P2
                 string filePath = ofd.FileName;
                 decoder = new Reader(filePath);
                 lista = decoder.GetListCAT48();
-                MessageBox.Show("The ASTERIX file was decoded correctly");
+                MessageBox.Show("ASTERIX file decoded succesfully!");
             }
         }
 
@@ -50,7 +50,7 @@ namespace ProyectoPGTA_P2
             }
             else
             {
-                MessageBox.Show("No has hecho ninguna decodificación aún");
+                MessageBox.Show("No ASTERIX file decoded yet");
             }
 
         }
@@ -112,13 +112,13 @@ namespace ProyectoPGTA_P2
                     File.WriteAllText(filePath + "\\"+ "DecodedASTERIXData.csv", csvContent.ToString());
 
                     // Muestra un mensaje de confirmación
-                    MessageBox.Show("Archivo CSV generado exitosamente." + filePath + "\\" + "DecodedASTERIXData.csv");
+                    MessageBox.Show("CSV file succesfully generated: " + filePath + "\\" + "DecodedASTERIXData.csv");
 
                 }
             }
             else
             {
-                MessageBox.Show("No has hecho ninguna decodificación aún");
+                MessageBox.Show("No ASTERIX file decoded yet");
             }          
         }
 
@@ -149,7 +149,7 @@ namespace ProyectoPGTA_P2
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar el archivo CSV: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Failed loading CSV file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

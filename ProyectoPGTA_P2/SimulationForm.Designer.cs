@@ -140,9 +140,9 @@
             // 
             this.GenerarRuta.Location = new System.Drawing.Point(66, 273);
             this.GenerarRuta.Name = "GenerarRuta";
-            this.GenerarRuta.Size = new System.Drawing.Size(75, 23);
+            this.GenerarRuta.Size = new System.Drawing.Size(100, 23);
             this.GenerarRuta.TabIndex = 6;
-            this.GenerarRuta.Text = "GeneraRuta";
+            this.GenerarRuta.Text = "Generate route";
             this.GenerarRuta.UseVisualStyleBackColor = true;
             this.GenerarRuta.Click += new System.EventHandler(this.GenerarRuta_Click);
             // 
@@ -151,7 +151,7 @@
             this.SimulTime.Location = new System.Drawing.Point(175, 72);
             this.SimulTime.Margin = new System.Windows.Forms.Padding(2);
             this.SimulTime.Name = "SimulTime";
-            this.SimulTime.Size = new System.Drawing.Size(76, 20);
+            this.SimulTime.Size = new System.Drawing.Size(63, 20);
             this.SimulTime.TabIndex = 5;
             // 
             // StopSimulation
