@@ -1566,7 +1566,7 @@ namespace ProyectoPGTA_P2
             HEAD = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3]), 2) * 45 / 8192f;
 
             //data = new List<string> { "Ground Speed", GS.ToString() + " kt", "Heading", HEAD.ToString() + " º"};
-            data = new List<string> { GS.ToString() + " kt", HEAD.ToString() + " º" };
+            data = new List<string> { GS.ToString() + " NM/s", HEAD.ToString() + " º" };
         }
         public List<string> GetData()
         {
