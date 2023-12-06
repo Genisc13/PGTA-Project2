@@ -15,21 +15,33 @@ namespace ProyectoPGTA_P2
     public partial class Form1 : Form
     {
         public Reader decoder;
-        public List<CAT48> lista;
+        public List<CAT48> lista;      
         public Form1()
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// This Button (The decode button) will be used to open a file browser
+        /// and decode any .ast and process all the data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
+            //The initial directory
             ofd.InitialDirectory ="..\\";
+            //The filter
             ofd.Filter = "Asterix Files (*.ast*)|*.ast|All files (*.*)|*.";
+            //The filter Index
             ofd.FilterIndex = 1;
+            //The option of RestoreDirectory at true
             ofd.RestoreDirectory = true;
+            //If the OpenFile is a success the next code will be done
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 string filePath = ofd.FileName;
+                //We create a Reader that reads the file and starts de decoding
                 decoder = new Reader(filePath);
                 lista = decoder.GetListCAT48();
                 MessageBox.Show("ASTERIX file decoded succesfully!");
@@ -38,9 +50,14 @@ namespace ProyectoPGTA_P2
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            //If the DataGridView is clicked nothing happens
         }
-
+        /// <summary>
+        /// This button opens the Simulation Form, this one will only be
+        /// shown if the data is decoded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenSimButton_Click(object sender, EventArgs e)
         {
             if (lista != null)
@@ -54,18 +71,26 @@ namespace ProyectoPGTA_P2
             }
 
         }
-
+        /// <summary>
+        /// This button exports the ASTERIX decoded data on
+        /// a .csv and can be exported on a directory of choice
+        /// The CSV file contains data of one packet per row
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExportButton_Click(object sender, EventArgs e)
         {
             if (lista != null)
             {
                 FolderBrowserDialog ofd = new FolderBrowserDialog();
                 ofd.SelectedPath = "..\\";
+                //If the folder browser is OK the next code is done
                 if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    string filePath = ofd.SelectedPath;
-                    // Crear un StringBuilder para almacenar el contenido CSV
+                {                  
+                    string filePath = ofd.SelectedPath;                  
+                    // Create a StringBuilder to store the CSV content
                     StringBuilder csvContent = new StringBuilder();
+                    //Here the CSV content is written string by string
                     csvContent.AppendLine("NUM;SAC;SIC;TIME;SEC;TYP;SIM;RDP;SPI;RAB;TST;ERR;XPP;ME;MI;FOE/FRI;ADSB_EP;ADSB_VAL;SCN_EP;SCN_VAL;PAI_EP;PAI_VAL;RHO;THETA;V;G;L;MODE3;V;G;FL;SRL;SRR;SAM;PRL;PAM;RPD;APD;A/C ADDRESS;A/C IDENTIFICATION;BDS VERSION;REPETITIONS;MCP/FCU SELECTED ALTITUDE;FMS SELECTED ALTITUDE;BAROMETRIC PRESSURE SETTING;STATUS OF MCP/FCU MODE;VNAV MODE;ALT HOLD MODE;APP MODE;STATUS OF TARGET ALTITUDE SOURCE;TARGET ALTITUDE SOURCE;ROLL ANGLE;TRUE TRACK ANGLE;GS;TRACK ANGLE RATE;TAS;MAGNETIC HEADING;IAS;MACH;BAROMETRIC ALTITUDE RATE;INERTIAL VERTICAL VELOCITY;TRACK NUMBER;X;Y;Z;GS;HEADING;CNF;RAD;DOU;MAH;CDM;TRE;GHO;SUP;TCC;3D HEIGHT;COM;STAT;SI;MSSC;ARC;AIC;B1A;B1B");
 
                     int i = 1;
@@ -74,22 +99,15 @@ namespace ProyectoPGTA_P2
                     {
                         Dictionary<int, List<string>> datos = items.GetDataDecodedPerItem();
                         StringBuilder rowDataBuilder = new StringBuilder();
-                        // Itera a través de los datos y agrega cada fila al contenido CSV
-
+                        // Iterates on the data and agregates every row at the CSV content 
                         rowDataBuilder.Append(i.ToString());
                         rowDataBuilder.Append(";");
-
-
                         foreach (var kvp in datos)
                         {
                             if (kvp.Key >= 1 && kvp.Key <= 28)
                             {
-                                //rowDataBuilder.Append("DataItem: " + kvp.Key);
-
-
                                 foreach (string value in kvp.Value)
                                 {
-                                    //rowDataBuilder.Append(";");
                                     if (value.Contains(","))
                                     {
                                         rowDataBuilder.Append(value.Replace(",", "."));
@@ -107,11 +125,10 @@ namespace ProyectoPGTA_P2
                         csvContent.AppendLine(rowData);
                         i++;
                     }
-
-                    // Guarda el contenido en un archivo CSV
+                    // Save the complete content on a .csv file
                     File.WriteAllText(filePath + "\\"+ "DecodedASTERIXData.csv", csvContent.ToString());
 
-                    // Muestra un mensaje de confirmación
+                    // Shows a confirmation message
                     MessageBox.Show("CSV file succesfully generated: " + filePath + "\\" + "DecodedASTERIXData.csv");
 
                 }
@@ -121,7 +138,11 @@ namespace ProyectoPGTA_P2
                 MessageBox.Show("No ASTERIX file decoded yet");
             }          
         }
-
+        /// <summary>
+        /// This function was made to be able to show the CSV data on the Application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowCSVButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -132,14 +153,19 @@ namespace ProyectoPGTA_P2
                 LoadCSV(filePath);
             }
         }
+ 
+        /// <summary>
+        /// This function reads the CSV data and transforms it into columns
+        /// and rows of the DataGridView
+        /// </summary>
+        /// <param name="filePath"></param>
         private void LoadCSV(string filePath)
         {
             try
             {
-                // Lee todo el contenido del archivo CSV
+                //Reads all the content of the CSV file
                 string[] lines = File.ReadAllLines(filePath);
-
-                // Divide las líneas en columnas y carga los datos en el DataGridView
+                // Divides the lines on columns and loads the DataGridView Data
                 dataGridView1.ColumnCount = lines[0].Split(';').Length;
                 for (int i = 0; i < lines.Length; i++)
                 {

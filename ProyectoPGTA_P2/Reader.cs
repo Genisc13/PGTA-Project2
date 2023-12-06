@@ -11,50 +11,62 @@ namespace ProyectoPGTA_P2
     public class Reader
     {
         string path;
-
+        //List of all the CAT48 packets
         private List<CAT48> listaCAT48 = new List<CAT48>();
         private DataTable tablaCAT48 = new DataTable();
-
+        /// <summary>
+        /// The reader takes the path of the .ast file and decodes 
+        /// it with the leer fucntion 
+        /// </summary>
+        /// <param name="nombre"></param>
         public Reader(string nombre)
         {
             this.path = nombre;
             this.Leer();
         }
+        /// <summary>
+        /// This is a getter of listaCAT48
+        /// </summary>
+        /// <returns></returns>
         public List<CAT48> GetListCAT48()
         {
             return this.listaCAT48;
         }
+        /// <summary>
+        /// This function takes all the Bytes of the 
+        /// binary .ast file and decodes it using the
+        /// CAT48 class and the dataItems
+        /// </summary>
         public void Leer()
         {
             //StreamReader fichero = new StreamReader(path);
             //string linea_1 = fichero.ReadLine();
-            byte[] fileBytes = File.ReadAllBytes(path); //Pasamos todo el fichero a conjuntos de 8 bits puestos en una matriz de una fila
-            
-            List<byte[]> listabyte = new List<byte[]>(); //Nueva lista de arrays de bytes vacía
-            int i = 0; //Colocamos la i en el primer byte del fichero
-            int contador = fileBytes[2]; //contador = al segundo byte del fichero?? Determina la longitud de la linea en la listabyte
-            //int length = 0;
+            byte[] fileBytes = File.ReadAllBytes(path); //We convert the entire file to 8-bit arrays placed in a one-row matrix
 
-            while (i < fileBytes.Length) //Descomponer en pequeñas arrays de bytes (por descifrar el tamaño) y colocarlos en una lista
+            List<byte[]> listabyte = new List<byte[]>(); //New empty byte array list
+            int i = 0; //We place the i in the first byte of the file
+            int contador = fileBytes[2]; //contador = to the second byte of the file, determines the length of the line in the bytelist
+
+            while (i < fileBytes.Length) //Break it down into small byte arrays (to figure out the size) and put them in a list
             {
-                byte[] array = new byte[contador]; //Array = nueva array de bytes igual de larga que el 2o byte del fichero??
-                for (int j = 0; j < array.Length;) //Va rellenando array con los bytes del fichero binario hasta que se llena array por completo
+                byte[] array = new byte[contador]; //Array = new byte array equal to the length of the 2nd byte of the file
+                for (int j = 0; j < array.Length;) //It fills the array with the bytes of the binary file until the array is completely filled.
                 {
                     array[j] = fileBytes[i];
                     i++;
                     j++;
                 }
-                listabyte.Add(array); //Añade array a la lista de bytes
+                listabyte.Add(array); //Add array to byte list
                 //length += array.Length;
-                if (i + 2 < fileBytes.Length) //Básicamente, lo que ocurre es que, una vez se sabe la length y se pasa por todo el primer mensaje, se salta al siguiente para seguir
+                if (i + 2 < fileBytes.Length) //once the length is known and the entire first message is passed, it skips to the next one to continue 
                 {
-                    contador = fileBytes[i + 2]; //Determina la longitud del próximo array de bytes o longitud de la siguiente entrada en la lista listabyte
+                    contador = fileBytes[i + 2]; //Determines the length of the next byte array or length of the next entry in the bytelist list
                 }
             }
 
-            List<string[]> listahex = new List<string[]>(); //Nueva lista de arrays de strings. listabyte en formato hex
+            List<string[]> listahex = new List<string[]>(); //New list of string arrays. bytelist in hex format
 
-            for (int x = 0; x < listabyte.Count; x++) //Bucle para convertir cada entrada de la listabyte en un valor hex
+            for (int x = 0; x < listabyte.Count; x++) //Loop to convert each bytelist entry to a hex value
             {
                 byte[] buffer = listabyte[x];
                 string[] arrayhex = new string[buffer.Length];
@@ -66,16 +78,15 @@ namespace ProyectoPGTA_P2
             }
 
 
-            for (int q = 0; q < listahex.Count; q++) //Iterar sobre toda la lista de bytes en hex
+            for (int q = 0; q < listahex.Count; q++) //Iterate over entire list of bytes in hex
             {
-                List<string> arraystring = new List<string>(listahex[q].Length); //Cada linea en hex
+                List<string> arraystring = new List<string>(listahex[q].Length); //Every line in hex
                 for(int k = 0; k < listahex[q].Length; k++)
                 {
                     arraystring.Add(listahex[q][k]);
                 }
-                int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber); //Convertir cada par de valores hex a un decimal
-
-                //Filtrar por valor decimal en distintas categorias ordenadas por listas 10, 20 y 21
+                int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber); //Convert each pair of hex values to a decimal
+                //Filter by decimal value in different categories ordered by lists 10, 20 and 21
                 if (CAT == 48)
                 {
                     CAT48 newcat10 = new CAT48(arraystring);
@@ -83,10 +94,8 @@ namespace ProyectoPGTA_P2
                     string Mode3 = newcat10.itemContainer.GetDataItem3().TYP;
 
                     if (Mode3 == "Single ModeS All-Call" || Mode3 == "Single ModeS Roll-Call" || Mode3 == "ModeS All-Call + PSR" || Mode3 == "ModeS Roll-Call + PSR") { 
-                        listaCAT48.Add(newcat10); //Solo agregar si es Mode S Call
+                        listaCAT48.Add(newcat10); //Only add if it is Mode S Call
                     }
-                    
-                    //Console.WriteLine("Hecha una categoría");
                 }
                 else
                 {

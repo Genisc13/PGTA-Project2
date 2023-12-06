@@ -10,7 +10,7 @@ namespace ProyectoPGTA_P2
     static class Program
     {
         /// <summary>
-        /// Punto de entrada principal para la aplicación.
+        /// Entry point of the aplication, it opens the Form1()
         /// </summary>
         [STAThread]
         static void Main()

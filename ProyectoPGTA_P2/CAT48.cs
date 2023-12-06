@@ -11,22 +11,36 @@ namespace ProyectoPGTA_P2
 {
     public class CAT48
     {
+        //List of strings that contains the values of the Binary code on Hex
         public List<string> arrayHex;
+        //Category number
         public int CAT;
+        //Number of the bytes of the Packet
         public int Length;
+        //A matrix of booleans saying if a dataItem is there or not
         public bool[] items;
+        //The container of all the dataItems
         public DataItem itemContainer;
-        Dictionary<int, List<string>> decodedDataPerItem;
-
+        //This is de dictionary of all the dataItems decoded and its data
+        public Dictionary<int, List<string>> decodedDataPerItem;
+        /// <summary>
+        /// This is the CAT48 class, this class decodes every packet with 
+        /// the correspondant dataItems on it listed on a dictionary
+        /// </summary>
+        /// <param name="arrayhex"></param>
         public CAT48(List<string> arrayhex)
         {
+            //We create an instance of GeoUtils for the coordiantes transformation
             GeoUtils geoUtils = new GeoUtils();
+            //initialization of the parameters
             this.arrayHex = arrayhex;
             this.CAT = int.Parse(arrayHex[0], System.Globalization.NumberStyles.HexNumber);
             this.Length = int.Parse(arrayHex[1]+arrayHex[2], System.Globalization.NumberStyles.HexNumber);
             this.items = new bool[28];
+            //These are DataItems that were done appart
             List<string> arrayItem3 = new List<string>();
             List<string> arrayItem14 = new List<string>();
+            //Initalization of the itemContainer and the dictionary of dataItems
             decodedDataPerItem = new Dictionary<int, List<string>>();
             itemContainer = new DataItem();
             int i = 3;
@@ -35,7 +49,7 @@ namespace ProyectoPGTA_P2
             //Console.WriteLine("Editando Byte");
             List<string> arrayItem;
             int n;
-            
+            //This while uses the FSPEC to know exactly what dataItems are on the CAT48 packet
             while (i >= 3 && i <= 6 && finishFSPEC == false)
             {
                 
@@ -536,20 +550,9 @@ namespace ProyectoPGTA_P2
                 items[27] = false;
             }
 
-            //Calcular posiciones
-
-            //GMS
-            //Latitud: 41º 18’ 02,5284’’ N
-            //Longitud: 02º 06’ 07,4095’’ E
-
-            //Geográficas
-            //Lat 41.3007023
-            //Long 2.1020581944444445
-
-            //Elevación terreno: 2,007 m
-            //Altura antena: 25,25 m
+            //Calculate positioning of all the aircrafts (As dere is no dataItem 12, we will put the geolocation data there)
             CoordinatesPolar radarPolar;
-
+            //If the .FL is negative we change it to 0;
             if (itemContainer.GetDataItem6().FL < 0)
             {
                 radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin((0 * 100 * 0.3048) / (itemContainer.GetDataItem4().RHO * 1852)));
@@ -560,23 +563,25 @@ namespace ProyectoPGTA_P2
 
                 radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
             }
-            
-            
-
+            //Here we change from spherical (rho,theta,elevation) to cartesian (X,Y,Z)        
             CoordinatesXYZ radarCartesian = GeoUtils.change_radar_spherical2radar_cartesian(radarPolar);
 
-            CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84(41.3007023 * (Math.PI / 180), 2.10205819444 * (Math.PI / 180), 2.007 + 25.25); //coordenadas del radar en geográficas en vez de GMS comentado por ahora
-                                                                                                          //CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84("41º 18’ 02,5284’’ N", "02º 06’ 07,4095’’ E", 2.007 + 25.25);
+            //Here we take the LatLon WGS84 of the radar on a point to change from cartesian to geocentric
+            CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84(41.3007023 * (Math.PI / 180), 2.10205819444 * (Math.PI / 180), 2.007 + 25.25); 
+            //Coordinates of the radar on geographical are comented for now
+            //CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84("41º 18’ 02,5284’’ N", "02º 06’ 07,4095’’ E", 2.007 + 25.25);
 
-
-            //LINEAS DE ABAJO COMENTADAS PARA QUE NO DE ERROR
+            //Here we change from cartesian to geocentric
             CoordinatesXYZ geocentricSystem = geoUtils.change_radar_cartesian2geocentric(radarCoordinates, radarCartesian);
 
-            CoordinatesWGS84 geodesic = geoUtils.change_geocentric2geodesic(geocentricSystem);           
+            //And finally here we change from geocentric to geodesic coordinates (Lat,Lon,Altitude)
+            CoordinatesWGS84 geodesic = geoUtils.change_geocentric2geodesic(geocentricSystem);  
+            
+            //And we set the Latitude,Longitude and altitude on the DataItem12 that we know that is empty
             itemContainer.GetDataItem12().SetData((float)geodesic.Lat * (180/Math.PI), (float)geodesic.Lon * (180 / Math.PI), (float)geodesic.Height);            
             
 
-            //Una vez tenemos todos los DataItems decodificados hemos de hacer algo con ellos.
+            //Once the dataItem are decoded we put all the data on the Dictionary.
             if (itemContainer.GetDataItem1()!=null)
             {
                 decodedDataPerItem.Add(1,itemContainer.GetDataItem1().GetData());
