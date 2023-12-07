@@ -859,6 +859,7 @@ namespace ProyectoPGTA_P2
         {
             //data = new List<string> { "V", "N/D", "G", "N/D", "FL", "N/D"};
             data = new List<string> { "N/D", "N/D", "N/D" };
+            FL = -9999;
         }
 
         public DataItem6(List<string> arrayhex)
@@ -928,17 +929,7 @@ namespace ProyectoPGTA_P2
             {
                 FL = Convert.ToInt32(FL_BIN, 2) / 4f;
             }
-            float newFl;
-            if (FL < 60)
-            {
-                newFl = FL + (float)(1013.4 - 1013.25) * (30 / 100);
-                FL = newFl;
-            }          
-
-            if (FL < 0){
-                FL = 0;
-            }
-
+                                        
             //data = new List<string> { "V", V, "G", G, "FL", FL.ToString() };
             data = new List<string> { V, G, FL.ToString() };
         }
@@ -1274,6 +1265,30 @@ namespace ProyectoPGTA_P2
         public string[] arrayString;
         public int REP = -9999;
         public List<string> data = new List<string>();
+        //Param BDS4.0
+        public string MCPSelectedAlt;
+        public int intMCPSelectedAlt;
+        public string FMSSelectedAlt;
+        public string BarPressure;
+        public float floatBarPressure;
+        public string StatusMCP;
+        public string VNAV;
+        public string ALTHoldMode;
+        public string APPMode;
+        public string StatusTargetAltSource;
+        public string TargetAltSource;
+        //Param BDS5.0
+        public string RollAngle;
+        public string TrueTrackAngle;
+        public string GS;
+        public string TrackAngleRate;
+        public string TAS;
+        //Param BDS6.0
+        public string MagneticHeading;
+        public string IAS;
+        public string MACH;
+        public string BarometricAlt;
+        public string InertialVerticalVel;
         public DataItem10()
         {
             //data = new List<string> { "BDS version: ", "N/D", "Repetitions", "N/D", "MCP/FCU Selected Altitude: ", "N/D", "FMS Selected Altitude: ", "N/D", "Barometric Pressure Setting: ", "N/D", "Status of MCP/FCU MODE: ", "N/D", "VNAV Mode: ", "N/D", "Alt Hold Mode: ", "N/D", "Approach Mode: ", "N/D", "Status of target Altitude Source: ", "N/D", "Target Altitude Source: ", "N/D", "Roll Angle: ", "N/D" , "True Track Angle: ", "N/D", "GS: ", "N/D", "Track Angle Rate: ", "N/D", "TAS: ", "N/D",  "Magnetic heading: ", "N/D", "IAS: ", "N/D", "MACH: ", "N/D", "Barometric Altitude Rate: ", "N/D", "Inertial Vertical Velocity", "N/D" };
@@ -1293,28 +1308,30 @@ namespace ProyectoPGTA_P2
             string BDSDATA = "N/A", BDSver = "";
             string BDS1 = "N/A", BDS2 = "N/A";
 
-            //Param BDS4.0
-            string MCPSelectedAlt = "N/A";
-            string FMSSelectedAlt = "N/A";
-            string BarPressure = "N/A";
-            string StatusMCP = "N/A";
-            string VNAV = "N/A";
-            string ALTHoldMode = "N/A";
-            string APPMode = "N/A";
-            string StatusTargetAltSource = "N/A";
-            string TargetAltSource = "N/A";
+           //Param BDS4.0
+            MCPSelectedAlt = "N/A";
+            intMCPSelectedAlt = 0;
+            FMSSelectedAlt = "N/A";
+            BarPressure = "N/A";
+            floatBarPressure = 0;
+            StatusMCP = "N/A";
+            VNAV = "N/A";
+            ALTHoldMode = "N/A";
+            APPMode = "N/A";
+            StatusTargetAltSource = "N/A";
+            TargetAltSource = "N/A";
             //Param BDS5.0
-            string RollAngle = "N/A";
-            string TrueTrackAngle = "N/A";
-            string GS = "N/A";
-            string TrackAngleRate = "N/A";
-            string TAS = "N/A";
+            RollAngle = "N/A";
+            TrueTrackAngle = "N/A";
+            GS = "N/A";
+            TrackAngleRate = "N/A";
+            TAS = "N/A";
             //Param BDS6.0
-            string MagneticHeading = "N/A";
-            string IAS = "N/A";
-            string MACH = "N/A";
-            string BarometricAlt = "N/A";
-            string InertialVerticalVel = "N/A";
+            MagneticHeading = "N/A";
+            IAS = "N/A";
+            MACH = "N/A";
+            BarometricAlt = "N/A";
+            InertialVerticalVel = "N/A";
 
             for (int i = 0; i < REP; i++)
             {
@@ -1340,8 +1357,10 @@ namespace ProyectoPGTA_P2
                 {
                     case "4.0":
                         MCPSelectedAlt = (Convert.ToInt32(String.Concat(BDSDATA[1], BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11], BDSDATA[12]), 2) * 16).ToString() + " ft";
+                        intMCPSelectedAlt = Convert.ToInt32(String.Concat(BDSDATA[1], BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11], BDSDATA[12]), 2) * 16;
                         FMSSelectedAlt = (Convert.ToInt32(String.Concat(BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22], BDSDATA[23], BDSDATA[24], BDSDATA[25]), 2) * 16).ToString() + " ft";
                         BarPressure = (Convert.ToInt32(String.Concat(BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33], BDSDATA[34], BDSDATA[35], BDSDATA[36], BDSDATA[37], BDSDATA[38]), 2) * 0.1f + 800).ToString() + " mb";
+                        floatBarPressure = Convert.ToInt32(String.Concat(BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33], BDSDATA[34], BDSDATA[35], BDSDATA[36], BDSDATA[37], BDSDATA[38]), 2) * 0.1f + 800;
                         StatusMCP = BDSDATA[47].ToString();
                         switch (StatusMCP)
                         {
