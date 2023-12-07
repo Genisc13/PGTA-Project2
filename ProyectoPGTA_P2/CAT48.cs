@@ -554,17 +554,20 @@ namespace ProyectoPGTA_P2
             CoordinatesPolar radarPolar;
             //If the .FL is negative we change it to 0;          
             double asin;
+
             if (itemContainer.GetDataItem6().FL < 60)
             {
                 if (itemContainer.GetDataItem10().FMSSelectedAlt == "N/A" || itemContainer.GetDataItem10().FMSSelectedAlt == "N/D")
-                {                    
-                    if (itemContainer.GetDataItem6().FL < 0)
+                {
+                    double correctedAltitude1 = itemContainer.GetDataItem6().FL * 100 + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30;
+                    if (correctedAltitude1 < 0)
                     {
                         asin = 0;
                     }
                     else
                     {
-                        asin = (2 * 6371000 * ((itemContainer.GetDataItem6().FL * 100 * 0.3048) - 2.007 - 25.25) + (itemContainer.GetDataItem6().FL * 100 * 0.3048) * (itemContainer.GetDataItem6().FL * 100 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
+                        
+                        asin = (2 * 6371000 * ((correctedAltitude1 * 0.3048) - 2.007 - 25.25) + (correctedAltitude1 * 0.3048) * (correctedAltitude1 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
                     }
                     radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
                 }
@@ -576,18 +579,29 @@ namespace ProyectoPGTA_P2
                     }
                     else
                     {
-                        double correctedAltitude1 = itemContainer.GetDataItem10().intMCPSelectedAlt + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30;
-                        double correctedAltitude2 = itemContainer.GetDataItem10().intFMSSelectedAlt + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30;
+                        
+                        double correctedAltitude1 = itemContainer.GetDataItem6().FL*100 + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30; //MCP
+                        //double correctedAltitude2 = itemContainer.GetDataItem10().intFMSSelectedAlt + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30; //FMS
+
+                        if (correctedAltitude1 < 0)
+                        {
+                            correctedAltitude1 = 0;
+                        }
+
                         asin = (2 * 6371000 * ((correctedAltitude1 * 0.3048) - 2.007 - 25.25) + (correctedAltitude1 * 0.3048) * (correctedAltitude1 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
+                        /*
                         if (asin > 1)
                         {
                             asin = (2 * 6371000 * ((correctedAltitude2 * 0.3048) - 2.007 - 25.25) + (correctedAltitude2 * 0.3048) * (correctedAltitude2 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
-                        }
-                        if(asin > 1)
+                        }*/
+                        
+                        if (asin > 1)
                         {
                             asin = 1;
                         }
-                    }                                       
+
+
+                    }
                     radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
                 }
             }
