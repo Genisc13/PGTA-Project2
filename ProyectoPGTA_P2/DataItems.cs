@@ -1266,29 +1266,30 @@ namespace ProyectoPGTA_P2
         public int REP = -9999;
         public List<string> data = new List<string>();
         //Param BDS4.0
-        public string MCPSelectedAlt;
+        public string MCPSelectedAlt="N/D";
         public int intMCPSelectedAlt;
-        public string FMSSelectedAlt;
-        public string BarPressure;
+        public string FMSSelectedAlt = "N/D";
+        public int intFMSSelectedAlt;
+        public string BarPressure = "N/D";
         public float floatBarPressure;
-        public string StatusMCP;
-        public string VNAV;
-        public string ALTHoldMode;
-        public string APPMode;
-        public string StatusTargetAltSource;
-        public string TargetAltSource;
+        public string StatusMCP = "N/D";
+        public string VNAV = "N/D";
+        public string ALTHoldMode = "N/D";
+        public string APPMode = "N/D";
+        public string StatusTargetAltSource = "N/D";
+        public string TargetAltSource = "N/D";
         //Param BDS5.0
-        public string RollAngle;
-        public string TrueTrackAngle;
-        public string GS;
-        public string TrackAngleRate;
-        public string TAS;
+        public string RollAngle = "N/D";
+        public string TrueTrackAngle = "N/D";
+        public string GS = "N/D";
+        public string TrackAngleRate = "N/D";
+        public string TAS = "N/D";
         //Param BDS6.0
-        public string MagneticHeading;
-        public string IAS;
-        public string MACH;
-        public string BarometricAlt;
-        public string InertialVerticalVel;
+        public string MagneticHeading = "N/D";
+        public string IAS = "N/D";
+        public string MACH = "N/D";
+        public string BarometricAlt = "N/D";
+        public string InertialVerticalVel = "N/D";
         public DataItem10()
         {
             //data = new List<string> { "BDS version: ", "N/D", "Repetitions", "N/D", "MCP/FCU Selected Altitude: ", "N/D", "FMS Selected Altitude: ", "N/D", "Barometric Pressure Setting: ", "N/D", "Status of MCP/FCU MODE: ", "N/D", "VNAV Mode: ", "N/D", "Alt Hold Mode: ", "N/D", "Approach Mode: ", "N/D", "Status of target Altitude Source: ", "N/D", "Target Altitude Source: ", "N/D", "Roll Angle: ", "N/D" , "True Track Angle: ", "N/D", "GS: ", "N/D", "Track Angle Rate: ", "N/D", "TAS: ", "N/D",  "Magnetic heading: ", "N/D", "IAS: ", "N/D", "MACH: ", "N/D", "Barometric Altitude Rate: ", "N/D", "Inertial Vertical Velocity", "N/D" };
@@ -1312,6 +1313,7 @@ namespace ProyectoPGTA_P2
             MCPSelectedAlt = "N/A";
             intMCPSelectedAlt = 0;
             FMSSelectedAlt = "N/A";
+            intFMSSelectedAlt = 0;
             BarPressure = "N/A";
             floatBarPressure = 0;
             StatusMCP = "N/A";
@@ -1359,6 +1361,7 @@ namespace ProyectoPGTA_P2
                         MCPSelectedAlt = (Convert.ToInt32(String.Concat(BDSDATA[1], BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11], BDSDATA[12]), 2) * 16).ToString() + " ft";
                         intMCPSelectedAlt = Convert.ToInt32(String.Concat(BDSDATA[1], BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11], BDSDATA[12]), 2) * 16;
                         FMSSelectedAlt = (Convert.ToInt32(String.Concat(BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22], BDSDATA[23], BDSDATA[24], BDSDATA[25]), 2) * 16).ToString() + " ft";
+                        intFMSSelectedAlt = Convert.ToInt32(String.Concat(BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22], BDSDATA[23], BDSDATA[24], BDSDATA[25]), 2) * 16;
                         BarPressure = (Convert.ToInt32(String.Concat(BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33], BDSDATA[34], BDSDATA[35], BDSDATA[36], BDSDATA[37], BDSDATA[38]), 2) * 0.1f + 800).ToString() + " mb";
                         floatBarPressure = Convert.ToInt32(String.Concat(BDSDATA[27], BDSDATA[28], BDSDATA[29], BDSDATA[30], BDSDATA[31], BDSDATA[32], BDSDATA[33], BDSDATA[34], BDSDATA[35], BDSDATA[36], BDSDATA[37], BDSDATA[38]), 2) * 0.1f + 800;
                         StatusMCP = BDSDATA[47].ToString();
