@@ -106,9 +106,6 @@ C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\x86\libSkiaSh
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\x64\libSkiaSharp.dll
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\arm64\libSkiaSharp.dll
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.dll.config
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ProyectoPGTA_P2.exe.config
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ProyectoPGTA_P2.exe
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ProyectoPGTA_P2.pdb
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.dll
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.Math.Core.dll
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.Math.dll
@@ -196,15 +193,18 @@ C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\VisioForge.Li
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\VisioForge.Libs.External.xml
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.csproj.AssemblyReference.cache
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.Form1.resources
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.Properties.Resources.resources
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.SimulationForm.resources
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.csproj.GenerateResource.cache
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\Sentry.Attributes.cs
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.csproj.CoreCompileInputs.cache
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.csproj.CopyComplete
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.exe
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.pdb
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ProyectoPGTA_P2.exe.manifest
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ProyectoPGTA_P2.application
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.exe.manifest
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.application
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ASTERIX DECODER G14.exe.config
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ASTERIX DECODER G14.exe.manifest
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ASTERIX DECODER G14.application
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ASTERIX DECODER G14.exe
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ASTERIX DECODER G14.pdb
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\G14.Properties.Resources.resources
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.exe.manifest
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.application
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.exe
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.pdb

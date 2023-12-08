@@ -250,21 +250,15 @@ C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_
 C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.CopyComplete
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.AssemblyReference.cache
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Form1.resources
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Properties.Resources.resources
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.SimulationForm.resources
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.GenerateResource.cache
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\Sentry.Attributes.cs
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.CoreCompileInputs.cache
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.exe
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.pdb
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\libSkiaSharp.dylib
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\x86\libSkiaSharp.dll
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\x64\libSkiaSharp.dll
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\arm64\libSkiaSharp.dll
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\Accord.dll.config
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe.config
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe
-C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.pdb
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\Accord.dll
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\Accord.Math.Core.dll
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\Accord.Math.dll
@@ -728,3 +722,13 @@ C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\PGTA-Project2\ProyectoPGTA_P2\obj\D
 C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.CopyComplete
 C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.exe
 C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.pdb
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.exe.config
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.exe.manifest
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.application
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.exe
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.pdb
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\G14.Properties.Resources.resources
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.exe.manifest
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.application
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.exe
+C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.pdb
