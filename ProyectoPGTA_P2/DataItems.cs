@@ -331,7 +331,6 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
-        public string[] arrayString;
 
         //DATA ITEM 2
         public string timestr = "";
@@ -349,8 +348,6 @@ namespace ProyectoPGTA_P2
         {
             this.number = 2;
             this.arrayHex = arrayhex;
-
-            arrayString = new string[arrayhex.Count];
 
             this.time = Convert.ToInt32(arrayhex[0] + arrayhex[1]+ arrayhex[2], 16) / 128f; //hora actual en segundos
 
@@ -819,7 +816,6 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
-        public List<string> arrayString;
 
         public string V, G;
         public float FL;
@@ -836,15 +832,9 @@ namespace ProyectoPGTA_P2
         {
             this.number = 6;
             this.arrayHex = arrayhex;
-
-            this.arrayString = new List<string>(arrayhex.Count);
-
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
-            }
-
-            V = arrayString[0][0].ToString();
+           
+            string a = Convert.ToString(Convert.ToInt32(arrayhex[0], 16), 2).PadLeft(8, '0');
+            V = a[0].ToString();
             switch (V)
             {
                 case "0":
@@ -859,7 +849,7 @@ namespace ProyectoPGTA_P2
 
             }
 
-            G = arrayString[0][1].ToString();
+            G = a[1].ToString();
             switch (G)
             {
                 case "0":
@@ -874,9 +864,9 @@ namespace ProyectoPGTA_P2
 
             }
 
-            string FL_BIN = String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
-            string FL_BIN1 = String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7]);
-            string FL_BIN2 = String.Concat(arrayString[1]);
+            string FL_BIN = String.Concat(a[2], a[3], a[4], a[5], a[6], a[7], Convert.ToString(Convert.ToInt32(arrayhex[1], 16), 2).PadLeft(8, '0'));
+            string FL_BIN1 = String.Concat(a[2], a[3], a[4], a[5], a[6], a[7]);
+            string FL_BIN2 = String.Concat(Convert.ToString(Convert.ToInt32(arrayhex[1], 16), 2).PadLeft(8, '0'));
 
             if (FL_BIN1[0].ToString() == "1") //2s comp
             {
@@ -914,7 +904,6 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
-        public List<string> arrayString = new List<string>();
 
         public string SRL, SRR, SAM, PRL, PAM, RPD, APD;
         public string FX1;
@@ -931,16 +920,12 @@ namespace ProyectoPGTA_P2
             this.number = 7;
             this.arrayHex = arrayhex;
 
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
-            }
             int index = 1;
-
-            SRL = arrayString[0][0].ToString();
+            string a = Convert.ToString(Convert.ToInt32(arrayhex[0], 16), 2).PadLeft(8, '0');
+            SRL = a[0].ToString();
             if (SRL == "1")
             {
-                SRL = arrayString[index];
+                SRL = Convert.ToString(Convert.ToInt32(arrayhex[index], 16), 2).PadLeft(8, '0');
                 SRL = (Convert.ToInt32(SRL, 2) * 45 / 1024f).ToString() + " dg";
 
                 index++;
@@ -950,10 +935,10 @@ namespace ProyectoPGTA_P2
                 SRL = "N/A";
             }
 
-            SRR = arrayString[0][1].ToString();
+            SRR = a[1].ToString();
             if (SRR == "1")
             {
-                SRR = arrayString[index];
+                SRR = Convert.ToString(Convert.ToInt32(arrayhex[index], 16), 2).PadLeft(8, '0');
                 SRR = (Convert.ToInt32(SRR, 2)).ToString();
 
                 index++;
@@ -964,11 +949,11 @@ namespace ProyectoPGTA_P2
                 SRR = "N/A";
             }
 
-            SAM = arrayString[0][2].ToString();
+            SAM = a[2].ToString();
 
             if (SAM == "1")
             {
-                SAM = arrayString[index];
+                SAM = Convert.ToString(Convert.ToInt32(arrayhex[index], 16), 2).PadLeft(8, '0');
 
                 //2s complement
 
@@ -986,10 +971,10 @@ namespace ProyectoPGTA_P2
                 SAM = "N/A";
             }
 
-            PRL = arrayString[0][3].ToString();
+            PRL = a[3].ToString();
             if (PRL == "1")
             {
-                PRL = arrayString[index];
+                PRL = Convert.ToString(Convert.ToInt32(arrayhex[index], 16), 2).PadLeft(8, '0');
                 PRL = (Convert.ToInt32(PRL, 2) * 45 / 1024f).ToString() + " dg";
 
                 index++;
@@ -1000,10 +985,10 @@ namespace ProyectoPGTA_P2
                 PRL = "N/A";
             }
 
-            PAM = arrayString[0][4].ToString();
+            PAM = a[4].ToString();
             if (PAM == "1")
             {
-                PAM = arrayString[index];
+                PAM = Convert.ToString(Convert.ToInt32(arrayhex[index], 16), 2).PadLeft(8, '0');
                 PAM = (Convert.ToInt32(PAM, 2)).ToString() + " dbm";
 
                 index++;
@@ -1014,10 +999,10 @@ namespace ProyectoPGTA_P2
                 PAM = "N/A";
             }
 
-            RPD = arrayString[0][5].ToString();
+            RPD = a[5].ToString();
             if (RPD == "1")
             {
-                RPD = arrayString[index];
+                RPD = Convert.ToString(Convert.ToInt32(arrayhex[index], 16), 2).PadLeft(8, '0');
                 RPD = (Convert.ToInt32(RPD, 2) / 256f).ToString() + " NM";
 
                 index++;
@@ -1028,14 +1013,13 @@ namespace ProyectoPGTA_P2
                 RPD = "N/A";
             }
 
-            APD = arrayString[0][6].ToString();
+            APD = a[6].ToString();
             if (APD == "1")
             {
-                APD = arrayString[index];
+                APD = Convert.ToString(Convert.ToInt32(arrayhex[index], 16), 2).PadLeft(8, '0');
                 APD = (Convert.ToInt32(APD, 2) * 45 / 2048f).ToString() + " dg";
 
                 index++;
-
             }
             else
             {
@@ -1073,7 +1057,7 @@ namespace ProyectoPGTA_P2
 
             for (int i = 0; i < arrayhex.Count; i++)
             {
-                arrayhex[i] = arrayhex[i].PadLeft(2, '0');
+                this.arrayHex[i] = arrayhex[i].PadLeft(2, '0');
             }
 
             AircraftAddress = String.Concat(this.arrayHex[0], this.arrayHex[1], this.arrayHex[2]);
@@ -1091,7 +1075,6 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
-        public List<string> arrayString;
         public string completeArraystring;
         public string[] AAmatrix = new string[8];
         public string AircraftIdentification;
@@ -1109,15 +1092,9 @@ namespace ProyectoPGTA_P2
             this.number = 9;
             this.arrayHex = arrayhex;
             this.completeArraystring = "";
-            this.arrayString = new List<string>(arrayhex.Count);
-
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
-            }
             for (int i = 0; i < arrayHex.Count; i++)
             {
-                completeArraystring = completeArraystring.ToString() + arrayString[i].ToString();
+                completeArraystring = completeArraystring.ToString() + Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
             }
             string[] AA = new string[8];
 
@@ -1125,7 +1102,7 @@ namespace ProyectoPGTA_P2
             {
                 AA[i] = String.Concat(completeArraystring[i * 6].ToString(), completeArraystring[i * 6 + 1].ToString(), completeArraystring[i * 6 + 2].ToString(), completeArraystring[i * 6 + 3].ToString(), completeArraystring[i * 6 + 4].ToString(), completeArraystring[i * 6 + 5].ToString());
 
-                AAmatrix[i] = decode6bit(AA[i]);
+                AAmatrix[i] = Decode6bit(AA[i]);
             }
 
             AircraftIdentification = String.Join("", AAmatrix);
@@ -1134,7 +1111,7 @@ namespace ProyectoPGTA_P2
             data = new List<string> { AircraftIdentification };
         }
 
-        public string decode6bit(string a)
+        public string Decode6bit(string a)
         {
             string result;
 
@@ -1274,7 +1251,7 @@ namespace ProyectoPGTA_P2
             {
                 arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
             }
-            REP = Convert.ToInt32(arrayString[0], 2);
+            REP = Convert.ToInt32(arrayhex[0], 16);
 
             string BDSDATA = "N/A", BDSver = "";
             string BDS1 = "N/A", BDS2 = "N/A";
@@ -1457,8 +1434,6 @@ namespace ProyectoPGTA_P2
         public List<string> data;
         public int TrackNumber;
 
-        public string[] arrayString;
-
         public DataItem11()
         {
             //data = new List<string> { "Track Number", "N/D"};
@@ -1469,14 +1444,8 @@ namespace ProyectoPGTA_P2
         {
             this.number = 11;
             this.arrayHex = arrayhex;
-            this.arrayString = new string[arrayhex.Count];
-
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
-            }
-
-            TrackNumber = Convert.ToInt32(String.Concat(arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]), 2);
+            string a = Convert.ToString(Convert.ToInt32(arrayhex[0], 16), 2).PadLeft(8, '0');
+            TrackNumber = Convert.ToInt32(String.Concat(a[4], a[5], a[6], a[7], Convert.ToString(Convert.ToInt32(arrayhex[1], 16), 2).PadLeft(8, '0')), 2);
 
             //data = new List<string> { "Track Number", TrackNumber.ToString()};
             data = new List<string> { TrackNumber.ToString() };
@@ -1494,7 +1463,6 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public List<string> data;
         public double Xcord, Ycord, Zcord;
-        public string[] arrayString;
 
         public DataItem12()
         {
@@ -1506,15 +1474,8 @@ namespace ProyectoPGTA_P2
         {
             this.number = 12;
             this.arrayHex = arrayhex;
-            this.arrayString = new string[arrayhex.Count];
-
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
-            }
-
-            Xcord = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1])) / 128f;
-            Ycord = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3])) / 128f;
+            Xcord = Convert.ToInt32(String.Concat(arrayHex[0], arrayHex[1]),16) / 128f;
+            Ycord = Convert.ToInt32(String.Concat(arrayHex[2], arrayHex[3]),16) / 128f;
 
             //data = new List<string> { "X", Xcord.ToString() + " NM", "Y", Ycord.ToString() + " NM" };
             data = new List<string> { Xcord.ToString(), Ycord.ToString(), Zcord.ToString() };
@@ -1539,7 +1500,6 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public List<string> data;
         public float GS, HEAD;
-        public string[] arrayString;
 
         public DataItem13()
         {
@@ -1551,18 +1511,12 @@ namespace ProyectoPGTA_P2
         {
             this.number = 13;
             this.arrayHex = arrayhex;
-            this.arrayString = new string[arrayhex.Count];
 
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
-            }
+            string GSstr = String.Concat(arrayHex[0], arrayHex[1]);
 
-            string GSstr = String.Concat(arrayString[0], arrayString[1]);
-
-            GS = Convert.ToInt32(GSstr, 2);
+            GS = Convert.ToInt32(GSstr, 16);
             GS = GS * 0.22f;
-            HEAD = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3]), 2) * 45 / 8192f;
+            HEAD = Convert.ToInt32(String.Concat(arrayHex[2], arrayHex[3]), 16) * 45 / 8192f;
 
             //data = new List<string> { "Ground Speed", GS.ToString() + " kt", "Heading", HEAD.ToString() + " º"};
             data = new List<string> { GS.ToString() + " kt", HEAD.ToString() + " º" };
@@ -1584,8 +1538,6 @@ namespace ProyectoPGTA_P2
         public string TRE = "N/A", GHO = "N/A", SUP = "N/A", TCC = "N/A";
         public int FX2;
 
-        public string[] arrayString;
-
         public DataItem14()
         {
             //data = new List<string> { "CNF", "N/D", "RAD", "N/D", "DOU", "N/D", "MAH", "N/D", "CDM", "N/D", "TRE", "N/D", "GHO", "N/D", "SUP", "N/D", "TCC", "N/D" };
@@ -1596,13 +1548,8 @@ namespace ProyectoPGTA_P2
         {
             this.number = 14;
             this.arrayHex = arrayhex;
-            this.arrayString = new string[arrayhex.Count];
-
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
-            }
-            CNF = Convert.ToString(arrayString[0][0]);
+            string a = Convert.ToString(Convert.ToInt32(arrayhex[0], 16), 2).PadLeft(8, '0');
+            CNF = Convert.ToString(a[0]);
             switch (CNF)
             {
                 case "0":
@@ -1615,7 +1562,7 @@ namespace ProyectoPGTA_P2
                     break;
             }
 
-            RAD = Convert.ToString(String.Concat(arrayString[0][1], arrayString[0][2]));
+            RAD = Convert.ToString(String.Concat(a[1], a[2]));
             switch (RAD)
             {
                 case "00":
@@ -1634,7 +1581,7 @@ namespace ProyectoPGTA_P2
                     break;
             }
 
-            DOU = Convert.ToString(arrayString[0][3]);
+            DOU = Convert.ToString(a[3]);
             switch (DOU)
             {
                 case "0":
@@ -1647,7 +1594,7 @@ namespace ProyectoPGTA_P2
                     break;
             }
 
-            MAH = Convert.ToString(arrayString[0][4]);
+            MAH = Convert.ToString(a[4]);
             switch (MAH)
             {
                 case "0":
@@ -1660,7 +1607,7 @@ namespace ProyectoPGTA_P2
                     break;
             }
 
-            CDM = Convert.ToString(String.Concat(arrayString[0][5], arrayString[0][6]));
+            CDM = Convert.ToString(String.Concat(a[5], a[6]));
             switch (CDM)
             {
                 case "00":
@@ -1679,11 +1626,12 @@ namespace ProyectoPGTA_P2
                     break;
             }
 
-            FX1 = Convert.ToInt32(arrayString[0][7]);
+            FX1 = Convert.ToInt32(a[7]);
 
             if (FX1 == 1)
             {
-                TRE = Convert.ToString(arrayString[1][0]);
+                string b = Convert.ToString(Convert.ToInt32(arrayhex[1], 16), 2).PadLeft(8, '0');
+                TRE = Convert.ToString(b[0]);
                 switch (TRE)
                 {
                     case "0":
@@ -1696,7 +1644,7 @@ namespace ProyectoPGTA_P2
                         break;
                 }
 
-                GHO = Convert.ToString(arrayString[1][1]);
+                GHO = Convert.ToString(b[1]);
                 switch (GHO)
                 {
                     case "0":
@@ -1709,7 +1657,7 @@ namespace ProyectoPGTA_P2
                         break;
                 }
 
-                SUP = Convert.ToString(arrayString[1][2]);
+                SUP = Convert.ToString(b[2]);
                 switch (SUP)
                 {
                     case "0":
@@ -1722,7 +1670,7 @@ namespace ProyectoPGTA_P2
                         break;
                 }
 
-                TCC = Convert.ToString(arrayString[1][3]);
+                TCC = Convert.ToString(b[3]);
                 switch (TCC)
                 {
                     case "0":
@@ -1735,7 +1683,7 @@ namespace ProyectoPGTA_P2
                         break;
                 }
 
-                FX2 = Convert.ToInt32(arrayString[1][7]);
+                FX2 = Convert.ToInt32(b[7]);
             }
 
             //data = new List<string>{ "CNF", CNF, "RAD", RAD, "DOU", DOU, "MAH", MAH, "CDM", CDM, "TRE", TRE, "GHO", GHO, "SUP", SUP, "TCC", TCC};
@@ -1822,8 +1770,6 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public List<string> data;
         public int Height3D;
-
-        public string[] arrayString;
         public DataItem19()
         {
             //data = new List<string> { "3D Height", "N/D" };
@@ -1833,15 +1779,8 @@ namespace ProyectoPGTA_P2
         {
             this.number = 19;
             this.arrayHex = arrayhex;
-
-            this.arrayString = new string[arrayhex.Count];
-
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
-            }
-
-            Height3D = Convert.ToInt32(String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]), 2) * 25;
+            string a = Convert.ToString(Convert.ToInt32(arrayhex[0], 16), 2).PadLeft(8, '0');
+            Height3D = Convert.ToInt32(String.Concat(a[2], a[3], a[4], a[5], a[6], a[7], Convert.ToString(Convert.ToInt32(arrayhex[1], 16), 2).PadLeft(8, '0')), 2) * 25;
 
             //data = new List<string> { "3D Height", Height3D.ToString() + " ft" };
             data = new List<string> { Height3D.ToString() + " ft" };
