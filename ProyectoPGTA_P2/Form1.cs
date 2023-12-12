@@ -167,7 +167,7 @@ namespace ProyectoPGTA_P2
                 string[] lines = File.ReadAllLines(filePath);
                 // Divides the lines on columns and loads the DataGridView Data
                 dataGridView1.ColumnCount = lines[0].Split(';').Length;
-                for (int i = 0; i < lines.Length; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     string[] values = lines[i].Split(';');
                     dataGridView1.Rows.Add(values);

@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="ASTERIX DECODER G14.exe.manifest" size="40515">
+    <dependentAssembly dependencyType="install" codebase="ASTERIX DECODER G14.exe.manifest" size="36448">
       <assemblyIdentity name="ASTERIX DECODER G14.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="amd64" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>PJ26CCUCVEhQuXyVv2VjfRmutPi0euk86shfvzm2/Bs=</dsig:DigestValue>
+        <dsig:DigestValue>vCmqFceZzaymIRWRcVlRSqdSaS2TLz/E3M/BART/8N0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

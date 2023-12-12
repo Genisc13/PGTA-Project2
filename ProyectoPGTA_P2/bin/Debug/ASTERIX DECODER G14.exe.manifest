@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>j/Y1UtIn+XONmxixM7l1CIJu3TKMrIxY0X5Mu3uMFLs=</dsig:DigestValue>
+        <dsig:DigestValue>ULN8Sw88Z2GigllgXf0sB4JzN5qZGw9BL79E3v68LWk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -570,13 +570,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Accord.dll.config" size="220">
+  <file name="Accord.dll.config" size="213">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>rXk1gk79Wcezlt/jAmK/WsVZR0elUxDKDqpL2eQSvj4=</dsig:DigestValue>
+      <dsig:DigestValue>MEnoP5t/qShagvs8d0DpwiW2ajH4BdNYKpv9NLXdjm4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="arm64\libSkiaSharp.dll" size="8084920">
@@ -595,15 +595,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>5DvsDve025sD0ttgNgIQaPICgrmMpaceHOtCPjjTzE8=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="ASTERIX DECODER G14.pdb" size="243200">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Geddwnt2DZiaLP4i3puLJ2EzoN1RUFcQpZ/XBM4KpbE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Eurocontrol-LOGO.ico" size="267326">
@@ -631,87 +622,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>5JrrglFY/BuSSQnwhvkAWjHb0T3FRy4PB+tjvxhASOU=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Serilog.Sinks.File.pdb" size="10852">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Cua+m417pbLXrQnJoMJDlnHW1BkhEZmobDxnIun6bPk=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="SkiaSharp.pdb" size="217400">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>oONx2MGd8noUxpG3vNjosHTr2Lh/Rz2LOil03cyoYBY=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="SkiaSharp.Views.Desktop.Common.pdb" size="11408">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>CjRJi4ic1WZUQWXIHA9vtjofcHGpWmGxAl7WM3xq5oo=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="System.ServiceModel.Duplex.pdb" size="2272">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>mMZqTGsj4UZvfCspFU0dp8ZalvjKY0A3lJe98iPKJoc=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="System.ServiceModel.Federation.pdb" size="24408">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>GtRaFvK/aY7c8cqv/WHmw8t2PE/k9PKS4BSArnJeFJY=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="System.ServiceModel.Http.pdb" size="2432">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>yuiJlCEsLudiffaryVPO82M0deK5U7ig0lCpMb08t0k=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="System.ServiceModel.NetTcp.pdb" size="2328">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ZaRWkJZUhveGCgaLVJYzkk7i88zirMIjxh02JJjf/BQ=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="System.ServiceModel.Primitives.pdb" size="3540">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>TT/5TrEv/MLsY8Z8iC98rSI/7ofYE0zRiuMvIogW+jM=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="System.ServiceModel.Security.pdb" size="2536">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>UPjxsN18kkn6gCyoW7MA5ZRcw1pAm1Y15DH7BKDOQKE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="x64\libSkiaSharp.dll" size="9580984">

@@ -35,15 +35,9 @@ C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoP
 C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe.config
 C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe
 C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.pdb
-C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe.config
-C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe
-C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.pdb
 C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Form1.resources
-C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Properties.Resources.resources
 C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.GenerateResource.cache
 C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.CoreCompileInputs.cache
-C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.exe
-C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.pdb
 C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csprojAssemblyReference.cache
 C:\Users\baiales\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Form1.resources
 C:\Users\alexr\Desktop\DRIVE\XX\ESTUDIOS\UNI\4A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Form1.resources
@@ -732,3 +726,13 @@ C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.application
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.exe
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.pdb
+C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.exe.config
+C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.exe.manifest
+C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.application
+C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.exe
+C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.pdb
+C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\G14.Properties.Resources.resources
+C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.exe.manifest
+C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.application
+C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.exe
+C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.pdb

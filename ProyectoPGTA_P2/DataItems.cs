@@ -1341,7 +1341,7 @@ namespace ProyectoPGTA_P2
                 BDSDATA = String.Concat(arrayString[shift + 1], arrayString[shift + 2], arrayString[shift + 3], arrayString[shift + 4], arrayString[shift + 5], arrayString[shift + 6], arrayString[shift + 7]);
 
                 //string dataBDSstr;
-
+                string actual_BDSver;
                 BDS1 = Convert.ToInt32(String.Concat(arrayString[shift + 8][0], arrayString[shift + 8][1], arrayString[shift + 8][2], arrayString[shift + 8][3]), 2).ToString();
                 BDS2 = Convert.ToInt32(String.Concat(arrayString[shift + 8][4], arrayString[shift + 8][5], arrayString[shift + 8][6], arrayString[shift + 8][7]), 2).ToString();
 
@@ -1353,9 +1353,9 @@ namespace ProyectoPGTA_P2
                 {
                     BDSver = BDSver + ":" + BDS1 + "." + BDS2;
                 }
-                
 
-                switch (BDSver)
+                actual_BDSver = BDS1 + "." + BDS2;
+                switch (actual_BDSver)
                 {
                     case "4.0":
                         MCPSelectedAlt = (Convert.ToInt32(String.Concat(BDSDATA[1], BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11], BDSDATA[12]), 2) * 16).ToString() + " ft";
