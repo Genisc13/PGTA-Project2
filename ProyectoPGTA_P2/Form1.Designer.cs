@@ -34,6 +34,8 @@
             this.ExportButton = new System.Windows.Forms.Button();
             this.ShowCSVButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.nextPage = new System.Windows.Forms.Button();
+            this.previousPage = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -113,6 +115,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.nextPage);
+            this.splitContainer1.Panel1.Controls.Add(this.previousPage);
             this.splitContainer1.Panel1.Controls.Add(this.OpenSimButton);
             this.splitContainer1.Panel1.Controls.Add(this.ShowCSVButton);
             this.splitContainer1.Panel1.Controls.Add(this.Button1);
@@ -124,6 +128,29 @@
             this.splitContainer1.Size = new System.Drawing.Size(593, 329);
             this.splitContainer1.SplitterDistance = 197;
             this.splitContainer1.TabIndex = 5;
+            // 
+            // nextPage
+            // 
+            this.nextPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.nextPage.Location = new System.Drawing.Point(93, 197);
+            this.nextPage.Name = "nextPage";
+            this.nextPage.Size = new System.Drawing.Size(41, 27);
+            this.nextPage.TabIndex = 6;
+            this.nextPage.Text = "▶";
+            this.nextPage.UseVisualStyleBackColor = true;
+            this.nextPage.Visible = false;
+            this.nextPage.Click += new System.EventHandler(this.nextPage_Click);
+            // 
+            // previousPage
+            // 
+            this.previousPage.Location = new System.Drawing.Point(46, 197);
+            this.previousPage.Name = "previousPage";
+            this.previousPage.Size = new System.Drawing.Size(41, 27);
+            this.previousPage.TabIndex = 5;
+            this.previousPage.Text = "◀";
+            this.previousPage.UseVisualStyleBackColor = true;
+            this.previousPage.Visible = false;
+            this.previousPage.Click += new System.EventHandler(this.previousPage_Click);
             // 
             // Form1
             // 
@@ -151,6 +178,8 @@
         private System.Windows.Forms.Button ExportButton;
         private System.Windows.Forms.Button ShowCSVButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button nextPage;
+        private System.Windows.Forms.Button previousPage;
     }
 }
 

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Data;
+using System.IO;
 
 
 namespace ProyectoPGTA_P2
@@ -81,7 +78,7 @@ namespace ProyectoPGTA_P2
             for (int q = 0; q < listahex.Count; q++) //Iterate over entire list of bytes in hex
             {
                 List<string> arraystring = new List<string>(listahex[q].Length); //Every line in hex
-                for(int k = 0; k < listahex[q].Length; k++)
+                for (int k = 0; k < listahex[q].Length; k++)
                 {
                     arraystring.Add(listahex[q][k]);
                 }
@@ -93,7 +90,8 @@ namespace ProyectoPGTA_P2
 
                     string Mode3 = newcat10.itemContainer.GetDataItem3().TYP;
 
-                    if (Mode3 == "Single ModeS All-Call" || Mode3 == "Single ModeS Roll-Call" || Mode3 == "ModeS All-Call + PSR" || Mode3 == "ModeS Roll-Call + PSR") { 
+                    if (Mode3 == "Single ModeS All-Call" || Mode3 == "Single ModeS Roll-Call" || Mode3 == "ModeS All-Call + PSR" || Mode3 == "ModeS Roll-Call + PSR")
+                    {
                         listaCAT48.Add(newcat10); //Only add if it is Mode S Call
                     }
                 }

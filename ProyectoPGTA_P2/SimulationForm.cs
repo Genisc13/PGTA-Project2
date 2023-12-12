@@ -1,17 +1,11 @@
-﻿using Accord;
-using System;
-using System.Collections.Concurrent;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static ProyectoPGTA_P2.SimulationForm;
-using Accord.Math;
 
 namespace ProyectoPGTA_P2
 {
@@ -20,7 +14,7 @@ namespace ProyectoPGTA_P2
         //This is the dictionary of every plane
         private Dictionary<string, Avion> simulacion;
         //This is the actual step of the simulation
-        private int pasoActual=0;
+        private int pasoActual = 0;
         //This is the total time of the simulation
         static int totaltime;
         //This is the initial time (is seconds) of the simulation
@@ -32,7 +26,7 @@ namespace ProyectoPGTA_P2
         //Here there is a dictionary with the visible aircrafts
         public Dictionary<string, bool> ACVisibles;
         //The starting speed of the 
-        int startspeed = 1*4000;
+        int startspeed = 1 * 4000;
         /// <summary>
         /// Here we have the simulation Form, it takes the decoded data and transforms it
         /// into the ubication of all the planes that are known by the radar, we can edit
@@ -109,7 +103,7 @@ namespace ProyectoPGTA_P2
                 {
                     simulacion[address].AddPosition(new Position(avionList[i].itemContainer.GetDataItem12().Xcord, avionList[i].itemContainer.GetDataItem12().Ycord, avionList[i].itemContainer.GetDataItem2().time, true));
                 }
-            };           
+            };
         }
         /// <summary>
         /// This function is performed every time there is a tick on the 
@@ -131,7 +125,7 @@ namespace ProyectoPGTA_P2
             else
             {
                 timerSimulacion.Stop();
-                MessageBox.Show("Currenyly on the last step of the simulation, can not advance forward");                
+                MessageBox.Show("Currenyly on the last step of the simulation, can not advance forward");
             }
         }
         /// <summary>
@@ -179,16 +173,17 @@ namespace ProyectoPGTA_P2
         /// <param name="e"></param>
         private void AdvanceButton_Click(object sender, EventArgs e)
         {
-            if (pasoActual <= totaltime-4)
+            if (pasoActual <= totaltime - 4)
             {
                 pasoActual += 4; //% simulacion.Count;
-                gmap.Overlays.Clear();                
+                gmap.Overlays.Clear();
                 ActivateOverlay();
                 SimulTime.Text = (initialTime + pasoActual).ToString();
             }
-            else {
+            else
+            {
                 MessageBox.Show("Currenyly on the last step of the simulation, can not advance fordward");
-            }           
+            }
         }
         /// <summary>
         /// This function is created to go steps back on the simulation
@@ -197,17 +192,17 @@ namespace ProyectoPGTA_P2
         /// <param name="e"></param>
         private void ReverseButton_Click(object sender, EventArgs e)
         {
-            if(pasoActual > 0)
+            if (pasoActual > 0)
             {
                 pasoActual -= 4; //% simulacion.Count;
-                gmap.Overlays.Clear();                
+                gmap.Overlays.Clear();
                 ActivateOverlay();
                 SimulTime.Text = (initialTime + pasoActual).ToString();
             }
             else
             {
                 MessageBox.Show("Currently in the first step of the simulation, can not reverse");
-            }            
+            }
         }
         /// <summary>
         /// This is the function thas is used to create the markers on GMap,
@@ -221,13 +216,13 @@ namespace ProyectoPGTA_P2
             int i = 0;
             int offset = 4;
 
-            foreach(Avion avion in simulacion.Values)
+            foreach (Avion avion in simulacion.Values)
             {
                 for (int j = 0; j < avion.positionList.Count; j++)
-                {                   
+                {
                     if ((avion.positionList[j].Time - initialTime) <= pasoActual + offset && (avion.positionList[j].Time - initialTime) >= pasoActual)
-                    {                      
-                        if(double.IsNaN(avion.positionList[j].X) && double.IsNaN(avion.positionList[j].Y))
+                    {
+                        if (double.IsNaN(avion.positionList[j].X) && double.IsNaN(avion.positionList[j].Y))
                         {
                             /*GMap.NET.PointLatLng posicion = new GMap.NET.PointLatLng(avion.positionList[j-1].X, avion.positionList[j-1].Y);
                             // Crear un marcador
@@ -250,15 +245,15 @@ namespace ProyectoPGTA_P2
                             overlay.Markers.Add(marcador);
                             break;
                         }
-                    }                                 
+                    }
                 }
 
                 i++;
-            }   
+            }
             // Añadir el marcador al mapa                       
             gmap.Overlays.Add(overlay);
             gmap.Position = new GMap.NET.PointLatLng(41.297445, 2.0832941);
-            gmap.Update();           
+            gmap.Update();
         }
         /// <summary>
         /// This function initializes the timer
@@ -308,7 +303,7 @@ namespace ProyectoPGTA_P2
                         Avion aircraft = simulacion[aircraftName];
 
                         GMap.NET.PointLatLng[] routePoints = new GMap.NET.PointLatLng[aircraft.positionList.Count];
-                        for (int i=0; i < aircraft.positionList.Count; i++)
+                        for (int i = 0; i < aircraft.positionList.Count; i++)
                         {
                             routePoints[i] = new GMap.NET.PointLatLng(aircraft.positionList[i].X, aircraft.positionList[i].Y);
                         }
@@ -349,12 +344,12 @@ namespace ProyectoPGTA_P2
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            if (timerSimulacion.Interval/2 > 0)
+            if (timerSimulacion.Interval / 2 > 0)
             {
                 timerSimulacion.Interval = timerSimulacion.Interval / 2;
                 SIMspeed.Text = Math.Round(4000f / timerSimulacion.Interval, 2).ToString() + "x";
             }
-            
+
         }
         /// <summary>
         /// This button was created to make the simulation
@@ -364,7 +359,7 @@ namespace ProyectoPGTA_P2
         /// <param name="e"></param>
         private void button2_Click_1(object sender, EventArgs e)
         {
-            if (timerSimulacion.Interval*2 > 0)
+            if (timerSimulacion.Interval * 2 > 0)
             {
                 timerSimulacion.Interval *= 2;
                 SIMspeed.Text = Math.Round(4000f / timerSimulacion.Interval, 2).ToString() + "x";
@@ -411,7 +406,7 @@ namespace ProyectoPGTA_P2
                     kmlContent.AppendLine("</kml>");
 
                     // Save the KML content to a file                   
-                    File.WriteAllText(filePath+"\\"+ "AircraftRoutes.kml", kmlContent.ToString());
+                    File.WriteAllText(filePath + "\\" + "AircraftRoutes.kml", kmlContent.ToString());
 
                     MessageBox.Show($"KML file created successfully: {filePath}\\AircraftRoutes.kml");
                 }

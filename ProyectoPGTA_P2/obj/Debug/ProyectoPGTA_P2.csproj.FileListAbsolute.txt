@@ -515,9 +515,6 @@ C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\x86\libSkiaSharp.
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\x64\libSkiaSharp.dll
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\arm64\libSkiaSharp.dll
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\Accord.dll.config
-C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe.config
-C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.exe
-C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ProyectoPGTA_P2.pdb
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\Accord.dll
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\Accord.Math.Core.dll
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\Accord.Math.dll
@@ -605,14 +602,11 @@ C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\VisioForge.Libs.x
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\VisioForge.Libs.External.xml
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.AssemblyReference.cache
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Form1.resources
-C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.Properties.Resources.resources
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.SimulationForm.resources
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.GenerateResource.cache
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\Sentry.Attributes.cs
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.CoreCompileInputs.cache
 C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.csproj.CopyComplete
-C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.exe
-C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ProyectoPGTA_P2.pdb
 C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\libSkiaSharp.dylib
 C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\x86\libSkiaSharp.dll
 C:\Users\GENIS\Desktop\5A\PGTA\PGTA-Project2\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\x64\libSkiaSharp.dll
@@ -736,3 +730,13 @@ C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Deb
 C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.application
 C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.exe
 C:\Users\GENIS\OneDrive\Escritorio\5A\PGTA\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.exe.config
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.exe.manifest
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.application
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.exe
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Debug\ASTERIX DECODER G14.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\G14.Properties.Resources.resources
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.exe.manifest
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.application
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.exe
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Debug\ASTERIX DECODER G14.pdb

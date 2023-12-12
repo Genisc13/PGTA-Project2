@@ -208,3 +208,110 @@ C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECOD
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.application
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.exe
 C:\Users\baiales\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\libSkiaSharp.dylib
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\x86\libSkiaSharp.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\x64\libSkiaSharp.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\arm64\libSkiaSharp.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.dll.config
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ASTERIX DECODER G14.exe.config
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ASTERIX DECODER G14.exe.manifest
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ASTERIX DECODER G14.application
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ASTERIX DECODER G14.exe
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\ASTERIX DECODER G14.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.Math.Core.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.Math.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\EntityFramework.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\GMap.NET.Core.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\GMap.NET.WindowsForms.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.IdentityModel.Logging.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.IdentityModel.Protocols.WsTrust.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.IdentityModel.Tokens.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.IdentityModel.Tokens.Saml.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.IdentityModel.Xml.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Newtonsoft.Json.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Sentry.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Serilog.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Serilog.Sinks.Debug.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Serilog.Sinks.File.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\SkiaSharp.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\SkiaSharp.Views.Desktop.Common.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Buffers.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Collections.Immutable.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Data.SQLite.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Data.SQLite.EF6.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Data.SQLite.Linq.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Drawing.Common.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Memory.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Numerics.Vectors.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Reflection.Metadata.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.Duplex.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.Federation.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.Http.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.NetTcp.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.Primitives.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.Security.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Text.Encodings.Web.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Text.Json.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Threading.Tasks.Extensions.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ValueTuple.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\VisioForge.Core.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\VisioForge.Libs.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\VisioForge.Libs.External.dll
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.Math.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Accord.Math.Core.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\EntityFramework.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.IdentityModel.Logging.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.IdentityModel.Protocols.WsTrust.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.IdentityModel.Tokens.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.IdentityModel.Tokens.Saml.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Microsoft.IdentityModel.Xml.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Newtonsoft.Json.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Sentry.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Serilog.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Serilog.Sinks.Debug.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Serilog.Sinks.File.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\Serilog.Sinks.File.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\SkiaSharp.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\SkiaSharp.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\SkiaSharp.Views.Desktop.Common.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\SkiaSharp.Views.Desktop.Common.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Buffers.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Collections.Immutable.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Data.SQLite.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Drawing.Common.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Memory.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Numerics.Vectors.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Reflection.Metadata.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.Duplex.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.Federation.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.Http.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.NetTcp.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.Primitives.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ServiceModel.Security.pdb
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Text.Encodings.Web.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Text.Json.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.Threading.Tasks.Extensions.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\System.ValueTuple.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\VisioForge.Core.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\VisioForge.Libs.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\bin\Release\VisioForge.Libs.External.xml
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.csproj.AssemblyReference.cache
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.Form1.resources
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\G14.Properties.Resources.resources
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.SimulationForm.resources
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.csproj.GenerateResource.cache
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\Sentry.Attributes.cs
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.csproj.CoreCompileInputs.cache
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.exe.manifest
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.application
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ProyectoPGTA_P2.csproj.CopyComplete
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.exe
+C:\Users\alexr\Desktop\PGTA-Project2\ProyectoPGTA_P2\obj\Release\ASTERIX DECODER G14.pdb

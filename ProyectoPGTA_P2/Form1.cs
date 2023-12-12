@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProyectoPGTA_P2
@@ -15,7 +9,12 @@ namespace ProyectoPGTA_P2
     public partial class Form1 : Form
     {
         public Reader decoder;
-        public List<CAT48> lista;      
+        public List<CAT48> lista;
+
+        public string[] lines;
+        public int page;
+        public int pageSize = 500;
+
         public Form1()
         {
             InitializeComponent();
@@ -30,7 +29,7 @@ namespace ProyectoPGTA_P2
         {
             OpenFileDialog ofd = new OpenFileDialog();
             //The initial directory
-            ofd.InitialDirectory ="..\\";
+            ofd.InitialDirectory = "..\\";
             //The filter
             ofd.Filter = "Asterix Files (*.ast*)|*.ast|All files (*.*)|*.";
             //The filter Index
@@ -86,8 +85,8 @@ namespace ProyectoPGTA_P2
                 ofd.SelectedPath = "..\\";
                 //If the folder browser is OK the next code is done
                 if (ofd.ShowDialog() == DialogResult.OK)
-                {                  
-                    string filePath = ofd.SelectedPath;                  
+                {
+                    string filePath = ofd.SelectedPath;
                     // Create a StringBuilder to store the CSV content
                     StringBuilder csvContent = new StringBuilder();
                     //Here the CSV content is written string by string
@@ -126,7 +125,7 @@ namespace ProyectoPGTA_P2
                         i++;
                     }
                     // Save the complete content on a .csv file
-                    File.WriteAllText(filePath + "\\"+ "DecodedASTERIXData.csv", csvContent.ToString());
+                    File.WriteAllText(filePath + "\\" + "DecodedASTERIXData.csv", csvContent.ToString());
 
                     // Shows a confirmation message
                     MessageBox.Show("CSV file succesfully generated: " + filePath + "\\" + "DecodedASTERIXData.csv");
@@ -136,7 +135,7 @@ namespace ProyectoPGTA_P2
             else
             {
                 MessageBox.Show("No ASTERIX file decoded yet");
-            }          
+            }
         }
         /// <summary>
         /// This function was made to be able to show the CSV data on the Application
@@ -150,10 +149,14 @@ namespace ProyectoPGTA_P2
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = openFileDialog.FileName;
+                page = 0;
                 LoadCSV(filePath);
+                
+                //previousPage.Show();
+                nextPage.Show();
             }
         }
- 
+
         /// <summary>
         /// This function reads the CSV data and transforms it into columns
         /// and rows of the DataGridView
@@ -164,10 +167,13 @@ namespace ProyectoPGTA_P2
             try
             {
                 //Reads all the content of the CSV file
-                string[] lines = File.ReadAllLines(filePath);
+                lines = File.ReadAllLines(filePath);
                 // Divides the lines on columns and loads the DataGridView Data
                 dataGridView1.ColumnCount = lines[0].Split(';').Length;
-                for (int i = 0; i < 100; i++)
+
+                page = 0;
+
+                for (int i = pageSize * page; i < pageSize * page + pageSize; i++)
                 {
                     string[] values = lines[i].Split(';');
                     dataGridView1.Rows.Add(values);
@@ -176,6 +182,58 @@ namespace ProyectoPGTA_P2
             catch (Exception ex)
             {
                 MessageBox.Show("Failed loading CSV file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void nextPage_Click(object sender, EventArgs e)
+        {
+            page += 1;
+
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
+            dataGridView1.ColumnCount = lines[0].Split(';').Length;
+
+            int siguientes = lines.Length - page * pageSize;
+            if (siguientes > pageSize)
+            {
+                siguientes = pageSize;
+            }
+            else
+            {
+                nextPage.Hide();
+            }
+
+            for (int i = pageSize * page; i < pageSize * page + siguientes; i++)
+            {
+                string[] values = lines[i].Split(';');
+                dataGridView1.Rows.Add(values);
+            }
+
+            if (page > 0)
+            {
+                previousPage.Show();
+            }
+        }
+
+        private void previousPage_Click(object sender, EventArgs e)
+        {
+            page -= 1;
+
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
+            dataGridView1.ColumnCount = lines[0].Split(';').Length;
+
+            nextPage.Show();
+
+            for (int i = pageSize * page; i < pageSize * page + pageSize; i++)
+            {
+                string[] values = lines[i].Split(';');
+                dataGridView1.Rows.Add(values);
+            }
+
+            if (page == 0)
+            {
+                previousPage.Hide();
             }
         }
     }

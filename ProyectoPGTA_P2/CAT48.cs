@@ -1,11 +1,6 @@
-﻿using GLib;
-using MultiCAT6.Utils;
+﻿using MultiCAT6.Utils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VisioForge.Libs.MediaFoundation.OPM;
 
 namespace ProyectoPGTA_P2
 {
@@ -35,7 +30,7 @@ namespace ProyectoPGTA_P2
             //initialization of the parameters
             this.arrayHex = arrayhex;
             this.CAT = int.Parse(arrayHex[0], System.Globalization.NumberStyles.HexNumber);
-            this.Length = int.Parse(arrayHex[1]+arrayHex[2], System.Globalization.NumberStyles.HexNumber);
+            this.Length = int.Parse(arrayHex[1] + arrayHex[2], System.Globalization.NumberStyles.HexNumber);
             this.items = new bool[28];
             //These are DataItems that were done appart
             List<string> arrayItem3 = new List<string>();
@@ -45,14 +40,14 @@ namespace ProyectoPGTA_P2
             itemContainer = new DataItem();
             int i = 3;
             //Console.WriteLine("Creando paquete CAT48...");
-            bool finishFSPEC = false;           
+            bool finishFSPEC = false;
             //Console.WriteLine("Editando Byte");
             List<string> arrayItem;
             int n;
             //This while uses the FSPEC to know exactly what dataItems are on the CAT48 packet
             while (i >= 3 && i <= 6 && finishFSPEC == false)
             {
-                
+
                 string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
                 n = 0;
                 while (n < binaryByte.Length)
@@ -81,7 +76,7 @@ namespace ProyectoPGTA_P2
                     }
                     else
                     {
-                        if(n >= 0 && n <= 6)
+                        if (n >= 0 && n <= 6)
                         {
 
                             if (i == 3)
@@ -104,12 +99,12 @@ namespace ProyectoPGTA_P2
                         else
                         {
                             finishFSPEC = true;
-                        }                       
+                        }
                     }
                     n++;
                 }
                 i++;
-                
+
             }
             //Item 1
             if (items[0] == true)
@@ -151,11 +146,12 @@ namespace ProyectoPGTA_P2
                 string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
                 bool found = true;
                 arrayItem3.Add(arrayHex[i]);
-                while (found) {
+                while (found)
+                {
                     binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
-                    
+
                     if (binaryByte[7] == '1')
-                    {                                              
+                    {
                         i++;
                         arrayItem3.Add(arrayHex[i]);
                     }
@@ -166,7 +162,7 @@ namespace ProyectoPGTA_P2
                         found = false;
                         items[2] = false;
                     }
-                }              
+                }
             }
             else
             {
@@ -184,7 +180,7 @@ namespace ProyectoPGTA_P2
                 };
                 itemContainer.SetDataItem4(new DataItem4(arrayItem));
                 i += 4;
-                items[3] = false;                   
+                items[3] = false;
             }
             else
             {
@@ -201,12 +197,12 @@ namespace ProyectoPGTA_P2
                 itemContainer.SetDataItem5(new DataItem5(arrayItem));
                 i += 2;
                 items[4] = false;
-            }            
+            }
             else
             {
                 itemContainer.SetDataItem5(new DataItem5());
             }
-            
+
             //Item 6
             if (items[5] == true)
             {
@@ -234,7 +230,7 @@ namespace ProyectoPGTA_P2
                 int next = 0;
                 while (n < binaryByte.Length)
                 {
-                    binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i+next], 16), 2).PadLeft(8, '0');
+                    binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i + next], 16), 2).PadLeft(8, '0');
                     if (binaryByte[n] == '1')
                     {
                         if (n == 7)
@@ -247,19 +243,19 @@ namespace ProyectoPGTA_P2
                         else
                         {
                             count++;
-                        }                      
-                    }                        
+                        }
+                    }
                     n++;
                 }
                 n = 0 + next;
-                while (n <= count+next)
+                while (n <= count + next)
                 {
-                    arrayItem.Add(arrayHex[i+n]);
+                    arrayItem.Add(arrayHex[i + n]);
                     n++;
                 }
-                i+=n;
+                i += n;
                 itemContainer.SetDataItem7(new DataItem7(arrayItem));
-                items[6] = false;                   
+                items[6] = false;
             }
             else
             {
@@ -292,7 +288,7 @@ namespace ProyectoPGTA_P2
                     arrayHex[i + 2],
                     arrayHex[i + 3],
                     arrayHex[i + 4],
-                    arrayHex[i + 5],                        
+                    arrayHex[i + 5],
                 };
                 itemContainer.SetDataItem9(new DataItem9(arrayItem));
                 i += 6;
@@ -306,15 +302,15 @@ namespace ProyectoPGTA_P2
             if (items[9] == true)
             {
                 arrayItem = new List<string>();
-                int REP = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);                    
+                int REP = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);
                 n = 0;
-                while (n <= REP*8)
+                while (n <= REP * 8)
                 {
                     arrayItem.Add(arrayHex[i + n]);
                     n++;
                 }
                 itemContainer.SetDataItem10(new DataItem10(arrayItem));
-                i += REP * 8+1;
+                i += REP * 8 + 1;
                 items[9] = false;
             }
             else
@@ -382,7 +378,7 @@ namespace ProyectoPGTA_P2
                 while (found)
                 {
                     binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
-                    
+
                     if (binaryByte[7] == '1')
                     {
                         i++;
@@ -395,7 +391,7 @@ namespace ProyectoPGTA_P2
                         found = false;
                         items[13] = false;
                     }
-                }                
+                }
             }
             else
             {
@@ -426,7 +422,7 @@ namespace ProyectoPGTA_P2
                         items[13] = false;
                         found = false;
                     }
-                }              
+                }
             }
             //Item 17
             if (items[16] == true)
@@ -472,9 +468,9 @@ namespace ProyectoPGTA_P2
                     {
                         i++;
                         items[19] = false;
-                        found= false;
+                        found = false;
                     }
-                }               
+                }
             }
             //Item 21
             if (items[20] == true)
@@ -566,7 +562,7 @@ namespace ProyectoPGTA_P2
                     }
                     else
                     {
-                        
+
                         asin = (2 * 6371000 * ((correctedAltitude1 * 0.3048) - 2.007 - 25.25) + (correctedAltitude1 * 0.3048) * (correctedAltitude1 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
                     }
                     radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
@@ -579,8 +575,8 @@ namespace ProyectoPGTA_P2
                     }
                     else
                     {
-                        
-                        double correctedAltitude1 = itemContainer.GetDataItem6().FL*100 + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30; //MCP
+
+                        double correctedAltitude1 = itemContainer.GetDataItem6().FL * 100 + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30; //MCP
                         //double correctedAltitude2 = itemContainer.GetDataItem10().intFMSSelectedAlt + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30; //FMS
 
                         if (correctedAltitude1 < 0)
@@ -594,7 +590,7 @@ namespace ProyectoPGTA_P2
                         {
                             asin = (2 * 6371000 * ((correctedAltitude2 * 0.3048) - 2.007 - 25.25) + (correctedAltitude2 * 0.3048) * (correctedAltitude2 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
                         }*/
-                        
+
                         if (asin > 1)
                         {
                             asin = 1;
@@ -606,15 +602,15 @@ namespace ProyectoPGTA_P2
                 }
             }
             else
-            {               
-                asin = (2 * 6371000 * ((itemContainer.GetDataItem6().FL * 100 * 0.3048) - 2.007 - 25.25) + (itemContainer.GetDataItem6().FL * 100 * 0.3048) * (itemContainer.GetDataItem6().FL * 100 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));                               
+            {
+                asin = (2 * 6371000 * ((itemContainer.GetDataItem6().FL * 100 * 0.3048) - 2.007 - 25.25) + (itemContainer.GetDataItem6().FL * 100 * 0.3048) * (itemContainer.GetDataItem6().FL * 100 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
                 radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
             }
             //Here we change from spherical (rho,theta,elevation) to cartesian (X,Y,Z)        
             CoordinatesXYZ radarCartesian = GeoUtils.change_radar_spherical2radar_cartesian(radarPolar);
 
             //Here we take the LatLon WGS84 of the radar on a point to change from cartesian to geocentric
-            CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84(41.3007023 * (Math.PI / 180), 2.10205819444 * (Math.PI / 180), 2.007 + 25.25); 
+            CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84(41.3007023 * (Math.PI / 180), 2.10205819444 * (Math.PI / 180), 2.007 + 25.25);
             //Coordinates of the radar on geographical are comented for now
             //CoordinatesWGS84 radarCoordinates = new CoordinatesWGS84("41º 18’ 02,5284’’ N", "02º 06’ 07,4095’’ E", 2.007 + 25.25);
 
@@ -622,16 +618,16 @@ namespace ProyectoPGTA_P2
             CoordinatesXYZ geocentricSystem = geoUtils.change_radar_cartesian2geocentric(radarCoordinates, radarCartesian);
 
             //And finally here we change from geocentric to geodesic coordinates (Lat,Lon,Altitude)
-            CoordinatesWGS84 geodesic = geoUtils.change_geocentric2geodesic(geocentricSystem);  
-            
+            CoordinatesWGS84 geodesic = geoUtils.change_geocentric2geodesic(geocentricSystem);
+
             //And we set the Latitude,Longitude and altitude on the DataItem12 that we know that is empty
-            itemContainer.GetDataItem12().SetData((float)geodesic.Lat * (180/Math.PI), (float)geodesic.Lon * (180 / Math.PI), (float)geodesic.Height);            
-            
+            itemContainer.GetDataItem12().SetData((float)geodesic.Lat * (180 / Math.PI), (float)geodesic.Lon * (180 / Math.PI), (float)geodesic.Height);
+
 
             //Once the dataItem are decoded we put all the data on the Dictionary.
-            if (itemContainer.GetDataItem1()!=null)
+            if (itemContainer.GetDataItem1() != null)
             {
-                decodedDataPerItem.Add(1,itemContainer.GetDataItem1().GetData());
+                decodedDataPerItem.Add(1, itemContainer.GetDataItem1().GetData());
             }
             if (itemContainer.GetDataItem2() != null)
             {
@@ -741,9 +737,9 @@ namespace ProyectoPGTA_P2
             {
                 decodedDataPerItem.Add(28, itemContainer.GetDataItem28().GetData());
             }
-            
+
         }
-        public Dictionary<int,List<string>> GetDataDecodedPerItem()
+        public Dictionary<int, List<string>> GetDataDecodedPerItem()
         {
             return decodedDataPerItem;
         }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using DotNetMatrix;
+using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using DotNetMatrix;
-using GLib;
-using ProyectoPGTA_P2;
 
 namespace MultiCAT6.Utils
 {
@@ -339,7 +335,7 @@ namespace MultiCAT6.Utils
         /// <param name="c">x,y,z coordinates</param>
         /// <returns>lat,lon (radians),height (meters) coordinates</returns>
         public CoordinatesWGS84 change_geocentric2geodesic(CoordinatesXYZ c)
-        { 
+        {
             if (c == null) return null;
             CoordinatesWGS84 res = new CoordinatesWGS84();
             // semi-minor earth axis

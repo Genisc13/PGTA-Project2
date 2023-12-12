@@ -1,15 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using MultiCAT6.Utils;
-using VisioForge.Libs.MediaFoundation.OPM;
-using System.Security.Cryptography;
 
 namespace ProyectoPGTA_P2
 {
@@ -301,7 +291,7 @@ namespace ProyectoPGTA_P2
             return item28;
         }
     }
-    
+
     //Data Item I048/010, Data Source Identifier
     public class DataItem1
     {
@@ -309,10 +299,11 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
 
         //DATA ITEM 1
-        public string SAC, SIC;
+        //public string SAC, SIC;
         public List<string> data;
 
-        public DataItem1() {
+        public DataItem1()
+        {
             data = new List<string> { "N/D", "N/D" };
         }
 
@@ -321,10 +312,10 @@ namespace ProyectoPGTA_P2
             this.number = 1;
             this.arrayHex = arrayhex;
 
-            SAC = arrayhex[0];
-            SIC = arrayhex[1];
-            int SACint = Convert.ToInt32(SAC, 16);
-            int SICint = Convert.ToInt32(SIC, 16);
+            //SAC = arrayhex[0];
+            //SIC = arrayhex[1];
+            int SACint = Convert.ToInt32(arrayhex[0], 16);
+            int SICint = Convert.ToInt32(arrayhex[1], 16);
 
             data = new List<string> { SACint.ToString(), SICint.ToString() };
         }
@@ -359,15 +350,9 @@ namespace ProyectoPGTA_P2
             this.number = 2;
             this.arrayHex = arrayhex;
 
-           arrayString = new string[arrayhex.Count];
+            arrayString = new string[arrayhex.Count];
 
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
-                this.timestr += arrayString[i];
-            }
-
-            this.time = Convert.ToInt32(timestr,2) / 128f; //hora actual en segundos
+            this.time = Convert.ToInt32(arrayhex[0] + arrayhex[1]+ arrayhex[2], 16) / 128f; //hora actual en segundos
 
             float hours = time / 3600f;
             int trunchours = (int)Math.Truncate(hours);
@@ -394,8 +379,6 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
-
-        public List<string> arrayString;
         public string TYP = "N/A";
         public string SIM = "N/A";
         public string RDP = "N/A";
@@ -409,7 +392,7 @@ namespace ProyectoPGTA_P2
         public string ADSB_EP = "N/A", ADSB_VAL = "N/A", SCN_EP = "N/A", SCN_VAL = "N/A", PAI_EP = "N/A", PAI_VAL = "N/A";
 
         public List<string> data;
-        
+
         public DataItem3()
         {
             //data = new List<string> { "TYP", "N/D", "SIM", "N/D", "RDP", "N/D", "SPI", "N/D", "RAB", "N/D", "TST", "N/D", "ERR", "N/D", "XPP", "N/D", "ME", "N/D", "MI", "N/D", "FOE/FRI", "N/D", "ADSB_EP", "N/D", "ADSB_VAL", "N/D", "SCN_EP", "N/D", "SCN_VAL", "N/D", "PAI_EP", "N/D", "PAI_VAL", "N/D" };
@@ -421,16 +404,10 @@ namespace ProyectoPGTA_P2
         {
             this.number = 3;
             this.arrayHex = arrayhex;
-            this.arrayString = new List<string>(arrayhex.Count);
-
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
-            }
 
             //First part decode
-            string a = arrayString[0];
 
+            string a = Convert.ToString(Convert.ToInt32(arrayhex[0], 16), 2).PadLeft(8, '0');
             TYP = String.Concat(a[0], a[1], a[2]);
             switch (TYP)
             {
@@ -523,7 +500,7 @@ namespace ProyectoPGTA_P2
             if (FX1 == "1")
             {
                 //Decode first extension
-                string b = arrayString[1];
+                string b = Convert.ToString(Convert.ToInt32(arrayhex[1], 16), 2).PadLeft(8, '0');
 
                 TST = b[0].ToString();
                 switch (TST)
@@ -619,7 +596,7 @@ namespace ProyectoPGTA_P2
                 if (FX2 == "1")
                 {
                     //Decode second extension
-                    string c = arrayString[2];
+                    string c = Convert.ToString(Convert.ToInt32(arrayhex[2], 16), 2).PadLeft(8, '0');
 
                     ADSB_EP = c[0].ToString();
                     switch (ADSB_EP)
@@ -743,7 +720,7 @@ namespace ProyectoPGTA_P2
 
             RHO = (float)Math.Round(Convert.ToInt32(RHD_16, 16) / 256d, 4);
 
-            THETA = (float)Math.Round(Convert.ToInt32(THETA_16, 16) * 45 / 8192f,4);
+            THETA = (float)Math.Round(Convert.ToInt32(THETA_16, 16) * 45 / 8192f, 4);
 
             //data = new List<string> { "RHO", RHD.ToString() + " NM", "THETA", THETA.ToString() + " º"};
             data = new List<string> { RHO.ToString() + " NM", THETA.ToString() + " º" };
@@ -759,7 +736,6 @@ namespace ProyectoPGTA_P2
     {
         public int number;
         public List<string> arrayHex;
-        public List<string> arrayString;
 
         public string V, G, L, Mode3;
         public List<string> data;
@@ -774,14 +750,8 @@ namespace ProyectoPGTA_P2
             this.number = 5;
             this.arrayHex = arrayhex;
 
-            this.arrayString = new List<string>(arrayhex.Count);
-
-            for (int i = 0; i < arrayhex.Count; i++)
-            {
-                arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
-            }
-
-            V = arrayString[0][0].ToString();
+            string a = Convert.ToString(Convert.ToInt32(arrayhex[0], 16), 2).PadLeft(8, '0');
+            V = a[0].ToString();
             switch (V)
             {
                 case "0":
@@ -796,7 +766,7 @@ namespace ProyectoPGTA_P2
 
             }
 
-            G = arrayString[0][1].ToString();
+            G = a[1].ToString();
             switch (G)
             {
                 case "0":
@@ -811,7 +781,7 @@ namespace ProyectoPGTA_P2
 
             }
 
-            L = arrayString[0][2].ToString();
+            L = a[2].ToString();
             switch (L)
             {
                 case "0":
@@ -826,7 +796,7 @@ namespace ProyectoPGTA_P2
 
             }
 
-            Mode3 = string.Concat(arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]);
+            Mode3 = string.Concat(a[4], a[5], a[6], a[7], Convert.ToString(Convert.ToInt32(arrayhex[1], 16), 2).PadLeft(8, '0'));
             if (L == "Codigo Mode-3/A no se ha extraído en el último escaneo")
             {
                 Mode3 = "N/A";
@@ -929,7 +899,7 @@ namespace ProyectoPGTA_P2
             {
                 FL = Convert.ToInt32(FL_BIN, 2) / 4f;
             }
-                                        
+
             //data = new List<string> { "V", V, "G", G, "FL", FL.ToString() };
             data = new List<string> { V, G, FL.ToString() };
         }
@@ -999,9 +969,9 @@ namespace ProyectoPGTA_P2
             if (SAM == "1")
             {
                 SAM = arrayString[index];
-                
+
                 //2s complement
-                
+
                 byte b = Convert.ToByte(SAM, 2);
                 byte complement = (byte)~b;
                 byte twosComplement = (byte)(complement + 1);
@@ -1145,15 +1115,15 @@ namespace ProyectoPGTA_P2
             {
                 arrayString.Add(Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0'));
             }
-            for (int i=0; i< arrayHex.Count; i++)
+            for (int i = 0; i < arrayHex.Count; i++)
             {
                 completeArraystring = completeArraystring.ToString() + arrayString[i].ToString();
-            }           
+            }
             string[] AA = new string[8];
 
-            for (int i = 0;i < AA.Length; i++)
+            for (int i = 0; i < AA.Length; i++)
             {
-                AA[i] = String.Concat(completeArraystring[i*6].ToString(), completeArraystring[i*6+1].ToString(), completeArraystring[i*6+2].ToString(), completeArraystring[i*6+3].ToString(), completeArraystring[i*6+4].ToString(), completeArraystring[i*6+5].ToString());
+                AA[i] = String.Concat(completeArraystring[i * 6].ToString(), completeArraystring[i * 6 + 1].ToString(), completeArraystring[i * 6 + 2].ToString(), completeArraystring[i * 6 + 3].ToString(), completeArraystring[i * 6 + 4].ToString(), completeArraystring[i * 6 + 5].ToString());
 
                 AAmatrix[i] = decode6bit(AA[i]);
             }
@@ -1266,7 +1236,7 @@ namespace ProyectoPGTA_P2
         public int REP = -9999;
         public List<string> data = new List<string>();
         //Param BDS4.0
-        public string MCPSelectedAlt="N/D";
+        public string MCPSelectedAlt = "N/D";
         public int intMCPSelectedAlt;
         public string FMSSelectedAlt = "N/D";
         public int intFMSSelectedAlt;
@@ -1309,7 +1279,7 @@ namespace ProyectoPGTA_P2
             string BDSDATA = "N/A", BDSver = "";
             string BDS1 = "N/A", BDS2 = "N/A";
 
-           //Param BDS4.0
+            //Param BDS4.0
             MCPSelectedAlt = "N/A";
             intMCPSelectedAlt = 0;
             FMSSelectedAlt = "N/A";
@@ -1345,7 +1315,7 @@ namespace ProyectoPGTA_P2
                 BDS1 = Convert.ToInt32(String.Concat(arrayString[shift + 8][0], arrayString[shift + 8][1], arrayString[shift + 8][2], arrayString[shift + 8][3]), 2).ToString();
                 BDS2 = Convert.ToInt32(String.Concat(arrayString[shift + 8][4], arrayString[shift + 8][5], arrayString[shift + 8][6], arrayString[shift + 8][7]), 2).ToString();
 
-                if(BDSver == "")
+                if (BDSver == "")
                 {
                     BDSver = BDS1 + "." + BDS2;
                 }
@@ -1437,7 +1407,7 @@ namespace ProyectoPGTA_P2
                         RollAngle = (((-1) ^ Convert.ToInt32(BDSDATA[1])) * Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10]), 2) * 45 / 256f).ToString() + " º";
 
                         float TTA = Convert.ToInt32(String.Concat(BDSDATA[13], BDSDATA[14], BDSDATA[15], BDSDATA[16], BDSDATA[17], BDSDATA[18], BDSDATA[19], BDSDATA[20], BDSDATA[21], BDSDATA[22]), 2) * 90 / 512f % 360;
-                        if(((-1) ^ Convert.ToInt32(BDSDATA[12])) == 1 && TTA > 180)
+                        if (((-1) ^ Convert.ToInt32(BDSDATA[12])) == 1 && TTA > 180)
                         {
                             TTA -= 180;
                         }
@@ -1447,7 +1417,7 @@ namespace ProyectoPGTA_P2
                         TAS = (Convert.ToInt32(String.Concat(BDSDATA[46], BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 2f).ToString() + " kt";
 
                         //dataBDSstr = "REP;" + REP.ToString() + ";BDS Version;" + BDSver + ";Roll Angle:;" + RollAngle.ToString() +";True Track Angle:;" +TrueTrackAngle.ToString()+ ";Ground Speed;"+GS.ToString()+";Track Angle Rate:;"+TrackAngleRate.ToString()+";True Air Speed:;" + TAS.ToString();
-                        
+
                         break;
                     case "6.0":
                         MagneticHeading = (Convert.ToInt32(String.Concat(BDSDATA[2], BDSDATA[3], BDSDATA[4], BDSDATA[5], BDSDATA[6], BDSDATA[7], BDSDATA[8], BDSDATA[9], BDSDATA[10], BDSDATA[11]), 2) * 90 / 512f).ToString() + " º";
@@ -1458,7 +1428,7 @@ namespace ProyectoPGTA_P2
                         InertialVerticalVel = (((-1) ^ Convert.ToInt32(BDSDATA[46])) * Convert.ToInt32(String.Concat(BDSDATA[47], BDSDATA[48], BDSDATA[49], BDSDATA[50], BDSDATA[51], BDSDATA[52], BDSDATA[53], BDSDATA[54], BDSDATA[55]), 2) * 32f).ToString() + " ft/min";
 
                         //dataBDSstr = "Magnetic Heading:;" + MagneticHeading.ToString()+";Indicated Air Speed:;" +IAS.ToString() + ";MACH Number: ;"+MACH.ToString()+ ";Barometric Altitude:;"+ BarometricAlt.ToString()+";Inertial Vertical Velocity;" +InertialVerticalVel.ToString();
-                        
+
                         break;
                     default:
                         //dataBDSstr = "Null";
@@ -1466,11 +1436,11 @@ namespace ProyectoPGTA_P2
                 }
 
                 //data.Add(dataBDSstr);
-                
+
             }
 
             //data = new List<string> { "BDS version: ", BDSver, "Repetitions", REP.ToString(), "MCP/FCU Selected Altitude: ", MCPSelectedAlt, "FMS Selected Altitude: ", FMSSelectedAlt, "Barometric Pressure Setting: ", BarPressure, "Status of MCP/FCU MODE: ", StatusMCP, "VNAV Mode: ", VNAV, "Alt Hold Mode: ", ALTHoldMode, "Approach Mode: ", APPMode, "Status of target Altitude Source: ", StatusTargetAltSource, "Target Altitude Source: ", TargetAltSource, "Roll Angle: ", RollAngle, "True Track Angle: ", TrueTrackAngle, "GS: ", GS, "Track Angle Rate: ", TrackAngleRate, "TAS: ", TAS, "Magnetic heading: ", MagneticHeading, "IAS: ", IAS, "MACH: ", MACH, "Barometric Altitude Rate: ", BarometricAlt, "Inertial Vertical Velocity", InertialVerticalVel };
-            data = new List<string> { BDSver, REP.ToString(), MCPSelectedAlt, FMSSelectedAlt, BarPressure, StatusMCP, VNAV, ALTHoldMode, APPMode, StatusTargetAltSource, TargetAltSource, RollAngle, TrueTrackAngle,  GS, TrackAngleRate, TAS, MagneticHeading, IAS, MACH, BarometricAlt, InertialVerticalVel };
+            data = new List<string> { BDSver, REP.ToString(), MCPSelectedAlt, FMSSelectedAlt, BarPressure, StatusMCP, VNAV, ALTHoldMode, APPMode, StatusTargetAltSource, TargetAltSource, RollAngle, TrueTrackAngle, GS, TrackAngleRate, TAS, MagneticHeading, IAS, MACH, BarometricAlt, InertialVerticalVel };
 
         }
         public List<string> GetData()
@@ -1529,7 +1499,7 @@ namespace ProyectoPGTA_P2
         public DataItem12()
         {
             //data = new List<string> { "X", "N/D", "Y", "N/D" };
-            data = new List<string> { "N/D", "N/D" , "N/D"};
+            data = new List<string> { "N/D", "N/D", "N/D" };
         }
 
         public DataItem12(List<string> arrayhex)
@@ -1543,11 +1513,11 @@ namespace ProyectoPGTA_P2
                 arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
             }
 
-            Xcord = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1]))/128f;
-            Ycord = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3]))/128f;
+            Xcord = Convert.ToInt32(String.Concat(arrayString[0], arrayString[1])) / 128f;
+            Ycord = Convert.ToInt32(String.Concat(arrayString[2], arrayString[3])) / 128f;
 
             //data = new List<string> { "X", Xcord.ToString() + " NM", "Y", Ycord.ToString() + " NM" };
-            data = new List<string> { Xcord.ToString() , Ycord.ToString(), Zcord.ToString() };
+            data = new List<string> { Xcord.ToString(), Ycord.ToString(), Zcord.ToString() };
         }
         public void SetData(double X, double Y, double Z)
         {
@@ -1576,7 +1546,7 @@ namespace ProyectoPGTA_P2
             //data = new List<string> { "Ground Speed", "N/D", "Heading", "N/D" };
             data = new List<string> { "N/D", "N/D" };
         }
-        
+
         public DataItem13(List<string> arrayhex)
         {
             this.number = 13;
@@ -1711,7 +1681,8 @@ namespace ProyectoPGTA_P2
 
             FX1 = Convert.ToInt32(arrayString[0][7]);
 
-            if (FX1 == 1 ){ 
+            if (FX1 == 1)
+            {
                 TRE = Convert.ToString(arrayString[1][0]);
                 switch (TRE)
                 {
@@ -1765,7 +1736,7 @@ namespace ProyectoPGTA_P2
                 }
 
                 FX2 = Convert.ToInt32(arrayString[1][7]);
-             }
+            }
 
             //data = new List<string>{ "CNF", CNF, "RAD", RAD, "DOU", DOU, "MAH", MAH, "CDM", CDM, "TRE", TRE, "GHO", GHO, "SUP", SUP, "TCC", TCC};
             data = new List<string> { CNF, RAD, DOU, MAH, CDM, TRE, GHO, SUP, TCC };
@@ -1870,7 +1841,7 @@ namespace ProyectoPGTA_P2
                 arrayString[i] = Convert.ToString(Convert.ToInt32(arrayhex[i], 16), 2).PadLeft(8, '0');
             }
 
-            Height3D = Convert.ToInt32(String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]), 2)*25;
+            Height3D = Convert.ToInt32(String.Concat(arrayString[0][2], arrayString[0][3], arrayString[0][4], arrayString[0][5], arrayString[0][6], arrayString[0][7], arrayString[1]), 2) * 25;
 
             //data = new List<string> { "3D Height", Height3D.ToString() + " ft" };
             data = new List<string> { Height3D.ToString() + " ft" };
@@ -1905,33 +1876,33 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public List<string> data;
         public string COM, STAT, SI, MSSC, ARC, AIC, B1A, B1B;
-    
+
         public DataItem21()
         {
             //data = new List<string> { "COM", "N/D", "STAT", "N/D", "SI", "N/D", "MSSC", "N/D", "ARC", "N/D", "AIC", "N/D", "B1A", "N/D", "B1B", "N/D" };
             data = new List<string> { "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D" };
         }
-        
+
         public DataItem21(List<string> arrayhex)
         {
             this.number = 21;
-            this.arrayHex = arrayhex;                
+            this.arrayHex = arrayhex;
             string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[0], 16), 2).PadLeft(8, '0');
-            string comVector = Convert.ToString(binaryByte[0])+ Convert.ToString(binaryByte[1])+ Convert.ToString(binaryByte[2]);
+            string comVector = Convert.ToString(binaryByte[0]) + Convert.ToString(binaryByte[1]) + Convert.ToString(binaryByte[2]);
             string statVector = Convert.ToString(binaryByte[3]) + Convert.ToString(binaryByte[4]) + Convert.ToString(binaryByte[5]);
             string si = Convert.ToString(binaryByte[6]);
-            string com =Convert.ToString( Convert.ToInt32(comVector,2));
+            string com = Convert.ToString(Convert.ToInt32(comVector, 2));
             string stat = Convert.ToString(Convert.ToInt32(statVector, 2));
-            
+
             string binaryByte2 = Convert.ToString(Convert.ToInt32(arrayHex[1], 16), 2).PadLeft(8, '0');
             string mssc = Convert.ToString(binaryByte2[0]);
             string arc = Convert.ToString(binaryByte2[1]);
             string aic = Convert.ToString(binaryByte2[2]);
             string b1a = Convert.ToString(binaryByte2[3]);
-            string b1b = Convert.ToString(binaryByte2[4])+ Convert.ToString(binaryByte2[5])+ Convert.ToString(binaryByte2[6])+ Convert.ToString(binaryByte2[7]);
+            string b1b = Convert.ToString(binaryByte2[4]) + Convert.ToString(binaryByte2[5]) + Convert.ToString(binaryByte2[6]) + Convert.ToString(binaryByte2[7]);
             B1A = b1a;
             B1B = b1b;
-            if(Convert.ToInt32(com)==0)
+            if (Convert.ToInt32(com) == 0)
             {
                 COM = "No communications capability (surveillance only)";
             }
@@ -1989,7 +1960,7 @@ namespace ProyectoPGTA_P2
                 STAT = "Unknown";
             }
 
-            if (Convert.ToInt32(si,2) == 0)
+            if (Convert.ToInt32(si, 2) == 0)
             {
                 SI = "Transponder capable on SI";
             }
