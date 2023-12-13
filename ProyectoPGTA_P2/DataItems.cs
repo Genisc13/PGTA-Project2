@@ -349,7 +349,7 @@ namespace ProyectoPGTA_P2
             this.number = 2;
             this.arrayHex = arrayhex;
 
-            this.time = Convert.ToInt32(arrayhex[0] + arrayhex[1]+ arrayhex[2], 16) / 128f; //hora actual en segundos
+            this.time = Convert.ToInt32(arrayhex[0].PadLeft(2,'0') + arrayhex[1].PadLeft(2, '0') + arrayhex[2].PadLeft(2, '0'), 16) / 128f; //hora actual en segundos
 
             float hours = time / 3600f;
             int trunchours = (int)Math.Truncate(hours);
@@ -1815,6 +1815,7 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public List<string> data;
         public string COM, STAT, SI, MSSC, ARC, AIC, B1A, B1B;
+        public int statINT;
 
         public DataItem21()
         {
@@ -1832,6 +1833,7 @@ namespace ProyectoPGTA_P2
             string si = Convert.ToString(binaryByte[6]);
             string com = Convert.ToString(Convert.ToInt32(comVector, 2));
             string stat = Convert.ToString(Convert.ToInt32(statVector, 2));
+            statINT = Convert.ToInt32(stat);
 
             string binaryByte2 = Convert.ToString(Convert.ToInt32(arrayHex[1], 16), 2).PadLeft(8, '0');
             string mssc = Convert.ToString(binaryByte2[0]);

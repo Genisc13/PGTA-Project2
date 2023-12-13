@@ -88,9 +88,34 @@ namespace ProyectoPGTA_P2
                 {
                     CAT48 newcat10 = new CAT48(arraystring);
 
-                    string Mode3 = newcat10.itemContainer.GetDataItem3().TYP;
+                    bool ADD = false;
 
+                    string Mode3 = newcat10.itemContainer.GetDataItem3().TYP;
+                    
+                    //Check modeS
                     if (Mode3 == "Single ModeS All-Call" || Mode3 == "Single ModeS Roll-Call" || Mode3 == "ModeS All-Call + PSR" || Mode3 == "ModeS Roll-Call + PSR")
+                    {
+                        //Check aircraft airborne
+                        int stat = newcat10.itemContainer.GetDataItem21().statINT;
+
+                        if (stat == 0 || stat == 2 || stat == 4 || stat == 5)
+                        {
+                            //Check lat and long in a certain range
+                            double lat = newcat10.itemContainer.GetDataItem12().Xcord;
+                            
+                            if ( lat > 40.9 && lat < 41.7)
+                            {
+                                double lon = newcat10.itemContainer.GetDataItem12().Ycord;
+
+                                if (lon > 1.5 && lon < 2.6)
+                                {
+                                    ADD = true;
+                                }
+                            }
+                        }
+                    }
+
+                    if (ADD == true)
                     {
                         listaCAT48.Add(newcat10); //Only add if it is Mode S Call
                     }

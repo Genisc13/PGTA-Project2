@@ -57,12 +57,67 @@ namespace ProyectoPGTA_P2
             //Function to print all the markers on the map and start the simulation when needed
             InicializarSimulacion(avionList);
             //Exclusive function to put the markers depending on the actual step of the simulation
-            ActivateOverlay();
+            ActivateOverlay(pasoActual);
             SimulTime.Text = initialTime.ToString();
             //Depending on the speed the interval of the timer will be one or other
             timerSimulacion.Interval = startspeed;
             SIMspeed.Text = (4000 / startspeed).ToString() + "x";
 
+            totaltime = Convert.ToInt32(Math.Truncate(avionList[avionList.Count - 1].itemContainer.GetDataItem2().time)) - initialTime;
+
+            statisticDATA(avionList);
+        }
+
+        private void statisticDATA (List<CAT48> avionList)
+        {
+            for (int i = initialTime; i < initialTime + totaltime; i+=4) {
+                List<Avion> DEP = getPlanesDEPAtTime(i);
+            }
+        }
+        private List<Avion> getPlanesDEPAtTime(int step)
+        {
+            int i = 0;
+            int offset = 4;
+
+            List<Avion> stepList = new List<Avion>();
+
+            foreach (Avion avion in simulacion.Values)
+            {
+                for (int j = 0; j < avion.positionList.Count; j++)
+                {
+                    if ((avion.positionList[j].Time - initialTime) <= step + offset && (avion.positionList[j].Time - initialTime) >= step)
+                    {
+                        if (double.IsNaN(avion.positionList[j].X) && double.IsNaN(avion.positionList[j].Y))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            if(avion.Name == "3463C6")
+                            {
+                                int b = 0;
+                            }
+                            
+                            if ( avion.positionList[j].X > 41.2873 | avion.positionList[j].X < 41.2929)
+                            {
+                                if (avion.positionList[j].Y > 2.087 | avion.positionList[j].Y < 2.101)
+                                {
+                                    stepList.Add(avion);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                i++;
+            }
+            if (stepList.Count > 0)
+            {
+                int a = 0;
+            }
+
+            return stepList;
         }
         /// <summary>
         /// If you doubleclick on the map it can be seen exatcly at what latitude
@@ -88,8 +143,7 @@ namespace ProyectoPGTA_P2
         {
             //Initialization of simulacion
             simulacion = new Dictionary<string, Avion>();
-            totaltime = Convert.ToInt32(avionList[avionList.Count - 1].itemContainer.GetDataItem2().time) - Convert.ToInt32(avionList[0].itemContainer.GetDataItem2().time);
-
+            
             for (int i = 0; i < avionList.Count; i++)
             {
                 string address = avionList[i].itemContainer.GetDataItem8().AircraftAddress;
@@ -119,7 +173,7 @@ namespace ProyectoPGTA_P2
                 pasoActual += 4;
                 gmap.Overlays.Clear();
                 //Regenerates the new position of the plains
-                ActivateOverlay();
+                ActivateOverlay(pasoActual);
                 SimulTime.Text = (initialTime + pasoActual).ToString();
             }
             else
@@ -177,7 +231,7 @@ namespace ProyectoPGTA_P2
             {
                 pasoActual += 4; //% simulacion.Count;
                 gmap.Overlays.Clear();
-                ActivateOverlay();
+                ActivateOverlay(pasoActual);
                 SimulTime.Text = (initialTime + pasoActual).ToString();
             }
             else
@@ -196,7 +250,7 @@ namespace ProyectoPGTA_P2
             {
                 pasoActual -= 4; //% simulacion.Count;
                 gmap.Overlays.Clear();
-                ActivateOverlay();
+                ActivateOverlay(pasoActual);
                 SimulTime.Text = (initialTime + pasoActual).ToString();
             }
             else
@@ -208,7 +262,7 @@ namespace ProyectoPGTA_P2
         /// This is the function thas is used to create the markers on GMap,
         /// it sees the time of the positions and puts a marker of the correct time
         /// </summary>
-        private void ActivateOverlay()
+        private void ActivateOverlay(int step)
         {
             GMap.NET.WindowsForms.GMapOverlay overlay = new GMap.NET.WindowsForms.GMapOverlay("Planes");
             // Dibuja los aviones en el PictureBox
@@ -220,7 +274,7 @@ namespace ProyectoPGTA_P2
             {
                 for (int j = 0; j < avion.positionList.Count; j++)
                 {
-                    if ((avion.positionList[j].Time - initialTime) <= pasoActual + offset && (avion.positionList[j].Time - initialTime) >= pasoActual)
+                    if ((avion.positionList[j].Time - initialTime) <= step + offset && (avion.positionList[j].Time - initialTime) >= step)
                     {
                         if (double.IsNaN(avion.positionList[j].X) && double.IsNaN(avion.positionList[j].Y))
                         {
