@@ -1077,7 +1077,7 @@ namespace ProyectoPGTA_P2
         public List<string> arrayHex;
         public string completeArraystring;
         public string[] AAmatrix = new string[8];
-        public string AircraftIdentification;
+        public string AircraftIdentification = "N/D";
 
         public List<string> data;
 
