@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -27,6 +28,8 @@ namespace ProyectoPGTA_P2
         public Dictionary<string, bool> ACVisibles;
         //The starting speed of the 
         int startspeed = 1 * 4000;
+
+        public List<string[]> AllDayDepartures;
         /// <summary>
         /// Here we have the simulation Form, it takes the decoded data and transforms it
         /// into the ubication of all the planes that are known by the radar, we can edit
@@ -70,16 +73,91 @@ namespace ProyectoPGTA_P2
 
         private void statisticDATA (List<CAT48> avionList)
         {
+            string filePath = @"C:\\Users\\baiales\\Desktop\\DRIVE\\XX\\ESTUDIOS\\UNI\\4A\\PGTA\\Inputs pel P3-20231212\\2305_02_dep_lebl.csv";
+            StreamReader reader = new StreamReader(File.OpenRead(filePath));
+            AllDayDepartures = new List<string[]>();
+            int id = 0;
+            string line = reader.ReadLine();
+            while (!reader.EndOfStream)
+            {
+                line = reader.ReadLine();
+                AllDayDepartures.Add(line.Split(';'));
+
+
+                id++;
+            }
+
+            List<Departure> orderDepartures = new List<Departure>();
+
             for (int i = initialTime; i < initialTime + totaltime; i+=4) {
-                List<Avion> DEP = getPlanesDEPAtTime(i);
+                List<Departure> DEP = getPlanesDEPAtTime(i);
+
+                if (DEP.Count > 0)
+                {
+                    if (orderDepartures.Count == 0)
+                    {
+                        orderDepartures.Add(DEP[0]);
+                    }
+
+                    if (orderDepartures[orderDepartures.Count-1].name != DEP[0].name)
+                    {
+                        orderDepartures.Add(DEP[0]);
+                    }
+                    
+                }                
             }
         }
-        private List<Avion> getPlanesDEPAtTime(int step)
+        private List<Departure> getPlanesDEPAtTime(int step)
         {
-            int i = 0;
             int offset = 4;
 
-            List<Avion> stepList = new List<Avion>();
+            List<Departure> stepList = new List<Departure>();
+
+            for (int i = 0; i < simulacion.Count; i++)
+            {
+                Avion avion = simulacion.Values.ElementAt(i);
+
+                for (int j = 0; j < avion.positionList.Count; j++)
+                {
+                    if ((avion.positionList[j].Time - initialTime) <= step + offset && (avion.positionList[j].Time) >= step)
+                    {
+                        if (double.IsNaN(avion.positionList[j].X) && double.IsNaN(avion.positionList[j].Y))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            if (Math.Abs(avion.positionList[j].Time - step) < offset)
+                            {
+                                if (avion.positionList[j].X > 41.2873 && avion.positionList[j].X < 41.295)
+                                {
+                                    if (avion.positionList[j].Y > 2.087 && avion.positionList[j].Y < 2.1039)
+                                    {
+                                        string wake = "N/A";
+
+                                        for (int k = 0; k < AllDayDepartures.Count; k++)
+                                        {
+                                            string compname = AllDayDepartures[k][1];
+                                            if (compname == avion.Name)
+                                            {
+                                                wake = AllDayDepartures[k][5]; ;
+                                                break;
+                                            }
+                                        }
+
+                                        stepList.Add(new Departure(avion.Name, wake, avion.positionList[j].X, avion.positionList[j].Y, avion.positionList[j].Time));
+                                        break;
+                                    }
+                                }
+                            }
+
+                            
+                        }
+                    }
+                }
+            }
+            /*
+            int i = 0;
 
             foreach (Avion avion in simulacion.Values)
             {
@@ -112,6 +190,7 @@ namespace ProyectoPGTA_P2
 
                 i++;
             }
+            */
             if (stepList.Count > 0)
             {
                 int a = 0;
@@ -119,6 +198,21 @@ namespace ProyectoPGTA_P2
 
             return stepList;
         }
+
+        public class Departure
+        {
+            public string name;
+            public string estela;
+            public Position pos;
+
+            public Departure(string Name, string Estela, double x, double y, float time)
+            {
+                name = Name;
+                estela = Estela;
+                pos = new Position(x, y, time, true) ;
+            }
+        }
+
         /// <summary>
         /// If you doubleclick on the map it can be seen exatcly at what latitude
         /// and longitude you are pointing at
@@ -146,16 +240,23 @@ namespace ProyectoPGTA_P2
             
             for (int i = 0; i < avionList.Count; i++)
             {
-                string address = avionList[i].itemContainer.GetDataItem8().AircraftAddress;
-                if (!simulacion.ContainsKey(address))
+                string identification = avionList[i].itemContainer.GetDataItem9().AircraftIdentification.Replace(" ", "");
+
+                if (identification.Length <=3)
                 {
-                    Avion plane = new Avion(address);
+                    //identification = avionList[i].itemContainer.GetDataItem9().AircraftAddress;
+                    identification = "NO ID";
+                }
+                
+                if (!simulacion.ContainsKey(identification))
+                {
+                    Avion plane = new Avion(identification);
                     plane.positionList.Add(new Position(avionList[i].itemContainer.GetDataItem12().Xcord, avionList[i].itemContainer.GetDataItem12().Ycord, avionList[i].itemContainer.GetDataItem2().time, true));
-                    simulacion.Add(address, plane);
+                    simulacion.Add(identification, plane);
                 }
                 else
                 {
-                    simulacion[address].AddPosition(new Position(avionList[i].itemContainer.GetDataItem12().Xcord, avionList[i].itemContainer.GetDataItem12().Ycord, avionList[i].itemContainer.GetDataItem2().time, true));
+                    simulacion[identification].AddPosition(new Position(avionList[i].itemContainer.GetDataItem12().Xcord, avionList[i].itemContainer.GetDataItem12().Ycord, avionList[i].itemContainer.GetDataItem2().time, true));
                 }
             };
         }
