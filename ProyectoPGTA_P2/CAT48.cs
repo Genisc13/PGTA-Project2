@@ -6,12 +6,18 @@ namespace ProyectoPGTA_P2
 {
     public class CAT48
     {
+        //DataItem 2:
+        public float time;
+        //DataItem 3:
+        public string TYP;
+        //DataItem 4:
+        public float RHO, THETA;
         //DataItem 6:
         public float FL;
         //DataItem 8:
         public string AircraftAddress;
         //DataItem 9:
-        public string completeArraystring;
+        public string completeArraystring="";
         public string[] AAmatrix = new string[8];
         public string AircraftIdentification;
         //DataItem 10:
@@ -46,6 +52,9 @@ namespace ProyectoPGTA_P2
 
         //DataItem13:
         public float GS13, HEAD;
+
+        //DataItem21:
+        public int statINT;
         //List of strings that contains the values of the Binary code on Hex
         public List<string> arrayHex;
         public List<string> data;
@@ -55,8 +64,6 @@ namespace ProyectoPGTA_P2
         public int Length;
         //A matrix of booleans saying if a dataItem is there or not
         public bool[] items;
-        //The container of all the dataItems
-        public DataItem itemContainer;
         //This is de dictionary of all the dataItems decoded and its data
         public Dictionary<int, List<string>> decodedDataPerItem;
         /// <summary>
@@ -78,7 +85,6 @@ namespace ProyectoPGTA_P2
             List<string> arrayItem14 = new List<string>();
             //Initalization of the itemContainer and the dictionary of dataItems
             decodedDataPerItem = new Dictionary<int, List<string>>();
-            itemContainer = new DataItem();
             int i = 3;
             //Console.WriteLine("Creando paquete CAT48...");
             bool finishFSPEC = false;
@@ -175,8 +181,7 @@ namespace ProyectoPGTA_P2
                     arrayHex[i + 1],
                     arrayHex[i + 2]
                 };
-                float time;
-                itemContainer.SetDataItem2(new DataItem2(arrayItem));
+                
 
                 time = Convert.ToInt32(arrayItem[0].PadLeft(2, '0') + arrayItem[1].PadLeft(2, '0') + arrayItem[2].PadLeft(2, '0'), 16) / 128f; //hora actual en segundos
 
@@ -207,7 +212,7 @@ namespace ProyectoPGTA_P2
             {
                 string binaryByte;
                 bool found = true;
-                string TYP;
+                
                 string SIM;
                 string RDP;
                 string SPI;
@@ -527,7 +532,6 @@ namespace ProyectoPGTA_P2
             //Item 4
             if (items[3] == true)
             {
-                float RHO, THETA;
                 arrayItem = new List<string>
                 {
                     arrayHex[i],
@@ -864,14 +868,14 @@ namespace ProyectoPGTA_P2
             //Item 8
             if (items[7] == true)
             {
-                List<string> arrayString = new List<string>();
+                string[] arrayString = new string[3];
                 arrayItem = new List<string>(3)
                 {
                     arrayHex[i],
                     arrayHex[i + 1],
                     arrayHex[i + 2]
                 };
-                for (int index = 0; i < arrayItem.Count; index++)
+                for (int index = 0; index < arrayItem.Count; index++)
                 {
                     arrayString[index] = arrayItem[index].PadLeft(2, '0');
                 }
@@ -899,13 +903,13 @@ namespace ProyectoPGTA_P2
                     arrayHex[i + 4],
                     arrayHex[i + 5],
                 };
-                for (int index = 0; i < arrayItem.Count; index++)
+                for (int index = 0; index < arrayItem.Count; index++)
                 {
                     completeArraystring = completeArraystring.ToString() + Convert.ToString(Convert.ToInt32(arrayItem[index], 16), 2).PadLeft(8, '0');
                 }
                 string[] AA = new string[8];
 
-                for (int index = 0; i < AA.Length; index++)
+                for (int index = 0; index < AA.Length; index++)
                 {
                     AA[index] = String.Concat(completeArraystring[index * 6].ToString(), completeArraystring[index * 6 + 1].ToString(), completeArraystring[index * 6 + 2].ToString(), completeArraystring[index * 6 + 3].ToString(), completeArraystring[index * 6 + 4].ToString(), completeArraystring[index * 6 + 5].ToString());
 
@@ -967,11 +971,11 @@ namespace ProyectoPGTA_P2
                     arrayItem.Add(arrayHex[i + n]);
                     n++;
                 }
-                for (int index = 0; i < arrayItem.Count; index++)
+                for (int index = 0; index < arrayItem.Count; index++)
                 {
                     arrayString[index] = Convert.ToString(Convert.ToInt32(arrayItem[index], 16), 2).PadLeft(8, '0');
                 }
-                for (int index = 0; i < REP; index++)
+                for (int index = 0; index < REP; index++)
                 {
                     int shift = index * 8;
                     BDSDATA = String.Concat(arrayString[shift + 1], arrayString[shift + 2], arrayString[shift + 3], arrayString[shift + 4], arrayString[shift + 5], arrayString[shift + 6], arrayString[shift + 7]);
@@ -1179,7 +1183,7 @@ namespace ProyectoPGTA_P2
                 HEAD = Convert.ToInt32(String.Concat(arrayItem[2], arrayItem[3]), 16) * 45 / 8192f;
 
                 //data = new List<string> { "Ground Speed", GS.ToString() + " kt", "Heading", HEAD.ToString() + " º"};
-                data = new List<string> { GS.ToString() + " kt", HEAD.ToString() + " º" };
+                data = new List<string> { GS13.ToString() + " kt", HEAD.ToString() + " º" };
                 i += 4;
                 items[12] = false;
             }
@@ -1187,15 +1191,20 @@ namespace ProyectoPGTA_P2
             {
                 data = new List<string> { "N/D", "N/D" };
             }
+            SetDataOnDictionary(13, data);
+
             //Item 14
             if (items[13] == true)
             {
-                string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
+                string CNF, RAD, DOU, MAH, CDM;
+                int FX1;
+                string TRE = "N/A", GHO = "N/A", SUP = "N/A", TCC = "N/A";
+                int FX2;
                 bool found = true;
                 arrayItem14.Add(arrayHex[i]);
                 while (found)
                 {
-                    binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
+                    string binaryByte = Convert.ToString(Convert.ToInt32(arrayHex[i], 16), 2).PadLeft(8, '0');
 
                     if (binaryByte[7] == '1')
                     {
@@ -1205,16 +1214,157 @@ namespace ProyectoPGTA_P2
                     else
                     {
                         i++;
-                        itemContainer.SetDataItem14(new DataItem14(arrayItem14));
                         found = false;
                         items[13] = false;
                     }
                 }
+                string a = Convert.ToString(Convert.ToInt32(arrayItem14[0], 16), 2).PadLeft(8, '0');
+                CNF = Convert.ToString(a[0]);
+                switch (CNF)
+                {
+                    case "0":
+                        CNF = "Confirmed Track";
+                        break;
+                    case "1":
+                        CNF = "Tentative Track";
+                        break;
+                    default:
+                        break;
+                }
+
+                RAD = Convert.ToString(String.Concat(a[1], a[2]));
+                switch (RAD)
+                {
+                    case "00":
+                        RAD = "Combined Track";
+                        break;
+                    case "01":
+                        RAD = "PSR Track";
+                        break;
+                    case "10":
+                        RAD = "SSR/Mode S Track";
+                        break;
+                    case "11":
+                        RAD = "Invalid";
+                        break;
+                    default:
+                        break;
+                }
+
+                DOU = Convert.ToString(a[3]);
+                switch (DOU)
+                {
+                    case "0":
+                        DOU = "Normal confidence";
+                        break;
+                    case "1":
+                        DOU = "Low confidence in pilot to track association";
+                        break;
+                    default:
+                        break;
+                }
+
+                MAH = Convert.ToString(a[4]);
+                switch (MAH)
+                {
+                    case "0":
+                        MAH = "No horizontal manoeuvre sensed";
+                        break;
+                    case "1":
+                        MAH = "Horizontal manoeuvre sensed";
+                        break;
+                    default:
+                        break;
+                }
+
+                CDM = Convert.ToString(String.Concat(a[5], a[6]));
+                switch (CDM)
+                {
+                    case "00":
+                        CDM = "Maintaining";
+                        break;
+                    case "01":
+                        CDM = "Climbing";
+                        break;
+                    case "10":
+                        CDM = "Descending";
+                        break;
+                    case "11":
+                        CDM = "Unknown";
+                        break;
+                    default:
+                        break;
+                }
+
+                FX1 = Convert.ToInt32(a[7]);
+
+                if (FX1 == 1)
+                {
+                    string b = Convert.ToString(Convert.ToInt32(arrayItem14[1], 16), 2).PadLeft(8, '0');
+                    TRE = Convert.ToString(b[0]);
+                    switch (TRE)
+                    {
+                        case "0":
+                            TRE = "Track still alive";
+                            break;
+                        case "1":
+                            TRE = "End of track lifetime";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    GHO = Convert.ToString(b[1]);
+                    switch (GHO)
+                    {
+                        case "0":
+                            GHO = "True target track";
+                            break;
+                        case "1":
+                            GHO = "Ghost target track";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    SUP = Convert.ToString(b[2]);
+                    switch (SUP)
+                    {
+                        case "0":
+                            SUP = "No";
+                            break;
+                        case "1":
+                            SUP = "Yes";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    TCC = Convert.ToString(b[3]);
+                    switch (TCC)
+                    {
+                        case "0":
+                            TCC = "Tracking in Radar-Plane mode";
+                            break;
+                        case "1":
+                            TCC = "Slant range correction";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    FX2 = Convert.ToInt32(b[7]);
+                }
+
+                //data = new List<string>{ "CNF", CNF, "RAD", RAD, "DOU", DOU, "MAH", MAH, "CDM", CDM, "TRE", TRE, "GHO", GHO, "SUP", SUP, "TCC", TCC};
+                data = new List<string> { CNF, RAD, DOU, MAH, CDM, TRE, GHO, SUP, TCC };
             }
             else
             {
-                itemContainer.SetDataItem14(new DataItem14());
+                data = new List<string> { "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D" };
             }
+            SetDataOnDictionary(14, data);
+
             //Item 15
             if (items[14] == true)
             {
@@ -1257,19 +1407,25 @@ namespace ProyectoPGTA_P2
             //Item 19
             if (items[18] == true)
             {
+                int Height3D;
                 arrayItem = new List<string>
                 {
                     arrayHex[i],
                     arrayHex[i + 1]
                 };
-                itemContainer.SetDataItem19(new DataItem19(arrayItem));
+                string a = Convert.ToString(Convert.ToInt32(arrayItem[0], 16), 2).PadLeft(8, '0');
+                Height3D = Convert.ToInt32(String.Concat(a[2], a[3], a[4], a[5], a[6], a[7], Convert.ToString(Convert.ToInt32(arrayItem[1], 16), 2).PadLeft(8, '0')), 2) * 25;
+
+                //data = new List<string> { "3D Height", Height3D.ToString() + " ft" };
+                data = new List<string> { Height3D.ToString() + " ft" };
                 i += 2;
                 items[18] = false;
             }
             else
             {
-                itemContainer.SetDataItem19(new DataItem19());
+                data = new List<string> { "N/D" };
             }
+            SetDataOnDictionary(19, data);
             //Item 20
             if (items[19] == true)
             {
@@ -1293,19 +1449,134 @@ namespace ProyectoPGTA_P2
             //Item 21
             if (items[20] == true)
             {
+                string COM, STAT, SI, MSSC, ARC, AIC, B1A, B1B;
+                
                 arrayItem = new List<string>
                 {
                     arrayHex[i],
                     arrayHex[i + 1]
                 };
-                itemContainer.SetDataItem21(new DataItem21(arrayItem));
+                string binaryByte = Convert.ToString(Convert.ToInt32(arrayItem[0], 16), 2).PadLeft(8, '0');
+                string comVector = Convert.ToString(binaryByte[0]) + Convert.ToString(binaryByte[1]) + Convert.ToString(binaryByte[2]);
+                string statVector = Convert.ToString(binaryByte[3]) + Convert.ToString(binaryByte[4]) + Convert.ToString(binaryByte[5]);
+                string si = Convert.ToString(binaryByte[6]);
+                string com = Convert.ToString(Convert.ToInt32(comVector, 2));
+                string stat = Convert.ToString(Convert.ToInt32(statVector, 2));
+                statINT = Convert.ToInt32(stat);
+
+                string binaryByte2 = Convert.ToString(Convert.ToInt32(arrayItem[1], 16), 2).PadLeft(8, '0');
+                string mssc = Convert.ToString(binaryByte2[0]);
+                string arc = Convert.ToString(binaryByte2[1]);
+                string aic = Convert.ToString(binaryByte2[2]);
+                string b1a = Convert.ToString(binaryByte2[3]);
+                string b1b = Convert.ToString(binaryByte2[4]) + Convert.ToString(binaryByte2[5]) + Convert.ToString(binaryByte2[6]) + Convert.ToString(binaryByte2[7]);
+                B1A = b1a;
+                B1B = b1b;
+                if (Convert.ToInt32(com) == 0)
+                {
+                    COM = "No communications capability (surveillance only)";
+                }
+                else if (Convert.ToInt32(com) == 1)
+                {
+                    COM = "Comm. A and Comm. B capability";
+                }
+                else if (Convert.ToInt32(com) == 2)
+                {
+                    COM = "Comm. A, Comm. B and Uplink ELM";
+                }
+                else if (Convert.ToInt32(com) == 3)
+                {
+                    COM = "Comm. A, Comm. B, Uplink ELM and Downlink";
+                }
+                else if (Convert.ToInt32(com) == 4)
+                {
+                    COM = "Level 5 Transponder capability";
+                }
+                else
+                {
+                    COM = "Not assigned";
+                }
+
+                if (Convert.ToInt32(stat) == 0)
+                {
+                    STAT = "No alert, no SPI, aircraft airborne";
+                }
+                else if (Convert.ToInt32(stat) == 1)
+                {
+                    STAT = "No alert, no SPI, aircraft on ground";
+                }
+                else if (Convert.ToInt32(stat) == 2)
+                {
+                    STAT = "Alert, no SPI, aircraft airborne";
+                }
+                else if (Convert.ToInt32(stat) == 3)
+                {
+                    STAT = "Alert, no SPI, aircraft on ground";
+                }
+                else if (Convert.ToInt32(stat) == 4)
+                {
+                    STAT = "Alert,SPI, aircraft airborne or on ground";
+                }
+                else if (Convert.ToInt32(stat) == 5)
+                {
+                    STAT = "No alert,SPI, aircraft airborne or on ground";
+                }
+                else if (Convert.ToInt32(stat) == 6)
+                {
+                    STAT = "Not assigned";
+                }
+                else if (Convert.ToInt32(stat) == 7)
+                {
+                    STAT = "Unknown";
+                }
+                else
+                {
+                    STAT = "Not assigned";
+                }
+
+                if (Convert.ToInt32(si, 2) == 0)
+                {
+                    SI = "Transponder capable on SI";
+                }
+                else
+                {
+                    SI = "Transponder capable on II";
+                }
+                if (Convert.ToInt32(mssc, 2) == 0)
+                {
+                    MSSC = "Not Capability of the specific service of the Mode-S";
+                }
+                else
+                {
+                    MSSC = "Capability of the specific service of the Mode-S";
+                }
+                if (Convert.ToInt32(arc, 2) == 0)
+                {
+                    ARC = "100ft of resolution";
+                }
+                else
+                {
+                    ARC = "25ft of resolution";
+                }
+                if (Convert.ToInt32(aic, 2) == 0)
+                {
+                    AIC = "Not capable of identify itself";
+                }
+                else
+                {
+                    AIC = "Capable of identifying itself";
+                }
+
+                //data = new List<string> { "COM", COM.ToString(),"STAT",STAT.ToString(), "SI", SI.ToString(), "MSSC", MSSC, "ARC",ARC.ToString(), "AIC",AIC.ToString(), "B1A",B1A.ToString(), "B1B",B1B.ToString() };
+                data = new List<string> { COM.ToString(), STAT.ToString(), SI.ToString(), MSSC, ARC.ToString(), AIC.ToString(), B1A.ToString(), B1B.ToString().PadLeft(4, '0') };
                 i += 2;
                 items[20] = false;
             }
             else
             {
-                itemContainer.SetDataItem21(new DataItem21());
+                data = new List<string> { "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D", "N/D" };
             }
+            SetDataOnDictionary(21, data);
             //Item 22
             if (items[21] == true)
             {
@@ -1369,11 +1640,11 @@ namespace ProyectoPGTA_P2
             //If the .FL is negative we change it to 0;          
             double asin;
 
-            if (itemContainer.GetDataItem6().FL < 60)
+            if (FL < 60)
             {
-                if (itemContainer.GetDataItem10().FMSSelectedAlt == "N/A" || itemContainer.GetDataItem10().FMSSelectedAlt == "N/D")
+                if (FMSSelectedAlt == "N/A" || FMSSelectedAlt == "N/D")
                 {
-                    double correctedAltitude1 = itemContainer.GetDataItem6().FL * 100 + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30;
+                    double correctedAltitude1 = FL * 100 + (floatBarPressure - 1013.25) * 30;
                     if (correctedAltitude1 < 0)
                     {
                         asin = 0;
@@ -1381,32 +1652,34 @@ namespace ProyectoPGTA_P2
                     else
                     {
 
-                        asin = (2 * 6371000 * ((correctedAltitude1 * 0.3048) - 2.007 - 25.25) + (correctedAltitude1 * 0.3048) * (correctedAltitude1 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
+                        asin = (2 * 6371000 * ((correctedAltitude1 * 0.3048) - 2.007 - 25.25) + (correctedAltitude1 * 0.3048) * (correctedAltitude1 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (RHO * 1852) * RHO * 1852) / ((2 * RHO * 1852) * (6371000 + 2.007 + 25.25));
                     }
-                    radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
+                    radarPolar = new CoordinatesPolar(RHO * 1852, THETA * (Math.PI / 180), Math.Asin(asin));
                 }
                 else
                 {
-                    if (itemContainer.GetDataItem6().FL == -9999)
+                    if (FL == -9999)
                     {
                         asin = 0;
                     }
                     else
                     {
 
-                        double correctedAltitude1 = itemContainer.GetDataItem6().FL * 100 + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30; //MCP
-                        //double correctedAltitude2 = itemContainer.GetDataItem10().intFMSSelectedAlt + (itemContainer.GetDataItem10().floatBarPressure - 1013.25) * 30; //FMS
+                        double correctedAltitude1 = FL * 100 + (floatBarPressure - 1013.25) * 30; //MCP
+                        //double correctedAltitude2 = intFMSSelectedAlt + (floatBarPressure - 1013.25) * 30; //FMS
 
                         if (correctedAltitude1 < 0)
                         {
                             correctedAltitude1 = 0;
                         }
 
-                        asin = (2 * 6371000 * ((correctedAltitude1 * 0.3048) - 2.007 - 25.25) + (correctedAltitude1 * 0.3048) * (correctedAltitude1 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
+                        asin = (2 * 6371000 * ((correctedAltitude1 * 0.3048) - 2.007 - 25.25) + (correctedAltitude1 * 0.3048) * 
+                            (correctedAltitude1 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - 
+                            (RHO * 1852) * RHO * 1852) / ((2 * RHO * 1852) * (6371000 + 2.007 + 25.25));
                         /*
                         if (asin > 1)
                         {
-                            asin = (2 * 6371000 * ((correctedAltitude2 * 0.3048) - 2.007 - 25.25) + (correctedAltitude2 * 0.3048) * (correctedAltitude2 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
+                            asin = (2 * 6371000 * ((correctedAltitude2 * 0.3048) - 2.007 - 25.25) + (correctedAltitude2 * 0.3048) * (correctedAltitude2 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (RHO * 1852) * RHO * 1852) / ((2 * RHO * 1852) * (6371000 + 2.007 + 25.25));
                         }*/
 
                         if (asin > 1)
@@ -1416,13 +1689,15 @@ namespace ProyectoPGTA_P2
 
 
                     }
-                    radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
+                    radarPolar = new CoordinatesPolar(RHO * 1852, THETA * (Math.PI / 180), Math.Asin(asin));
                 }
             }
             else
             {
-                asin = (2 * 6371000 * ((itemContainer.GetDataItem6().FL * 100 * 0.3048) - 2.007 - 25.25) + (itemContainer.GetDataItem6().FL * 100 * 0.3048) * (itemContainer.GetDataItem6().FL * 100 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - (itemContainer.GetDataItem4().RHO * 1852) * itemContainer.GetDataItem4().RHO * 1852) / ((2 * itemContainer.GetDataItem4().RHO * 1852) * (6371000 + 2.007 + 25.25));
-                radarPolar = new CoordinatesPolar(itemContainer.GetDataItem4().RHO * 1852, itemContainer.GetDataItem4().THETA * (Math.PI / 180), Math.Asin(asin));
+                asin = (2 * 6371000 * ((FL * 100 * 0.3048) - 2.007 - 25.25) + 
+                    (FL * 100 * 0.3048) * (FL * 100 * 0.3048) - (2.007 + 25.25) * (2.007 + 25.25) - 
+                    (RHO * 1852) * RHO * 1852) / ((2 * RHO * 1852) * (6371000 + 2.007 + 25.25));
+                radarPolar = new CoordinatesPolar(RHO * 1852, THETA * (Math.PI / 180), Math.Asin(asin));
             }
             //Here we change from spherical (rho,theta,elevation) to cartesian (X,Y,Z)        
             CoordinatesXYZ radarCartesian = GeoUtils.change_radar_spherical2radar_cartesian(radarPolar);
@@ -1439,106 +1714,7 @@ namespace ProyectoPGTA_P2
             CoordinatesWGS84 geodesic = geoUtils.change_geocentric2geodesic(geocentricSystem);
 
             //And we set the Latitude,Longitude and altitude on the DataItem12 that we know that is empty
-            itemContainer.GetDataItem12().SetData((float)geodesic.Lat * (180 / Math.PI), (float)geodesic.Lon * (180 / Math.PI), (float)geodesic.Height);
-
-
-            //Once the dataItem are decoded we put all the data on the Dictionary.            
-            if (itemContainer.GetDataItem5() != null)
-            {
-                decodedDataPerItem.Add(5, itemContainer.GetDataItem5().GetData());
-            }
-            if (itemContainer.GetDataItem6() != null)
-            {
-                decodedDataPerItem.Add(6, itemContainer.GetDataItem6().GetData());
-            }
-            if (itemContainer.GetDataItem7() != null)
-            {
-                decodedDataPerItem.Add(7, itemContainer.GetDataItem7().GetData());
-            }
-            if (itemContainer.GetDataItem8() != null)
-            {
-                decodedDataPerItem.Add(8, itemContainer.GetDataItem8().GetData());
-            }
-            if (itemContainer.GetDataItem9() != null)
-            {
-                decodedDataPerItem.Add(9, itemContainer.GetDataItem9().GetData());
-            }
-            if (itemContainer.GetDataItem10() != null)
-            {
-                decodedDataPerItem.Add(10, itemContainer.GetDataItem10().GetData());
-            }
-            if (itemContainer.GetDataItem11() != null)
-            {
-                decodedDataPerItem.Add(11, itemContainer.GetDataItem11().GetData());
-            }
-            if (itemContainer.GetDataItem12() != null)
-            {
-                decodedDataPerItem.Add(12, itemContainer.GetDataItem12().GetData());
-            }
-            if (itemContainer.GetDataItem13() != null)
-            {
-                decodedDataPerItem.Add(13, itemContainer.GetDataItem13().GetData());
-            }
-            if (itemContainer.GetDataItem14() != null)
-            {
-                decodedDataPerItem.Add(14, itemContainer.GetDataItem14().GetData());
-            }
-            if (itemContainer.GetDataItem15() != null)
-            {
-                decodedDataPerItem.Add(15, itemContainer.GetDataItem15().GetData());
-            }
-            if (itemContainer.GetDataItem16() != null)
-            {
-                decodedDataPerItem.Add(16, itemContainer.GetDataItem16().GetData());
-            }
-            if (itemContainer.GetDataItem17() != null)
-            {
-                decodedDataPerItem.Add(17, itemContainer.GetDataItem17().GetData());
-            }
-            if (itemContainer.GetDataItem18() != null)
-            {
-                decodedDataPerItem.Add(18, itemContainer.GetDataItem18().GetData());
-            }
-            if (itemContainer.GetDataItem19() != null)
-            {
-                decodedDataPerItem.Add(19, itemContainer.GetDataItem19().GetData());
-            }
-            if (itemContainer.GetDataItem20() != null)
-            {
-                decodedDataPerItem.Add(20, itemContainer.GetDataItem20().GetData());
-            }
-            if (itemContainer.GetDataItem21() != null)
-            {
-                decodedDataPerItem.Add(21, itemContainer.GetDataItem21().GetData());
-            }
-            if (itemContainer.GetDataItem22() != null)
-            {
-                decodedDataPerItem.Add(22, itemContainer.GetDataItem22().GetData());
-            }
-            if (itemContainer.GetDataItem23() != null)
-            {
-                decodedDataPerItem.Add(23, itemContainer.GetDataItem23().GetData());
-            }
-            if (itemContainer.GetDataItem24() != null)
-            {
-                decodedDataPerItem.Add(24, itemContainer.GetDataItem24().GetData());
-            }
-            if (itemContainer.GetDataItem25() != null)
-            {
-                decodedDataPerItem.Add(25, itemContainer.GetDataItem25().GetData());
-            }
-            if (itemContainer.GetDataItem26() != null)
-            {
-                decodedDataPerItem.Add(26, itemContainer.GetDataItem26().GetData());
-            }
-            if (itemContainer.GetDataItem27() != null)
-            {
-                decodedDataPerItem.Add(27, itemContainer.GetDataItem27().GetData());
-            }
-            if (itemContainer.GetDataItem28() != null)
-            {
-                decodedDataPerItem.Add(28, itemContainer.GetDataItem28().GetData());
-            }
+            SetData12((float)geodesic.Lat * (180 / Math.PI), (float)geodesic.Lon * (180 / Math.PI), (float)geodesic.Height);           
 
         }
         public void SetDataOnDictionary(int i, List<string> data)
@@ -1645,6 +1821,7 @@ namespace ProyectoPGTA_P2
             Ycord = Y;
             Zcord = Z;
             data = new List<string> { X.ToString() + "º", Y.ToString() + "º", Z.ToString() + "m" };
+            EditDataOnDictionary(12, data);
         }
     }
 }

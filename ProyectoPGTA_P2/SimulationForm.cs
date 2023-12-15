@@ -41,7 +41,7 @@ namespace ProyectoPGTA_P2
         {
             //Initialization of all components of the simulation
             InitializeComponent();
-            initialTime = Convert.ToInt32(Math.Truncate(avionList[0].itemContainer.GetDataItem2().time));
+            initialTime = Convert.ToInt32(Math.Truncate(avionList[0].time));
             ACVisibles = new Dictionary<string, bool>();
             //Gmap initializationS
             gmap = new GMap.NET.WindowsForms.GMapControl();
@@ -66,14 +66,14 @@ namespace ProyectoPGTA_P2
             timerSimulacion.Interval = startspeed;
             SIMspeed.Text = (4000 / startspeed).ToString() + "x";
 
-            totaltime = Convert.ToInt32(Math.Truncate(avionList[avionList.Count - 1].itemContainer.GetDataItem2().time)) - initialTime;
+            totaltime = Convert.ToInt32(Math.Truncate(avionList[avionList.Count - 1].time)) - initialTime;
 
-            statisticDATA(avionList);
+            //statisticDATA(avionList);
         }
 
         private void statisticDATA (List<CAT48> avionList)
         {
-            string filePath = @"C:\\Users\\baiales\\Desktop\\DRIVE\\XX\\ESTUDIOS\\UNI\\4A\\PGTA\\Inputs pel P3-20231212\\2305_02_dep_lebl.csv";
+            string filePath = @"..\\..\\2305_02_dep_lebl.csv";
             StreamReader reader = new StreamReader(File.OpenRead(filePath));
             AllDayDepartures = new List<string[]>();
             int id = 0;
@@ -240,23 +240,27 @@ namespace ProyectoPGTA_P2
             
             for (int i = 0; i < avionList.Count; i++)
             {
-                string identification = avionList[i].itemContainer.GetDataItem9().AircraftIdentification.Replace(" ", "");
+                if (avionList[i].AircraftIdentification == null)
+                {
+                    avionList[i].AircraftIdentification = "N/A";
+                }
+                string identification = avionList[i].AircraftIdentification.Replace(" ", "");
 
                 if (identification.Length <=3)
                 {
                     //identification = avionList[i].itemContainer.GetDataItem9().AircraftAddress;
-                    identification = "NO ID";
+                    identification = "N/A";
                 }
                 
                 if (!simulacion.ContainsKey(identification))
                 {
                     Avion plane = new Avion(identification);
-                    plane.positionList.Add(new Position(avionList[i].itemContainer.GetDataItem12().Xcord, avionList[i].itemContainer.GetDataItem12().Ycord, avionList[i].itemContainer.GetDataItem2().time, true));
+                    plane.positionList.Add(new Position(avionList[i].Xcord, avionList[i].Ycord, avionList[i].time, true));
                     simulacion.Add(identification, plane);
                 }
                 else
                 {
-                    simulacion[identification].AddPosition(new Position(avionList[i].itemContainer.GetDataItem12().Xcord, avionList[i].itemContainer.GetDataItem12().Ycord, avionList[i].itemContainer.GetDataItem2().time, true));
+                    simulacion[identification].AddPosition(new Position(avionList[i].Xcord, avionList[i].Ycord, avionList[i].time, true));
                 }
             };
         }

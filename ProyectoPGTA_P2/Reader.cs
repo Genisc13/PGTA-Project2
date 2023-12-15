@@ -90,29 +90,30 @@ namespace ProyectoPGTA_P2
 
                     bool ADD = false;
 
-                    string Mode3 = newcat10.itemContainer.GetDataItem3().TYP;
+                    string Mode3 = newcat10.TYP;
                     
                     //Check modeS
                     if (Mode3 == "Single ModeS All-Call" || Mode3 == "Single ModeS Roll-Call" || Mode3 == "ModeS All-Call + PSR" || Mode3 == "ModeS Roll-Call + PSR")
                     {
                         //Check aircraft airborne
-                        int stat = newcat10.itemContainer.GetDataItem21().statINT;
+                        int stat = newcat10.statINT;
 
-                        if (stat == 0 || stat == 2 || stat == 4 || stat == 5)
+                        /*if (stat == 0 || stat == 2 || stat == 4 || stat == 5)
                         {
                             //Check lat and long in a certain range
-                            double lat = newcat10.itemContainer.GetDataItem12().Xcord;
+                            double lat = newcat10.Xcord;
                             
                             if ( lat > 40.9 && lat < 41.7)
                             {
-                                double lon = newcat10.itemContainer.GetDataItem12().Ycord;
+                                double lon = newcat10.Ycord;
 
                                 if (lon > 1.5 && lon < 2.6)
                                 {
                                     ADD = true;
                                 }
                             }
-                        }
+                        }*/
+                        ADD = true;
                     }
 
                     if (ADD == true)
