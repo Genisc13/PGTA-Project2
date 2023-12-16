@@ -98,7 +98,7 @@ namespace ProyectoPGTA_P2
                         //Check aircraft airborne
                         int stat = newcat10.statINT;
 
-                        /*if (stat == 0 || stat == 2 || stat == 4 || stat == 5)
+                        if (stat == 0 || stat == 2 || stat == 4 || stat == 5)
                         {
                             //Check lat and long in a certain range
                             double lat = newcat10.Xcord;
@@ -112,8 +112,7 @@ namespace ProyectoPGTA_P2
                                     ADD = true;
                                 }
                             }
-                        }*/
-                        ADD = true;
+                        }
                     }
 
                     if (ADD == true)

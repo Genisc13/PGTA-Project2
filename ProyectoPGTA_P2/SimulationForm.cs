@@ -68,7 +68,7 @@ namespace ProyectoPGTA_P2
 
             totaltime = Convert.ToInt32(Math.Truncate(avionList[avionList.Count - 1].time)) - initialTime;
 
-            //statisticDATA(avionList);
+            statisticDATA(avionList);
         }
 
         private void statisticDATA (List<CAT48> avionList)
@@ -81,7 +81,7 @@ namespace ProyectoPGTA_P2
             while (!reader.EndOfStream)
             {
                 line = reader.ReadLine();
-                AllDayDepartures.Add(line.Split(';'));
+                AllDayDepartures.Add(line.Split(','));
 
 
                 id++;
