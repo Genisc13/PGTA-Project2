@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Accord.Math;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -106,7 +107,68 @@ namespace ProyectoPGTA_P2
                     
                 }                
             }
+
+            List<float> Distances = new List<float>();
+
+            for (int i = 1; i < orderDepartures.Count; i++)
+            {
+                int time = (int)Math.Floor(orderDepartures[i].pos.Time);
+                Position thispos = orderDepartures[i].pos;
+                Position prepos;
+                string thiswake;
+                string prewake;
+                string preplane = orderDepartures[i-1].name;
+                string thisplane = orderDepartures[i].name;
+                bool found = false;
+
+                for (int j = 0; j < simulacion.Count; j++)
+                {
+                    if (found == true) { break; }
+
+                    if (preplane == simulacion.Keys.ElementAt(j))
+                    {
+                        for (int k = 0; k < simulacion.Values.ElementAt(j).positionList.Count; k++)
+                        {
+                            if (simulacion.Values.ElementAt(j).positionList[k].Time < time + 4 && simulacion.Values.ElementAt(j).positionList[k].Time > time)
+                            {
+                                prepos = simulacion.Values.ElementAt(j).positionList[k];
+
+                                orderDepartures[i].distance = Haversine(prepos, thispos);
+
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                
+                
+            }
+
         }
+
+        private float Haversine(Position pos1, Position pos2)
+        {
+            double EarthRadiusKm = 6371.0;
+
+            double lat1Rad = pos1.X * Math.PI / 180;
+            double lon1Rad = pos1.Y * Math.PI / 180;
+            double lat2Rad = pos2.X * Math.PI / 180;
+            double lon2Rad = pos2.Y * Math.PI / 180;
+
+            double deltaLat = lat2Rad - lat1Rad;
+            double deltaLon = lon2Rad - lon1Rad;
+
+            double a = Math.Sin(deltaLat / 2) * Math.Sin(deltaLat / 2) + Math.Cos(lat1Rad) * Math.Cos(lat2Rad) * Math.Sin(deltaLon / 2) * Math.Sin(deltaLon / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            double distance = EarthRadiusKm * c / 1.852;
+            float dist = (float)Math.Round(distance, 2);
+
+            return dist;
+        }
+
         private List<Departure> getPlanesDEPAtTime(int step)
         {
             int offset = 4;
@@ -129,9 +191,9 @@ namespace ProyectoPGTA_P2
                         {
                             if (Math.Abs(avion.positionList[j].Time - step) < offset)
                             {
-                                if (avion.positionList[j].X > 41.2873 && avion.positionList[j].X < 41.295)
+                                if (avion.positionList[j].X > 41.2817 && avion.positionList[j].X < 41.294) 
                                 {
-                                    if (avion.positionList[j].Y > 2.087 && avion.positionList[j].Y < 2.1039)
+                                    if (avion.positionList[j].Y > 2.073 && avion.positionList[j].Y < 2.1041)
                                     {
                                         string wake = "N/A";
 
@@ -140,12 +202,13 @@ namespace ProyectoPGTA_P2
                                             string compname = AllDayDepartures[k][1];
                                             if (compname == avion.Name)
                                             {
-                                                wake = AllDayDepartures[k][5]; ;
+                                                wake = AllDayDepartures[k][5];
+                                                stepList.Add(new Departure(avion.Name, wake, avion.positionList[j].X, avion.positionList[j].Y, avion.positionList[j].Time));
                                                 break;
                                             }
                                         }
 
-                                        stepList.Add(new Departure(avion.Name, wake, avion.positionList[j].X, avion.positionList[j].Y, avion.positionList[j].Time));
+                                        
                                         break;
                                     }
                                 }
@@ -204,6 +267,7 @@ namespace ProyectoPGTA_P2
             public string name;
             public string estela;
             public Position pos;
+            public float distance;
 
             public Departure(string Name, string Estela, double x, double y, float time)
             {
