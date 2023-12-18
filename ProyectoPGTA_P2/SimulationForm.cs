@@ -1,4 +1,5 @@
 ﻿using Accord.Math;
+using GMap.NET.MapProviders;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ProyectoPGTA_P2.SimulationForm;
 
 namespace ProyectoPGTA_P2
 {
@@ -30,6 +33,8 @@ namespace ProyectoPGTA_P2
         //The starting speed of the 
         int startspeed = 1 * 4000;
 
+        public List<CAT48> avionList;
+
         public List<string[]> AllDayDepartures;
         /// <summary>
         /// Here we have the simulation Form, it takes the decoded data and transforms it
@@ -38,8 +43,10 @@ namespace ProyectoPGTA_P2
         /// off all the planes
         /// </summary>
         /// <param name="avionList"></param>
-        public SimulationForm(List<CAT48> avionList)
+        public SimulationForm(List<CAT48> avionList1)
         {
+            avionList = avionList1;
+
             //Initialization of all components of the simulation
             InitializeComponent();
             initialTime = Convert.ToInt32(Math.Truncate(avionList[0].time));
@@ -68,11 +75,134 @@ namespace ProyectoPGTA_P2
             SIMspeed.Text = (4000 / startspeed).ToString() + "x";
 
             totaltime = Convert.ToInt32(Math.Truncate(avionList[avionList.Count - 1].time)) - initialTime;
-
-            statisticDATA(avionList);
         }
 
-        private void statisticDATA (List<CAT48> avionList)
+        private void RadarMinimaBtn_Click(object sender, EventArgs e)
+        {
+            RadarMinima();
+        }
+        private void WakeMinimaBtn_Click(object sender, EventArgs e)
+        {
+            WakeMinima();
+        }
+
+        private void LoaMinimaBtn_Click(object sender, EventArgs e)
+        {
+            LoAMinima();
+        }
+
+        private void RadarMinima() //Distancia minima 3NM
+        {
+            List<string[]> breakMinima = new List<string[]>();
+
+            for (int time = initialTime; time < totaltime + initialTime; time+=4)
+            {
+                Parallel.ForEach(simulacion.Values, avion1 =>
+                {
+                    Parallel.ForEach(simulacion.Values, avion2 =>
+                    {
+                        if (avion2 != avion1)
+                        {
+                            Position Pos1 = new Position(0, 0, -1, false);
+                            Position Pos2 = new Position(0, 0, -1, false);
+
+                            bool Av1 = false;
+                            bool Av2 = false;
+
+                            for (int i = 0; i < avion1.positionList.Count; i++)
+                            {
+                                if (avion1.positionList[i].Time < time + 4 && avion1.positionList[i].Time > time)
+                                {
+                                    Pos1 = avion1.positionList[i];
+                                    Av1 = true;
+                                    break;
+                                }
+                            }
+
+                            for (int i = 0; i < avion2.positionList.Count; i++)
+                            {
+                                if (avion2.positionList[i].Time < time + 4 && avion2.positionList[i].Time > time)
+                                {
+                                    Pos2 = avion2.positionList[i];
+                                    Av2 = true;
+                                    break;
+                                }
+                            }
+
+                            if (Av1 && Av2 && Pos1.Time != -1)
+                            {
+                                float distance = (float)Math.Round(Haversine(Pos1, Pos2), 2);
+
+                                if (distance < 3)
+                                {
+                                    string[] newRow = { avion1.Name, avion2.Name, time.ToString(), distance.ToString() };
+                                    breakMinima.Add(newRow);
+                                }
+                            }
+                        }
+                    }
+                    );
+                }
+                );
+                /*
+                for(int a = 0;  a < simulacion.Count; a++)
+                {
+                    for(int b = 0;  b < simulacion.Count; b++)
+                    {
+                        Avion avion1 = simulacion.Values.ElementAt(a);
+                        Avion avion2 = simulacion.Values.ElementAt(b);
+
+                        if (avion2 != avion1)
+                        {
+                            Position Pos1 = new Position(0, 0, -1, false);
+                            Position Pos2 = new Position(0, 0, -1, false);
+
+                            bool Av1 = false;
+                            bool Av2 = false;
+
+                            for (int i = 0; i < avion1.positionList.Count; i++)
+                            {
+                                if (avion1.positionList[i].Time < time + 4 && avion1.positionList[i].Time > time)
+                                {
+                                    Pos1 = avion1.positionList[i];
+                                    Av1 = true;
+                                    break;
+                                }
+                            }
+
+                            for (int i = 0; i < avion2.positionList.Count; i++)
+                            {
+                                if (avion2.positionList[i].Time < time + 4 && avion2.positionList[i].Time > time)
+                                {
+                                    Pos2 = avion2.positionList[i];
+                                    Av2 = true;
+                                    break;
+                                }
+                            }
+
+                            if (Av1 && Av2 && Pos1.Time != -1)
+                            {
+                                float distance = (float)Math.Round(Haversine(Pos1, Pos2), 2);
+
+                                if (distance < 3)
+                                {
+                                    string[] newRow = { avion1.Name, avion2.Name, time.ToString(), distance.ToString() };
+                                    breakMinima.Add(newRow);
+                                }
+                            }
+                        }
+                    }
+                }*/
+
+            }
+        }
+
+        private void LoAMinima() //No se lo que es
+        {
+
+        }
+
+        private void WakeMinima () //Distancia minima entre despegues
         {
             string filePath = @"..\\..\\2305_02_dep_lebl.csv";
             StreamReader reader = new StreamReader(File.OpenRead(filePath));
@@ -115,8 +245,6 @@ namespace ProyectoPGTA_P2
                 int time = (int)Math.Floor(orderDepartures[i].pos.Time);
                 Position thispos = orderDepartures[i].pos;
                 Position prepos;
-                string thiswake;
-                string prewake;
                 string preplane = orderDepartures[i-1].name;
                 string thisplane = orderDepartures[i].name;
                 bool found = false;
@@ -254,10 +382,6 @@ namespace ProyectoPGTA_P2
                 i++;
             }
             */
-            if (stepList.Count > 0)
-            {
-                int a = 0;
-            }
 
             return stepList;
         }
@@ -649,5 +773,6 @@ namespace ProyectoPGTA_P2
         {
             return string.Join(" ", positions.Select(pos => $"{pos.Y.ToString().Replace(",", ".")},{pos.X.ToString().Replace(",", ".")}"));
         }
+
     }
 }
