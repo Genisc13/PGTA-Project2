@@ -94,107 +94,58 @@ namespace ProyectoPGTA_P2
         private void RadarMinima() //Distancia minima 3NM
         {
             List<string[]> breakMinima = new List<string[]>();
-
-            for (int time = initialTime; time < totaltime + initialTime; time+=4)
+            int calcdist = 0;
+            List<List<Avion>> planes = new List<List<Avion>>();
+            
+            int[] timeMatrix = new int[totaltime/4];
+            int index = 0;
+            for (var i = initialTime; index < timeMatrix.Length; i += 4)
             {
-                Parallel.ForEach(simulacion.Values, avion1 =>
-                {
-                    Parallel.ForEach(simulacion.Values, avion2 =>
-                    {
-                        if (avion2 != avion1)
-                        {
-                            Position Pos1 = new Position(0, 0, -1, false);
-                            Position Pos2 = new Position(0, 0, -1, false);
-
-                            bool Av1 = false;
-                            bool Av2 = false;
-
-                            for (int i = 0; i < avion1.positionList.Count; i++)
-                            {
-                                if (avion1.positionList[i].Time < time + 4 && avion1.positionList[i].Time > time)
-                                {
-                                    Pos1 = avion1.positionList[i];
-                                    Av1 = true;
-                                    break;
-                                }
-                            }
-
-                            for (int i = 0; i < avion2.positionList.Count; i++)
-                            {
-                                if (avion2.positionList[i].Time < time + 4 && avion2.positionList[i].Time > time)
-                                {
-                                    Pos2 = avion2.positionList[i];
-                                    Av2 = true;
-                                    break;
-                                }
-                            }
-
-                            if (Av1 && Av2 && Pos1.Time != -1)
-                            {
-                                float distance = (float)Math.Round(Haversine(Pos1, Pos2), 2);
-
-                                if (distance < 3)
-                                {
-                                    string[] newRow = { avion1.Name, avion2.Name, time.ToString(), distance.ToString() };
-                                    breakMinima.Add(newRow);
-                                }
-                            }
-                        }
-                    }
-                    );
-                }
-                );
-                /*
-                for(int a = 0;  a < simulacion.Count; a++)
-                {
-                    for(int b = 0;  b < simulacion.Count; b++)
-                    {
-                        Avion avion1 = simulacion.Values.ElementAt(a);
-                        Avion avion2 = simulacion.Values.ElementAt(b);
-
-                        if (avion2 != avion1)
-                        {
-                            Position Pos1 = new Position(0, 0, -1, false);
-                            Position Pos2 = new Position(0, 0, -1, false);
-
-                            bool Av1 = false;
-                            bool Av2 = false;
-
-                            for (int i = 0; i < avion1.positionList.Count; i++)
-                            {
-                                if (avion1.positionList[i].Time < time + 4 && avion1.positionList[i].Time > time)
-                                {
-                                    Pos1 = avion1.positionList[i];
-                                    Av1 = true;
-                                    break;
-                                }
-                            }
-
-                            for (int i = 0; i < avion2.positionList.Count; i++)
-                            {
-                                if (avion2.positionList[i].Time < time + 4 && avion2.positionList[i].Time > time)
-                                {
-                                    Pos2 = avion2.positionList[i];
-                                    Av2 = true;
-                                    break;
-                                }
-                            }
-
-                            if (Av1 && Av2 && Pos1.Time != -1)
-                            {
-                                float distance = (float)Math.Round(Haversine(Pos1, Pos2), 2);
-
-                                if (distance < 3)
-                                {
-                                    string[] newRow = { avion1.Name, avion2.Name, time.ToString(), distance.ToString() };
-                                    breakMinima.Add(newRow);
-                                }
-                            }
-                        }
-                    }
-                }*/
-
+                timeMatrix[index] = i;
+                index++;
             }
+
+            Parallel.ForEach(timeMatrix, time =>
+            {
+                List<Avion> planestime = new List<Avion>();
+                List<Position> positionstime = new List<Position>();
+
+                Parallel.ForEach(simulacion.Values, Avion1 =>
+                {
+                    Parallel.ForEach(Avion1.positionList, pos1 =>
+                    {
+                        if(pos1.Time > time && pos1.Time < time + 4)
+                        {
+                            planestime.Add(Avion1);
+                            positionstime.Add(pos1);
+                        }
+                    });
+                });
+                planes.Add(planestime);
+
+                for (int i = 0; i < positionstime.Count; i++)
+                {
+                    for (int j = 0; j < positionstime.Count; j++)
+                    {
+                        if (positionstime[i] != positionstime[j])
+                        {
+                            float distance = (float)Math.Round(Haversine(positionstime[i], positionstime[j]),2);
+                            if(distance < 3)
+                            {
+                                string[] row = new string[] { planestime[i].Name, planestime[j].Name, time.ToString(), distance.ToString() };
+                                breakMinima.Add(row);
+                            }
+                            else
+                            {
+                                calcdist++;
+                            }
+                            
+                        }
+                    }
+                }
+                
+            });
+
         }
 
         private void LoAMinima() //No se lo que es
