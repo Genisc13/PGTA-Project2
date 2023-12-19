@@ -1,5 +1,6 @@
 ﻿using Accord.Math;
 using GMap.NET.MapProviders;
+using MultiCAT6.Utils;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
@@ -31,6 +32,7 @@ namespace ProyectoPGTA_P2
         public GMap.NET.WindowsForms.GMapControl gmap;
         //Here there is a dictionary with the visible aircrafts
         public Dictionary<string, bool> ACVisibles;
+        public GeoUtils geoutils = new GeoUtils(0.081819190842622, 6378137);
         //The starting speed of the 
         int startspeed = 1 * 4000;
 
@@ -166,8 +168,11 @@ namespace ProyectoPGTA_P2
                     }
 
                     // Combina las listas locales en la lista global después de que se hayan completado las iteraciones
-                    planestime.AddRange(planestimeLocal);
-                    positionstime.AddRange(positionstimeLocal);
+                    lock (breakMinima)
+                    {
+                        planestime.AddRange(planestimeLocal);
+                        positionstime.AddRange(positionstimeLocal);
+                    }                  
                 }
 
                 List<string[]> localBreakMinima = new List<string[]>(); // Lista local para almacenar resultados
@@ -177,21 +182,24 @@ namespace ProyectoPGTA_P2
                     for (int j = 0; j < positionstime.Count; j++)
                     {
                         if (positionstime[i] != positionstime[j])
-                        {
-                            float distance = (float)Math.Round(Haversine(positionstime[i], positionstime[j]), 2);
+                        {                           
+                            float distance = (float)Math.Round(Distance2D(positionstime[i], positionstime[j]), 2);
+
                             if (distance < 3)
                             {
-                                string[] row = new string[] { planestime[i].Name, planestime[j].Name, time.ToString(), distance.ToString() };
+                                string[] row = new string[] { planestime[i].Name, planestime[j].Name, time.ToString(), ((float)Math.Round(Distance2D(positionstime[i], positionstime[j]), 2)).ToString() };
                                 localBreakMinima.Add(row);
-                                
+
                             }
-                            calcdist++;
+
+                            calcdist++;                          
                         }
                     }
                 }
-
-                // Agrega los resultados locales a la lista global sin problemas de concurrencia
-                breakMinima.AddRange(localBreakMinima);
+                lock (breakMinima)
+                {                  
+                    breakMinima.AddRange(localBreakMinima);
+                }               
             });
             string[,] breakminimastring = new string[breakMinima.Count, 4];
             for(int i = 0; i < breakMinima.Count; i++)
@@ -267,7 +275,7 @@ namespace ProyectoPGTA_P2
                             {
                                 prepos = simulacion.Values.ElementAt(j).positionList[k];
 
-                                orderDepartures[i].distance = Haversine(prepos, thispos);
+                                orderDepartures[i].distance = Distance2D(prepos, thispos);
 
                                 found = true;
                                 break;
@@ -282,25 +290,31 @@ namespace ProyectoPGTA_P2
 
         }
 
-        private float Haversine(Position pos1, Position pos2)
+        private float Distance2D(Position pos1, Position pos2)
         {
-            double EarthRadiusKm = 6371.0;
+            
 
             double lat1Rad = pos1.X * Math.PI / 180;
             double lon1Rad = pos1.Y * Math.PI / 180;
             double lat2Rad = pos2.X * Math.PI / 180;
             double lon2Rad = pos2.Y * Math.PI / 180;
 
-            double deltaLat = lat2Rad - lat1Rad;
-            double deltaLon = lon2Rad - lon1Rad;
+            CoordinatesWGS84 pos1coords = new CoordinatesWGS84(lat1Rad,lon1Rad,pos1.Z);
+            CoordinatesWGS84 pos2coords = new CoordinatesWGS84(lat2Rad, lon2Rad, pos2.Z);
 
-            double a = Math.Sin(deltaLat / 2) * Math.Sin(deltaLat / 2) + Math.Cos(lat1Rad) * Math.Cos(lat2Rad) * Math.Sin(deltaLon / 2) * Math.Sin(deltaLon / 2);
-            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            CoordinatesXYZ pos1XYZ = geoutils.change_geodesic2geocentric(pos1coords);
+            CoordinatesXYZ pos2XYZ = geoutils.change_geodesic2geocentric(pos2coords);
 
-            double distance = EarthRadiusKm * c / 1.852;
-            float dist = (float)Math.Round(distance, 2);
+            CoordinatesXYZ pos1systemCart = geoutils.change_geocentric2system_cartesian(pos1XYZ);
+            CoordinatesXYZ pos2systemCart = geoutils.change_geocentric2system_cartesian(pos2XYZ);
 
-            return dist;
+            CoordinatesUVH pos1systemStereo = geoutils.change_system_cartesian2stereographic(pos1systemCart);
+            CoordinatesUVH pos2systemStereo = geoutils.change_system_cartesian2stereographic(pos2systemCart);
+
+            float delta_x = (float)((pos1systemStereo.U - pos2systemStereo.U)*(pos1systemStereo.U - pos2systemStereo.U)) ;
+            float delta_y = (float)((pos1systemStereo.V - pos2systemStereo.V) * (pos1systemStereo.V - pos2systemStereo.V));
+
+            return (float)(Math.Sqrt(delta_x+delta_y)/1852);
         }
 
         private List<Departure> getPlanesDEPAtTime(int step)
@@ -337,7 +351,7 @@ namespace ProyectoPGTA_P2
                                             if (compname == avion.Name)
                                             {
                                                 wake = AllDayDepartures[k][5];
-                                                stepList.Add(new Departure(avion.Name, wake, avion.positionList[j].X, avion.positionList[j].Y, avion.positionList[j].Time));
+                                                stepList.Add(new Departure(avion.Name, wake, avion.positionList[j].X, avion.positionList[j].Y,avion.positionList[j].Z, avion.positionList[j].Time));
                                                 break;
                                             }
                                         }
@@ -399,11 +413,12 @@ namespace ProyectoPGTA_P2
             public Position pos;
             public float distance;
 
-            public Departure(string Name, string Estela, double x, double y, float time)
+
+            public Departure(string Name, string Estela, double x, double y, double z, float time)
             {
                 name = Name;
                 estela = Estela;
-                pos = new Position(x, y, time, true) ;
+                pos = new Position(x, y, z, time, true) ;
             }
         }
 
@@ -449,12 +464,12 @@ namespace ProyectoPGTA_P2
                 if (!simulacion.ContainsKey(identification))
                 {
                     Avion plane = new Avion(identification);
-                    plane.positionList.Add(new Position(avionList[i].Xcord, avionList[i].Ycord, avionList[i].time, true));
+                    plane.positionList.Add(new Position(avionList[i].Xcord, avionList[i].Ycord, avionList[i].Zcord, avionList[i].time, true));
                     simulacion.Add(identification, plane);
                 }
                 else
                 {
-                    simulacion[identification].AddPosition(new Position(avionList[i].Xcord, avionList[i].Ycord, avionList[i].time, true));
+                    simulacion[identification].AddPosition(new Position(avionList[i].Xcord, avionList[i].Ycord, avionList[i].Zcord, avionList[i].time, true));
                 }
             };
         }
@@ -508,12 +523,14 @@ namespace ProyectoPGTA_P2
         {
             public double X { get; set; }
             public double Y { get; set; }
+            public double Z { get; set; }
             public float Time { get; set; }
             public bool Draw { get; set; }
-            public Position(double x, double y, float time, bool draw)
+            public Position(double x, double y, double z, float time, bool draw)
             {
                 X = x;
                 Y = y;
+                Z = z;
                 Time = time;
                 Draw = draw;
             }
@@ -593,7 +610,7 @@ namespace ProyectoPGTA_P2
                             // Crear un marcador
                             GMap.NET.WindowsForms.Markers.GMarkerGoogle marcador = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(posicion, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red)
                             {
-                                ToolTipText = avion.Name + " on time: " + avion.positionList[j].Time.ToString()
+                                ToolTipText = avion.Name + " on time: " + avion.positionList[j].Time.ToString() + " at altitude: " + avion.positionList[j].Z
                             };
                             overlay.Markers.Add(marcador);
                             break;

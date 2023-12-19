@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ASTERIX DECODER G14.exe" size="382960">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ASTERIX DECODER G14.exe" size="383472">
       <assemblyIdentity name="ASTERIX DECODER G14" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>1Hsod9bu73n36KBd6gtYMw0xxfW4fRhU3qQR7esAlgA=</dsig:DigestValue>
+        <dsig:DigestValue>BZgESzfRBh0yHw+4K61G9mtqZST6vQ4q4/NAJAlDR/M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -570,13 +570,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Accord.dll.config" size="220">
+  <file name="Accord.dll.config" size="213">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>rXk1gk79Wcezlt/jAmK/WsVZR0elUxDKDqpL2eQSvj4=</dsig:DigestValue>
+      <dsig:DigestValue>MEnoP5t/qShagvs8d0DpwiW2ajH4BdNYKpv9NLXdjm4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="arm64\libSkiaSharp.dll" size="8084920">
