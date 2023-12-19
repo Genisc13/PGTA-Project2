@@ -2,6 +2,7 @@
 using GMap.NET.MapProviders;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -105,7 +106,7 @@ namespace ProyectoPGTA_P2
                 index++;
             }
 
-            Parallel.ForEach(timeMatrix, time =>
+            /*Parallel.ForEach(timeMatrix, time =>
             {
                 List<Avion> planestime = new List<Avion>();
                 List<Position> positionstime = new List<Position>();
@@ -121,7 +122,7 @@ namespace ProyectoPGTA_P2
                         }
                     });
                 });
-                planes.Add(planestime);
+                planes.Add(planestime); //NO SE USA
 
                 for (int i = 0; i < positionstime.Count; i++)
                 {
@@ -135,17 +136,71 @@ namespace ProyectoPGTA_P2
                                 string[] row = new string[] { planestime[i].Name, planestime[j].Name, time.ToString(), distance.ToString() };
                                 breakMinima.Add(row);
                             }
-                            else
-                            {
-                                calcdist++;
-                            }
+                            
+                            
+                            calcdist++;
+                            
                             
                         }
                     }
                 }
                 
-            });
+            });*/
+            Parallel.ForEach(timeMatrix, time =>
+            {
+                List<Avion> planestime = new List<Avion>();
+                List<Position> positionstime = new List<Position>();
 
+                foreach(Avion Avion1 in simulacion.Values)
+                {
+                    ConcurrentBag<Avion> planestimeLocal = new ConcurrentBag<Avion>();
+                    ConcurrentBag<Position> positionstimeLocal = new ConcurrentBag<Position>();
+
+                    foreach (Position pos1 in Avion1.positionList)
+                    {
+                        if (pos1.Time > time && pos1.Time < time + 4 && pos1 != null)
+                        {
+                            planestimeLocal.Add(Avion1);
+                            positionstimeLocal.Add(pos1);
+                        }
+                    }
+
+                    // Combina las listas locales en la lista global después de que se hayan completado las iteraciones
+                    planestime.AddRange(planestimeLocal);
+                    positionstime.AddRange(positionstimeLocal);
+                }
+
+                List<string[]> localBreakMinima = new List<string[]>(); // Lista local para almacenar resultados
+
+                for (int i = 0; i < positionstime.Count; i++)
+                {
+                    for (int j = 0; j < positionstime.Count; j++)
+                    {
+                        if (positionstime[i] != positionstime[j])
+                        {
+                            float distance = (float)Math.Round(Haversine(positionstime[i], positionstime[j]), 2);
+                            if (distance < 3)
+                            {
+                                string[] row = new string[] { planestime[i].Name, planestime[j].Name, time.ToString(), distance.ToString() };
+                                localBreakMinima.Add(row);
+                                
+                            }
+                            calcdist++;
+                        }
+                    }
+                }
+
+                // Agrega los resultados locales a la lista global sin problemas de concurrencia
+                breakMinima.AddRange(localBreakMinima);
+            });
+            string[,] breakminimastring = new string[breakMinima.Count, 4];
+            for(int i = 0; i < breakMinima.Count; i++)
+            {
+                breakminimastring[i, 0] = breakMinima[i][0].ToString();
+                breakminimastring[i, 1] = breakMinima[i][1].ToString();
+                breakminimastring[i, 2] = breakMinima[i][2].ToString();
+                breakminimastring[i, 3] = breakMinima[i][3].ToString();
+            }
         }
 
         private void LoAMinima() //No se lo que es
