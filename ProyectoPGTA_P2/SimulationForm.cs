@@ -235,7 +235,165 @@ namespace ProyectoPGTA_P2
             }
         }
 
-        private void RadarMinima() //Distancia minima 3NM
+        private void RadarMinima()
+        {
+            FolderBrowserDialog ofd = new FolderBrowserDialog();
+            ofd.SelectedPath = "..\\";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                List<string[]> breakMinima = new List<string[]>();
+                List<Departure> orderDepartures = new List<Departure>();
+
+                for (int i = initialTime; i < initialTime + totaltime; i += 4)
+                {
+                    List<Departure> DEP = getPlanesDEPAtTime(i);
+
+                    if (DEP.Count > 0)
+                    {
+                        if (orderDepartures.Count == 0)
+                        {
+                            orderDepartures.Add(DEP[0]);
+                        }
+
+                        if (orderDepartures[orderDepartures.Count - 1].name != DEP[0].name)
+                        {
+                            orderDepartures.Add(DEP[0]);
+                        }
+                    }
+                }
+
+                List<float> Distances = new List<float>();
+
+                for (int i = 1; i < orderDepartures.Count; i++)
+                {
+                    int time = (int)Math.Floor(orderDepartures[i].pos.Time);
+                    Position thispos = orderDepartures[i].pos;
+                    Position prepos;
+                    string preplane = orderDepartures[i - 1].name;
+                    string thisplane = orderDepartures[i].name;
+
+                    for (int k = 0; k < simulacion[preplane].positionList.Count; k++)
+                    {
+                        if (simulacion[preplane].positionList[k].Time < time + 4 && simulacion[preplane].positionList[k].Time > time)
+                        {
+                            prepos = simulacion[preplane].positionList[k];
+
+                            float dist = Distance2D(prepos, thispos);
+                            orderDepartures[i].distance = dist;
+
+                            if (dist < 3)
+                            { 
+                                breakMinima.Add(new string[] { orderDepartures[i].name, orderDepartures[i].estela, orderDepartures[i - 1].name, orderDepartures[i - 1].estela, orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                            }
+
+                            break;
+                        }
+                    }
+
+
+                }
+                string filePath1 = ofd.SelectedPath;
+                // Create a StringBuilder to store the CSV content
+                StringBuilder csvContent = new StringBuilder();
+                //Here the CSV content is written string by string
+                int h = 1;
+                csvContent.AppendLine("NUM;Name;Estela;Lat;Lon;Altitude;Time;Distance");
+                foreach (var minimadata in orderDepartures)
+                {
+                    StringBuilder rowDataBuilder = new StringBuilder();
+                    // Iterates on the data and agregates every row at the CSV content 
+                    rowDataBuilder.Append(h.ToString());
+                    rowDataBuilder.Append(";");
+                    rowDataBuilder.Append(minimadata.name.ToString());
+                    rowDataBuilder.Append(";");
+                    rowDataBuilder.Append(minimadata.estela.ToString());
+                    rowDataBuilder.Append(";");
+                    if (minimadata.pos.X.ToString().Contains(","))
+                    {
+                        rowDataBuilder.Append(minimadata.pos.X.ToString().Replace(",", "."));
+                    }
+                    else
+                    {
+                        rowDataBuilder.Append(minimadata.pos.X.ToString());
+                    }
+                    rowDataBuilder.Append(";");
+                    if (minimadata.pos.Y.ToString().Contains(","))
+                    {
+                        rowDataBuilder.Append(minimadata.pos.Y.ToString().Replace(",", "."));
+                    }
+                    else
+                    {
+                        rowDataBuilder.Append(minimadata.pos.Y.ToString());
+                    }
+                    rowDataBuilder.Append(";");
+                    if (minimadata.pos.Z.ToString().Contains(","))
+                    {
+                        rowDataBuilder.Append(minimadata.pos.Z.ToString().Replace(",", "."));
+                    }
+                    else
+                    {
+                        rowDataBuilder.Append(minimadata.pos.Z.ToString());
+                    }
+                    rowDataBuilder.Append(";");
+
+                    rowDataBuilder.Append(minimadata.pos.Time.ToString());
+
+                    rowDataBuilder.Append(";");
+                    if (minimadata.distance.ToString().Contains(","))
+                    {
+                        rowDataBuilder.Append(minimadata.distance.ToString().Replace(",", "."));
+                    }
+                    else
+                    {
+                        rowDataBuilder.Append(minimadata.distance.ToString());
+                    }
+
+                    string rowData = rowDataBuilder.ToString();
+                    csvContent.AppendLine(rowData);
+                    h++;
+                }
+                // Save the complete content on a .csv file
+                File.WriteAllText(filePath1 + "\\" + "RadarMinimaData.csv", csvContent.ToString());
+
+                filePath1 = ofd.SelectedPath;
+                // Create a StringBuilder to store the CSV content
+                csvContent = new StringBuilder();
+                //Here the CSV content is written string by string
+                h = 1;
+                csvContent.AppendLine("NUM;ID_1;WAKE_1;ID_2;WAKE_2;Time;Distance"); //PODRIAMOS QUITAR LOS WAKE
+                foreach (var minimadata in breakMinima)
+                {
+                    StringBuilder rowDataBuilder = new StringBuilder();
+                    // Iterates on the data and agregates every row at the CSV content 
+                    rowDataBuilder.Append(h.ToString());
+                    foreach (var value in minimadata)
+                    {
+                        rowDataBuilder.Append(";");
+                        if (value.ToString().Contains(","))
+                        {
+                            rowDataBuilder.Append(value.ToString().Replace(",", "."));
+                        }
+                        else
+                        {
+                            rowDataBuilder.Append(value.ToString());
+                        }
+                    }
+                    string rowData = rowDataBuilder.ToString();
+                    csvContent.AppendLine(rowData);
+                    h++;
+                }
+                // Save the complete content on a .csv file
+                File.WriteAllText(filePath1 + "\\" + "BreakRadarMinimaData.csv", csvContent.ToString());
+
+                // Shows a confirmation message
+                MessageBox.Show("CSV file succesfully generated: " + filePath1 + "\\" + "BreakRadarMinimaData.csv");
+                // Shows a confirmation message
+                MessageBox.Show("CSV file succesfully generated: " + filePath1 + "\\" + "RadarMinimaData.csv");
+            }
+        }
+
+        private void AllRadarMinima() //Distancia minima 3NM TODOS ENTRE TODOS
         {
             FolderBrowserDialog ofd = new FolderBrowserDialog();
             ofd.SelectedPath = "..\\";
@@ -635,7 +793,7 @@ namespace ProyectoPGTA_P2
             }
         }
 
-        private void WakeMinima () //Distancia minima entre despegues
+        private void WakeMinima () //Distancia minima WAKE entre despegues
         {
             FolderBrowserDialog ofd = new FolderBrowserDialog();
             ofd.SelectedPath = "..\\";
@@ -681,7 +839,7 @@ namespace ProyectoPGTA_P2
 
                             orderDepartures[i].distance = Distance2D(prepos, thispos);
 
-                            if (orderDepartures[i - 1].estela == "Ligera")
+                            /*if (orderDepartures[i - 1].estela == "Ligera")
                             {
                                 if (orderDepartures[i].estela == "Ligera")
                                 {
@@ -716,7 +874,7 @@ namespace ProyectoPGTA_P2
                                     }
                                 }
                             }
-                            else if (orderDepartures[i - 1].estela == "Media")
+                            else */if (orderDepartures[i - 1].estela == "Media")
                             {
                                 if (orderDepartures[i].estela == "Ligera")
                                 {
@@ -726,7 +884,7 @@ namespace ProyectoPGTA_P2
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
-                                else if (orderDepartures[i].estela == "Media")
+                                /*else  if (orderDepartures[i].estela == "Media")
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
@@ -749,7 +907,7 @@ namespace ProyectoPGTA_P2
                                         breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
-                                }
+                                }*/
                             }
                             else if (orderDepartures[i - 1].estela == "Pesada")
                             {
@@ -777,16 +935,16 @@ namespace ProyectoPGTA_P2
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
-                                else if (orderDepartures[i].estela == "Super Pesada")
+                                /*else if (orderDepartures[i].estela == "Super Pesada")
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
                                         breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
-                                }
+                                }*/
                             }
-                            else if (orderDepartures[i - 1].estela == "Super Pesada")
+                            /*else if (orderDepartures[i - 1].estela == "Super Pesada")
                             {
                                 if (orderDepartures[i].estela == "Ligera")
                                 {
@@ -820,7 +978,7 @@ namespace ProyectoPGTA_P2
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
-                            }
+                            }*/
                             break;
                         }
                     }
