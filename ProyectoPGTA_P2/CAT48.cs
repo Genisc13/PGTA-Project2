@@ -56,7 +56,7 @@ namespace ProyectoPGTA_P2
         //DataItem21:
         public int statINT;
         //List of strings that contains the values of the Binary code on Hex
-        public List<string> arrayHex;
+        public string[] arrayHex;
         public List<string> data;
         //Category number
         public int CAT;
@@ -71,7 +71,7 @@ namespace ProyectoPGTA_P2
         /// the correspondant dataItems on it listed on a dictionary
         /// </summary>
         /// <param name="arrayhex"></param>
-        public CAT48(List<string> arrayhex)
+        public CAT48(string[] arrayhex)
         {
             //We create an instance of GeoUtils for the coordiantes transformation
             GeoUtils geoUtils = new GeoUtils();
@@ -962,7 +962,7 @@ namespace ProyectoPGTA_P2
                 string BDS1 = "N/A", BDS2 = "N/A";
 
                 string[] arrayString;
-                arrayString = new string[arrayhex.Count];
+                arrayString = new string[arrayhex.Length];
                 arrayItem = new List<string>();
                 int REP = int.Parse(arrayHex[i], System.Globalization.NumberStyles.HexNumber);
                 n = 0;

@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ASTERIX DECODER G14.exe" size="383472">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ASTERIX DECODER G14.exe" size="395760">
       <assemblyIdentity name="ASTERIX DECODER G14" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>BZgESzfRBh0yHw+4K61G9mtqZST6vQ4q4/NAJAlDR/M=</dsig:DigestValue>
+        <dsig:DigestValue>eWInhNyL4U7winCfGyliUoC3ckcS31aRQpU9gqV1nFE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -77,16 +77,10 @@ namespace ProyectoPGTA_P2
 
             for (int q = 0; q < listahex.Count; q++) //Iterate over entire list of bytes in hex
             {
-                List<string> arraystring = new List<string>(listahex[q].Length); //Every line in hex
-                for (int k = 0; k < listahex[q].Length; k++)
-                {
-                    arraystring.Add(listahex[q][k]);
-                }
-                int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber); //Convert each pair of hex values to a decimal
                 //Filter by decimal value in different categories ordered by lists 10, 20 and 21
-                if (CAT == 48)
+                if (int.TryParse(listahex[q][0], System.Globalization.NumberStyles.HexNumber, null, out int CAT) && CAT == 48)
                 {
-                    CAT48 newcat10 = new CAT48(arraystring);
+                    CAT48 newcat10 = new CAT48(listahex[q]);
 
                     bool ADD = false;
 
