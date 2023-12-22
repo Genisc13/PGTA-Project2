@@ -500,7 +500,7 @@ namespace ProyectoPGTA_P2
             }        
         }
 
-        private void LoAMinima() //No se lo que es
+        private void LoAMinima() 
         {
             FolderBrowserDialog ofd = new FolderBrowserDialog();
             ofd.SelectedPath = "..\\";
@@ -547,9 +547,80 @@ namespace ProyectoPGTA_P2
 
                             orderDepartures[i].distance = Distance2D(prepos, thispos);
 
-                            if (orderDepartures[i - 1].estela == "Ligera")
+                            if (FlightClasses["HP"].Contains(orderDepartures[i - 1].model))
                             {
-                                if (orderDepartures[i].estela == "Ligera")
+                                if (FlightClasses["HP"].Contains(orderDepartures[i].model))
+                                {
+                                    for(int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q","")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                }
+                                else if (FlightClasses["NR"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
@@ -557,7 +628,7 @@ namespace ProyectoPGTA_P2
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
-                                else if (orderDepartures[i].estela == "Media")
+                                else if (FlightClasses["NR+"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
@@ -565,7 +636,7 @@ namespace ProyectoPGTA_P2
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
-                                else if (orderDepartures[i].estela == "Pesada")
+                                else if (FlightClasses["NR-"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
@@ -573,26 +644,271 @@ namespace ProyectoPGTA_P2
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
-                                else if (orderDepartures[i].estela == "Super Pesada")
+                                else if (FlightClasses["LP"].Contains(orderDepartures[i].model))
                                 {
-                                    if (orderDepartures[i].distance < 3)
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else if (FlightClasses["NR"].Contains(orderDepartures[i - 1].model))
+                            {
+                                if (FlightClasses["HP"].Contains(orderDepartures[i].model))
+                                {
+                                    if (orderDepartures[i].distance < 9)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["NR"].Contains(orderDepartures[i].model))
+                                {
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (FlightClasses["NR+"].Contains(orderDepartures[i].model))
+                                {
+                                    if (orderDepartures[i].distance < 9)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["NR-"].Contains(orderDepartures[i].model))
+                                {
+                                    if (orderDepartures[i].distance < 9)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["LP"].Contains(orderDepartures[i].model))
+                                {
+                                    if (orderDepartures[i].distance < 9)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else
+                                {
+                                    if (orderDepartures[i].distance < 9)
                                     {
                                         breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
                             }
-                            else if (orderDepartures[i - 1].estela == "Media")
+                            else if (FlightClasses["NR-"].Contains(orderDepartures[i - 1].model))
                             {
-                                if (orderDepartures[i].estela == "Ligera")
+                                if (FlightClasses["HP"].Contains(orderDepartures[i].model))
                                 {
-                                    if (orderDepartures[i].distance < 5)
+                                    if (orderDepartures[i].distance < 9)
                                     {
                                         breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
-                                else if (orderDepartures[i].estela == "Media")
+                                else if (FlightClasses["NR"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
@@ -600,90 +916,871 @@ namespace ProyectoPGTA_P2
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
-                                else if (orderDepartures[i].estela == "Pesada")
+                                else if (FlightClasses["NR+"].Contains(orderDepartures[i].model))
                                 {
-                                    if (orderDepartures[i].distance < 3)
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 9)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 9)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 9)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (FlightClasses["NR-"].Contains(orderDepartures[i].model))
+                                {
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (FlightClasses["LP"].Contains(orderDepartures[i].model))
+                                {
+                                    if (orderDepartures[i].distance < 9)
                                     {
                                         breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
-                                else if (orderDepartures[i].estela == "Super Pesada")
+                                else
                                 {
-                                    if (orderDepartures[i].distance < 3)
+                                    if (orderDepartures[i].distance < 9)
                                     {
                                         breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
                                     }
                                 }
                             }
-                            else if (orderDepartures[i - 1].estela == "Pesada")
+                            else if (FlightClasses["NR+"].Contains(orderDepartures[i - 1].model))
                             {
-                                if (orderDepartures[i].estela == "Ligera")
+                                if (FlightClasses["HP"].Contains(orderDepartures[i].model))
                                 {
-                                    if (orderDepartures[i].distance < 6)
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 11)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 8)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 11)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 8)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 11)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 8)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
                                     }
                                 }
-                                else if (orderDepartures[i].estela == "Media")
-                                {
-                                    if (orderDepartures[i].distance < 5)
-                                    {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                    }
-                                }
-                                else if (orderDepartures[i].estela == "Pesada")
-                                {
-                                    if (orderDepartures[i].distance < 4)
-                                    {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                    }
-                                }
-                                else if (orderDepartures[i].estela == "Super Pesada")
+                                else if (FlightClasses["NR"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
                                         breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["NR+"].Contains(orderDepartures[i].model))
+                                {
+                                    if (orderDepartures[i].distance < 3)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["NR-"].Contains(orderDepartures[i].model))
+                                {
+                                    if (orderDepartures[i].distance < 3)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["LP"].Contains(orderDepartures[i].model))
+                                {
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 9)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 9)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 9)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 9)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 9)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 9)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
-                            else if (orderDepartures[i - 1].estela == "Super Pesada")
+                            else if (FlightClasses["LP"].Contains(orderDepartures[i - 1].model))
                             {
-                                if (orderDepartures[i].estela == "Ligera")
+                                if (FlightClasses["HP"].Contains(orderDepartures[i].model))
                                 {
-                                    if (orderDepartures[i].distance < 8)
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 8)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 8)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 8)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
                                     }
                                 }
-                                else if (orderDepartures[i].estela == "Media")
-                                {
-                                    if (orderDepartures[i].distance < 7)
-                                    {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                    }
-                                }
-                                else if (orderDepartures[i].estela == "Pesada")
-                                {
-                                    if (orderDepartures[i].distance < 6)
-                                    {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                    }
-                                }
-                                else if (orderDepartures[i].estela == "Super Pesada")
+                                else if (FlightClasses["NR"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
                                         breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
                                             orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["NR+"].Contains(orderDepartures[i].model))
+                                {
+                                    if (orderDepartures[i].distance < 3)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["NR-"].Contains(orderDepartures[i].model))
+                                {
+                                    if (orderDepartures[i].distance < 3)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["LP"].Contains(orderDepartures[i].model))
+                                {
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 4)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 4)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 6)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 4)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (FlightClasses["HP"].Contains(orderDepartures[i - 1].model))
+                                {
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 7)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 7)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 7)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (FlightClasses["NR"].Contains(orderDepartures[i - 1].model))
+                                {
+                                    if (orderDepartures[i].distance < 3)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["NR+"].Contains(orderDepartures[i - 1].model))
+                                {
+                                    if (orderDepartures[i].distance < 3)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["NR-"].Contains(orderDepartures[i - 1].model))
+                                {
+                                    if (orderDepartures[i].distance < 3)
+                                    {
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                    }
+                                }
+                                else if (FlightClasses["LP"].Contains(orderDepartures[i - 1].model))
+                                {
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    {
+                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        {
+                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            {
+                                                if (orderDepartures[i].distance < 5)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (orderDepartures[i].distance < 3)
+                                                {
+                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1146,7 +2243,7 @@ namespace ProyectoPGTA_P2
                                             if (compname == avion.Name)
                                             {
                                                 wake = AllDayDepartures[k][5];
-                                                stepList.Add(new Departure(avion.Name, wake, AllDayDepartures[k][5], avion.positionList[j].X, avion.positionList[j].Y,avion.positionList[j].Z, avion.positionList[j].Time));
+                                                stepList.Add(new Departure(avion.Name, wake, AllDayDepartures[k][4], AllDayDepartures[k][3], AllDayDepartures[k][7], avion.positionList[j].X, avion.positionList[j].Y,avion.positionList[j].Z, avion.positionList[j].Time));
                                                 break;
                                             }
                                         }
@@ -1208,13 +2305,16 @@ namespace ProyectoPGTA_P2
             public Position pos;
             public float distance = 999;
             public string model;
+            public string route;
+            public string runway;
 
 
-            public Departure(string Name, string Estela,string Model ,double x, double y, double z, float time)
+            public Departure(string Name, string Estela,string Model,string Route,string runway ,double x, double y, double z, float time)
             {
                 name = Name;
                 estela = Estela;
                 model = Model;
+                route = Route;
                 pos = new Position(x, y, z, time, true) ;
             }
         }
