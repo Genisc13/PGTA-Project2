@@ -529,6 +529,97 @@ namespace ProyectoPGTA_P2
                     }
                 }
 
+                for(int i = 0; i< orderDepartures.Count; i++)
+                {
+                    if(orderDepartures[i].runway == "LEBL-06R")
+                    {
+                        bool found = false;
+                        for (int j = 0; j < SIDs06["Misma_SID_G1"].Count; j++)
+                        {
+                            if (orderDepartures[i].route.Contains(SIDs06["Misma_SID_G1"][j].Replace("-R", "")))
+                            {
+                                orderDepartures[i].SIDGroup = "G1R";
+                                found = true;
+                                break;
+                            }                            
+                        }
+                        if (found)
+                        {
+                            continue;
+                        }
+                        for (int j = 0; j < SIDs06["Misma_SID_G2"].Count; j++)
+                        {
+                            if (orderDepartures[i].route.Contains(SIDs06["Misma_SID_G2"][j].Replace("-R", "")))
+                            {
+                                orderDepartures[i].SIDGroup = "G2R";
+                                found = true;
+                                break;
+                            }                           
+                        }
+                        if (found)
+                        {
+                            continue;
+                        }
+                        for (int j = 0; j < SIDs06["Misma_SID_G3"].Count; j++)
+                        {
+                            if (orderDepartures[i].route.Contains(SIDs06["Misma_SID_G3"][j].Replace("-R", "")))
+                            {
+                                orderDepartures[i].SIDGroup = "G3R";
+                                found = true;
+                                break;
+                            }                           
+                        }
+                        if (found)
+                        {
+                            continue;
+                        }
+
+                    }
+                    else
+                    {
+                        bool found = false;
+                        for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                        {
+                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                            {
+                                orderDepartures[i].SIDGroup = "G1Q";
+                                found = true;
+                                break;
+                            }                        
+                        }
+                        if (found)
+                        {
+                            continue;
+                        }
+                        for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                        {
+                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                            {
+                                orderDepartures[i].SIDGroup = "G2Q";
+                                found = true;
+                                break;
+                            }                           
+                        }
+                        if (found)
+                        {
+                            continue;
+                        }
+                        for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                        {
+                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                            {
+                                orderDepartures[i].SIDGroup = "G3Q";
+                                found = true;
+                                break;
+                            }                           
+                        }
+                        if (found)
+                        {
+                            continue;
+                        }
+                    }
+                    
+                }
                 List<float> Distances = new List<float>();
 
                 for (int i = 1; i < orderDepartures.Count; i++)
@@ -550,236 +641,376 @@ namespace ProyectoPGTA_P2
                             if (FlightClasses["HP"].Contains(orderDepartures[i - 1].model))
                             {
                                 if (FlightClasses["HP"].Contains(orderDepartures[i].model))
-                                {
-                                    for(int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                {   
+                                    
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q","")))
+                                        if(orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }else if(orderDepartures[i - 1].SIDGroup == "G2Q")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1R")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }                                  
                                 }
                                 else if (FlightClasses["NR"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR+"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR-"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["LP"].Contains(orderDepartures[i].model))
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"HP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
@@ -791,76 +1022,123 @@ namespace ProyectoPGTA_P2
                                 {
                                     if (orderDepartures[i].distance < 9)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR"].Contains(orderDepartures[i].model))
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
@@ -869,32 +1147,32 @@ namespace ProyectoPGTA_P2
                                 {
                                     if (orderDepartures[i].distance < 9)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR-"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 9)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["LP"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 9)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else
                                 {
                                     if (orderDepartures[i].distance < 9)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                             }
@@ -904,154 +1182,248 @@ namespace ProyectoPGTA_P2
                                 {
                                     if (orderDepartures[i].distance < 9)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR+"].Contains(orderDepartures[i].model))
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 9)
                                             {
-                                                if (orderDepartures[i].distance < 9)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 9)
                                             {
-                                                if (orderDepartures[i].distance < 9)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 9)
                                             {
-                                                if (orderDepartures[i].distance < 9)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 9)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 9)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
                                                     orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 9)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
                                 }
                                 else if (FlightClasses["NR-"].Contains(orderDepartures[i].model))
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
@@ -1060,16 +1432,16 @@ namespace ProyectoPGTA_P2
                                 {
                                     if (orderDepartures[i].distance < 9)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else
                                 {
                                     if (orderDepartures[i].distance < 9)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR-", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                             }
@@ -1077,70 +1449,117 @@ namespace ProyectoPGTA_P2
                             {
                                 if (FlightClasses["HP"].Contains(orderDepartures[i].model))
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 11)
                                             {
-                                                if (orderDepartures[i].distance < 11)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 8)
                                             {
-                                                if (orderDepartures[i].distance < 8)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 11)
                                             {
-                                                if (orderDepartures[i].distance < 11)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 8)
                                             {
-                                                if (orderDepartures[i].distance < 8)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 11)
                                             {
-                                                if (orderDepartures[i].distance < 11)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 8)
                                             {
-                                                if (orderDepartures[i].distance < 8)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 11)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 8)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 11)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 8)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 11)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 8)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
@@ -1149,162 +1568,365 @@ namespace ProyectoPGTA_P2
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR+"].Contains(orderDepartures[i].model))
                                 {
-                                    if (orderDepartures[i].distance < 3)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
                                     }
                                 }
                                 else if (FlightClasses["NR-"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["LP"].Contains(orderDepartures[i].model))
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 9)
                                             {
-                                                if (orderDepartures[i].distance < 9)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 9)
                                             {
-                                                if (orderDepartures[i].distance < 9)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 9)
                                             {
-                                                if (orderDepartures[i].distance < 9)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 9)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 9)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 9)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 9)
                                             {
-                                                if (orderDepartures[i].distance < 9)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 9)
                                             {
-                                                if (orderDepartures[i].distance < 9)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 9)
                                             {
-                                                if (orderDepartures[i].distance < 9)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 9)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 9)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 9)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"NR+", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
@@ -1314,70 +1936,117 @@ namespace ProyectoPGTA_P2
                             {
                                 if (FlightClasses["HP"].Contains(orderDepartures[i].model))
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 8)
                                             {
-                                                if (orderDepartures[i].distance < 8)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 8)
                                             {
-                                                if (orderDepartures[i].distance < 8)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 8)
                                             {
-                                                if (orderDepartures[i].distance < 8)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 8)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 8)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 8)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
@@ -1386,162 +2055,256 @@ namespace ProyectoPGTA_P2
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR+"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR-"].Contains(orderDepartures[i].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["LP"].Contains(orderDepartures[i].model))
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 4)
                                             {
-                                                if (orderDepartures[i].distance < 4)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 4)
                                             {
-                                                if (orderDepartures[i].distance < 4)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 6)
                                             {
-                                                if (orderDepartures[i].distance < 6)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 4)
                                             {
-                                                if (orderDepartures[i].distance < 4)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 4)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 4)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 6)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 4)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"LP", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
@@ -1551,70 +2314,117 @@ namespace ProyectoPGTA_P2
                             {
                                 if (FlightClasses["HP"].Contains(orderDepartures[i - 1].model))
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 7)
                                             {
-                                                if (orderDepartures[i].distance < 7)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 7)
                                             {
-                                                if (orderDepartures[i].distance < 7)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 7)
                                             {
-                                                if (orderDepartures[i].distance < 7)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 7)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 7)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 7)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"HP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
@@ -1623,162 +2433,256 @@ namespace ProyectoPGTA_P2
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR+"].Contains(orderDepartures[i - 1].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR+", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["NR-"].Contains(orderDepartures[i - 1].model))
                                 {
                                     if (orderDepartures[i].distance < 3)
                                     {
-                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                            orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
+                                        breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"NR-", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                     }
                                 }
                                 else if (FlightClasses["LP"].Contains(orderDepartures[i - 1].model))
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"LP", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    for (int j = 0; j < SIDs24["Misma_SID_G1"].Count; j++)
+                                    if (orderDepartures[i - 1].SIDGroup == "G1Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G1Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G1"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-
-                                    for (int j = 0; j < SIDs24["Misma_SID_G2"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G2Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G2"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
-                                    for (int j = 0; j < SIDs24["Misma_SID_G3"].Count; j++)
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3Q")
                                     {
-                                        if (orderDepartures[i - 1].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                        if (orderDepartures[i].SIDGroup == "G3Q")
                                         {
-                                            if (orderDepartures[i].route.Contains(SIDs24["Misma_SID_G3"][j].Replace("-Q", "")))
+                                            if (orderDepartures[i].distance < 5)
                                             {
-                                                if (orderDepartures[i].distance < 5)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
                                             {
-                                                if (orderDepartures[i].distance < 3)
-                                                {
-                                                    breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela, orderDepartures[i-1].name,orderDepartures[i-1].estela,
-                                                    orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString() });
-                                                }
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G1R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G1R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G2R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G2R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                    }
+                                    else if (orderDepartures[i - 1].SIDGroup == "G3R")
+                                    {
+                                        if (orderDepartures[i].SIDGroup == "G3R")
+                                        {
+                                            if (orderDepartures[i].distance < 5)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (orderDepartures[i].distance < 3)
+                                            {
+                                                breakMinima.Add(new string[] {orderDepartures[i].name,orderDepartures[i].estela,orderDepartures[i].SIDGroup,"R", orderDepartures[i-1].name, orderDepartures[i-1].estela,
+                                                    orderDepartures[i-1].SIDGroup,"R", orderDepartures[i].pos.Time.ToString(), orderDepartures[i].distance.ToString(),orderDepartures[i].runway });
                                             }
                                         }
                                     }
@@ -1857,8 +2761,8 @@ namespace ProyectoPGTA_P2
                 // Create a StringBuilder to store the CSV content
                 csvContent = new StringBuilder();
                 //Here the CSV content is written string by string
-                h = 1;
-                csvContent.AppendLine("NUM;ID_1;WAKE_1;ID_2;WAKE_2;Time;Distance");
+                h = 1;               
+                csvContent.AppendLine("NUM;ID_1;WAKE_1;SID_1;PERFORMANCE_1;ID_2;WAKE_2;SID_2;PERFORMANCE_2;Time;Distance;Runway");
                 foreach (var minimadata in breakMinima)
                 {
                     StringBuilder rowDataBuilder = new StringBuilder();
@@ -2307,14 +3211,16 @@ namespace ProyectoPGTA_P2
             public string model;
             public string route;
             public string runway;
+            public string SIDGroup="";
 
 
-            public Departure(string Name, string Estela,string Model,string Route,string runway ,double x, double y, double z, float time)
+            public Departure(string Name, string Estela,string Model,string Route,string Runway ,double x, double y, double z, float time)
             {
                 name = Name;
                 estela = Estela;
                 model = Model;
                 route = Route;
+                runway = Runway;
                 pos = new Position(x, y, z, time, true) ;
             }
         }
